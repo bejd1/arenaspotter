@@ -2,9 +2,11 @@ import { ThemeProvider } from "@/components/theme-provider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import favicon from "./favicon.ico";
 import Nav from "./_components/nav";
 
 const inter = Inter({ subsets: ["latin"] });
+const myFavicon = favicon.src;
 
 export const metadata: Metadata = {
   title: "Arena Spotter",
@@ -18,6 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href={myFavicon} />
+      </head>
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"
