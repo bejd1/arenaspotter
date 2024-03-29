@@ -70,15 +70,19 @@ export function Auth() {
               <CardContent className="space-y-2">
                 <div className="space-y-1">
                   <Label htmlFor="name">First name</Label>
-                  <Input id="name" type="name" />
+                  <Input id="name" type="name" placeholder="First Name" />
                 </div>
                 <div className="space-y-1">
                   <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="youremail@email.com"
+                  />
                 </div>
                 <div className="space-y-1">
                   <Label htmlFor="new">Password</Label>
-                  <Input id="new" type="password" />
+                  <Input id="new" type="password" placeholder="••••••••" />
                 </div>
               </CardContent>
               <CardFooter className="flex flex-col py-0">

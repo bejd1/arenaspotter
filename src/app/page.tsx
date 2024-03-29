@@ -4,6 +4,8 @@ import { BsSearch } from "react-icons/bs";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { CustomInput } from "@/components/ui/customInput";
+import Component from "./_components/login-btn";
+import GitHubProvider from "next-auth/providers/github";
 
 const ParentComponent = () => {
   const [isInputClicked, setIsInputClicked] = useState(false);
@@ -39,6 +41,7 @@ const ParentComponent = () => {
       <Button className="mt-12">
         <Link href={"/arena"}>Arena</Link>
       </Button>
+      <Component />
     </div>
   );
 };

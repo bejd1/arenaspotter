@@ -8,8 +8,13 @@ import { Button } from "@/components/ui/button";
 import DropdownBurger from "@/components/dropdown-burger";
 import { Separator } from "@/components/ui/separator";
 import { Auth } from "./auth";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import DropdownImage from "@/components/dropdown-image";
 
 const Nav = () => {
+  const { data: session } = useSession();
+
   return (
     <div>
       <div className="flex justify-between px-4 sm:px-6 lg:px-20 py-2">
@@ -20,16 +25,21 @@ const Nav = () => {
           </div>
         </Link>
         <div className="flex items-center justify-center gap-1 md:gap-4">
-          <Auth />
           <div className="flex items-center justify-center">
-            {/* <Button variant={"outline"} size="icon">
-            
-            </Button> */}
             <Button variant={"outline"} size="icon">
               <AiOutlineStar className="text-xl cursor-pointer" />
             </Button>
             <ModeToggle />
-            <DropdownBurger />
+            <div>
+              {!session?.user ? (
+                <div className="flex flex-row gap-2">
+                  <DropdownBurger />
+                  <Auth />
+                </div>
+              ) : (
+                <DropdownImage />
+              )}
+            </div>
           </div>
         </div>
       </div>

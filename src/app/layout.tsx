@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import favicon from "./favicon.ico";
 import Nav from "./_components/nav";
+import AuthProvider from "./context/AuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 const myFavicon = favicon.src;
@@ -30,10 +31,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div>
-            <Nav />
-            {children}
-          </div>
+          <AuthProvider>
+            <div>
+              <Nav />
+              {children}
+            </div>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>
