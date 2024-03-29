@@ -21,25 +21,21 @@ const GetData = () => {
     fetchData();
   }, []);
 
-  console.log(data);
-
   return (
     <div className="my-5">
-      <h1>
-        Data:{" "}
-        {data.map((d) => {
-          return (
-            <div className="flex gap-4" key={d.id}>
-              <div>
-                <p>{d.title}</p>
-                <p>{d.body}</p>
-                <p>{d.id}</p>
-              </div>
-              <DeletePost id={d.id} />
+      <h1 className="text-xl mb-2">Data:</h1>
+      {data.map((d) => {
+        return (
+          <div className="flex gap-4" key={d.id}>
+            <div>
+              <p>{d.title}</p>
+              <p>{d.body}</p>
+              <p>{d.id}</p>
             </div>
-          );
-        })}
-      </h1>
+            <DeletePost id={d.id} />
+          </div>
+        );
+      })}
     </div>
   );
 };

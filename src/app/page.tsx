@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
-import { Input } from "@/components/ui/input";
 import { BsSearch } from "react-icons/bs";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { CustomInput } from "@/components/ui/customInput";
 
 const ParentComponent = () => {
   const [isInputClicked, setIsInputClicked] = useState(false);
@@ -15,10 +15,12 @@ const ParentComponent = () => {
         <div
           className={`flex items-center justify-center border w-[420px] rounded-md ${
             isInputClicked ? "border-slate-900" : "border-slate-300"
-          } dark:${isInputClicked ? "border-slate-100" : "border-gray-200"}`}
+          } ${
+            isInputClicked ? "dark:border-white" : "dark:border-y-slate-300"
+          }`}
         >
           <div className="w-full">
-            <Input
+            <CustomInput
               placeholder="Choose arena near you..."
               className="border-none"
               onFocus={() => setIsInputClicked(true)}

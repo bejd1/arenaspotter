@@ -7,6 +7,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { Button } from "@/components/ui/button";
+import { AiOutlinePlus } from "react-icons/ai";
+import { Auth } from "@/app/_components/auth";
 
 const DropdownBurger = () => {
   return (
@@ -18,15 +20,13 @@ const DropdownBurger = () => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem className="cursor-pointer">
-            Profile
+          <DropdownMenuItem className="cursor-pointer sm:hidden">
+            <Auth />
+            fdssf
           </DropdownMenuItem>
-          <DropdownMenuItem className="cursor-pointer">
-            Billing
-          </DropdownMenuItem>
-          <DropdownMenuItem className="cursor-pointer">Team</DropdownMenuItem>
-          <DropdownMenuItem className="cursor-pointer">
-            Subscription
+          <DropdownMenuItem className="cursor-pointer flex justify-between">
+            <p>Add arena</p>
+            <AiOutlinePlus className="text-xl cursor-pointer" />
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
