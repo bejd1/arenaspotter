@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { FaGoogle } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
+import { signIn } from "next-auth/react";
 
 export function Auth() {
   return (
@@ -51,16 +52,25 @@ export function Auth() {
                 <div className="bg-slate-200 h-0.5 w-full mr-6 ml-4"></div>
               </div>
               <CardFooter className="flex gap-4">
-                <Button variant={"secondary"} className="w-full">
+                <Button
+                  onClick={() => signIn("google")}
+                  variant={"secondary"}
+                  className="w-full"
+                >
                   <FaGoogle className="text-xl" />
                 </Button>
-                <Button variant={"secondary"} className="w-full">
+                <Button
+                  onClick={() => signIn("github")}
+                  variant={"secondary"}
+                  className="w-full"
+                >
                   <FaGithub className="text-xl" />
                 </Button>
               </CardFooter>
             </Card>
           </TabsContent>
           <TabsContent value="password">
+            {/* Register */}
             <Card>
               <CardHeader>
                 <CardTitle className="text-2xl text-center">
@@ -94,10 +104,18 @@ export function Auth() {
                 <div className="bg-slate-200 h-0.5 w-full mr-6 ml-4"></div>
               </div>
               <CardFooter className="flex gap-4">
-                <Button variant={"secondary"} className="w-full">
+                <Button
+                  onClick={() => signIn("google")}
+                  variant={"secondary"}
+                  className="w-full"
+                >
                   <FaGoogle className="text-xl" />
                 </Button>
-                <Button variant={"secondary"} className="w-full">
+                <Button
+                  onClick={() => signIn("github")}
+                  variant={"secondary"}
+                  className="w-full"
+                >
                   <FaGithub className="text-xl" />
                 </Button>
               </CardFooter>

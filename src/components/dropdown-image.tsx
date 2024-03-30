@@ -19,7 +19,7 @@ const DropdownImage = () => {
         <DropdownMenuTrigger asChild>
           <div>
             {session?.user ? (
-              <div className="flex items-center justify-center w-8 h-8 ml-2 bg-blue-600 rounded-full cursor-pointer">
+              <div className="flex items-center justify-center w-8 h-8 ml-2 bg-blue-600 text-white rounded-full cursor-pointer">
                 {session?.user?.name?.charAt(0).toLocaleUpperCase()}
               </div>
             ) : (
