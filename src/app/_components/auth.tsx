@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,8 +15,27 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { FaGoogle } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { signIn } from "next-auth/react";
+import { PrismaClient } from "@prisma/client";
+import { handleSignUpCredentials } from "@/actions/myreg";
+import { FormSuccess } from "./formSuccess";
+import { FormError } from "./formError";
+import { FormEvent, useState } from "react";
 
 export function Auth() {
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
+
+  const [email, setEmail] = useState<undefined | string>();
+  const [password, setPassword] = useState<undefined | string>();
+  function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    signIn("credentials", {
+      email: email,
+      password: password,
+    });
+    console.log(email, password);
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -27,25 +48,42 @@ export function Auth() {
             <TabsTrigger value="password">Register</TabsTrigger>
           </TabsList>
           <TabsContent value="account">
+            {/* Login */}
             <Card>
               <CardHeader>
                 <CardTitle className="text-2xl text-center">
                   Log Into My Account
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-2">
-                <div className="space-y-1">
-                  <Label htmlFor="email">Email</Label>
-                  <Input id="email" placeholder="youremail@email.com" />
-                </div>
-                <div className="space-y-1">
-                  <Label htmlFor="password">Password</Label>
-                  <Input id="password" placeholder="••••••••" />
-                </div>
-              </CardContent>
-              <CardFooter className="py-0">
-                <Button className="w-full">Login</Button>
-              </CardFooter>
+              <form onSubmit={handleSubmit}>
+                <CardContent className="space-y-2">
+                  <div className="space-y-1">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      name="email"
+                      placeholder="youremail@email.com"
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label htmlFor="password">Password</Label>
+                    <Input
+                      id="password"
+                      type="password"
+                      name="password"
+                      placeholder="••••••••"
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </div>
+                </CardContent>
+                <CardFooter className="py-0">
+                  <Button type="submit" className="w-full">
+                    Login
+                  </Button>
+                </CardFooter>
+              </form>
               <div className="flex items-center justify-center flex-row">
                 <div className="bg-slate-200 h-0.5 w-full mr-4 ml-6"></div>
                 <p className="text-center py-2">or</p>
@@ -77,27 +115,42 @@ export function Auth() {
                   Create a new account
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-2">
-                <div className="space-y-1">
-                  <Label htmlFor="name">First name</Label>
-                  <Input id="name" type="name" placeholder="First Name" />
-                </div>
-                <div className="space-y-1">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="youremail@email.com"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <Label htmlFor="new">Password</Label>
-                  <Input id="new" type="password" placeholder="••••••••" />
-                </div>
-              </CardContent>
-              <CardFooter className="flex flex-col py-0">
-                <Button className="w-full">Register</Button>
-              </CardFooter>
+              <form action={handleSignUpCredentials}>
+                <CardContent className="space-y-2">
+                  <div className="space-y-1">
+                    <Label htmlFor="name">First name</Label>
+                    <Input
+                      id="name"
+                      type="name"
+                      name="name"
+                      placeholder="First Name"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      name="email"
+                      placeholder="youremail@email.com"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label htmlFor="new">Password</Label>
+                    <Input
+                      id="new"
+                      type="password"
+                      name="password"
+                      placeholder="••••••••"
+                    />
+                  </div>
+                </CardContent>
+                <CardFooter className="flex flex-col py-0">
+                  <Button type="submit" name="submit" className="w-full">
+                    Register
+                  </Button>
+                </CardFooter>
+              </form>
               <div className="flex items-center justify-center flex-row">
                 <div className="bg-slate-200 h-0.5 w-full mr-4 ml-6"></div>
                 <p className="text-center py-2">or</p>
@@ -119,6 +172,8 @@ export function Auth() {
                   <FaGithub className="text-xl" />
                 </Button>
               </CardFooter>
+              {success ? <FormSuccess message={success} /> : <></>}
+              {!error ? <FormError message={error} /> : <></>}
             </Card>
           </TabsContent>
         </Tabs>

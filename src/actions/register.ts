@@ -18,8 +18,8 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const { name, email, password } = validateFields.data;
 
   // Hash the password using bcrypt
-  const bcrypt = require("bcrypt");
-  const hashedPassword = await bcrypt.hash(password, 10);
+  // const bcrypt = require("bcrypt");
+  // const hashedPassword = await bcrypt.hash(password, 10);
 
   // Check if the user with the provided email already exists
   const existingUser = await prisma.user.findUnique({
@@ -36,7 +36,8 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     data: {
       name,
       email,
-      password: hashedPassword,
+      password,
+      // password: hashedPassword,
     },
   });
 
