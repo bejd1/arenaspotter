@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { CustomInput } from "@/components/ui/customInput";
 import Component from "./_components/login-btn";
-import GitHubProvider from "next-auth/providers/github";
+import Arenas from "./_components/arenas";
 
 const ParentComponent = () => {
   const [isInputClicked, setIsInputClicked] = useState(false);
@@ -38,6 +38,7 @@ const ParentComponent = () => {
           <input type="checkbox" />
         </div>
       </form>
+      <Arenas />
       <Button className="mt-12">
         <Link href={"/arena"}>Arena</Link>
       </Button>

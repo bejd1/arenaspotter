@@ -10,6 +10,8 @@ export const login = async (formData: FormData) => {
     const password = formData.get("password") as string;
     const email = formData.get("email") as string;
 
+    console.log(password, email);
+
     const existingUser = await prisma.user.findUnique({
       where: {
         email: email,
