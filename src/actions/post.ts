@@ -3,7 +3,6 @@
 import { PostT } from "@/types/types";
 import { PrismaClient } from "@prisma/client";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 const prisma = new PrismaClient();
 
@@ -12,24 +11,64 @@ export async function getData(): Promise<PostT[]> {
 
   return data.map((item) => ({
     id: item.id,
-    title: item.title,
-    body: item.body,
+    name: item.name,
+    city: item.city,
+    address: item.address,
+    email: item.email,
+    image: item.image,
+    image2: item.image2,
+    image3: item.image3,
+    payment: item.payment,
+    people: item.people,
+    football: item.football,
+    basketball: item.basketball,
+    netball: item.netball,
+    cost: item.cost,
   }));
 }
 
 export async function createPost(formData: FormData) {
   try {
-    const title = formData.get("title") as string;
-    const body = formData.get("body") as string;
+    const name = formData.get("name") as string;
+    const city = formData.get("city") as string;
+    const address = formData.get("address") as string;
+    const email = formData.get("email") as string;
+    const image = formData.get("image") as string;
+    const image2 = formData.get("image2") as string;
+    const image3 = formData.get("image3") as string;
+    const payment = formData.get("payment") as string;
+    const people = parseInt(formData.get("people") as string);
+    const cost = parseInt(formData.get("cost") as string);
+    // Assuming 'terms' checkbox values are boolean indicating whether selected or not
+    const football = formData.has("football");
+    const basketball = formData.has("basketball");
+    const netball = formData.has("netball");
+
     await prisma.post.create({
       data: {
-        title: title,
-        body: body,
+        name: name,
+        city: city,
+        address: address,
+        email: email,
+        image: image,
+        image2: image2,
+        image3: image3,
+        payment: payment,
+        people: people,
+        cost: cost,
+        football: football,
+        basketball: basketball,
+        netball: netball,
       },
     });
-    revalidatePath("/arena");
-  } catch (error) {}
-  console.log("Create post");
+
+    // Assuming revalidatePath is correct, although typically used with Next.js ISR
+    revalidatePath("/");
+  } catch (error) {
+    // Handle errors appropriately, for example logging or throwing
+    console.error("Error creating post:", error);
+    throw error;
+  }
 }
 
 export async function deletePost(formData: FormData) {

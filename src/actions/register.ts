@@ -1,45 +1,44 @@
 "use server";
 
-import * as z from "zod";
-import { RegisterSchema } from "@/schemas";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export const register = async (values: z.infer<typeof RegisterSchema>) => {
-  // Validate input using the RegisterSchema
-  const validateFields = RegisterSchema.safeParse(values);
+export async function register(formData: FormData) {
+  try {
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    const bcrypt = require("bcrypt");
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-  // Check if validation was successful
-  if (!validateFields.success) {
-    return { error: "Invalid fields" };
+    const existingUser = await prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    if (existingUser) {
+      throw new Error("User with this email already exists");
+    }
+
+    if (existingUser) {
+      return { error: "Email already in use" };
+    }
+
+    console.log({ name, email, password });
+
+    await prisma.user.create({
+      data: {
+        name: name,
+        email: email,
+        password: hashedPassword,
+      },
+    });
+    console.log(`created new user : ${name}, ${email}, ${password}`);
+  } catch (error) {
+    // Obsłuż błędy
+    console.error("Error during user creation:", error);
   }
-
-  const { name, email, password } = validateFields.data;
-
-  // Hash the password using bcrypt
-  // const bcrypt = require("bcrypt");
-  // const hashedPassword = await bcrypt.hash(password, 10);
-
-  // Check if the user with the provided email already exists
-  const existingUser = await prisma.user.findUnique({
-    where: { email },
-  });
-
-  // If user already exists, return an error
-  if (existingUser) {
-    return { error: "Email already in use" };
-  }
-
-  // Create a new user in the database
-  await prisma.user.create({
-    data: {
-      name,
-      email,
-      password,
-      // password: hashedPassword,
-    },
-  });
-
   return { success: "Registration successful" };
-};
+}

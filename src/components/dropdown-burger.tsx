@@ -9,6 +9,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { Button } from "@/components/ui/button";
 import { AiOutlinePlus } from "react-icons/ai";
 import { Auth } from "@/app/_components/auth";
+import Link from "next/link";
 
 const DropdownBurger = () => {
   return (
@@ -22,12 +23,13 @@ const DropdownBurger = () => {
         <DropdownMenuContent>
           <DropdownMenuItem className="cursor-pointer sm:hidden">
             <Auth />
-            fdssf
           </DropdownMenuItem>
-          <DropdownMenuItem className="cursor-pointer flex justify-between">
-            <p>Add arena</p>
-            <AiOutlinePlus className="text-xl cursor-pointer" />
-          </DropdownMenuItem>
+          <Link href={"/create-post"}>
+            <DropdownMenuItem className="cursor-pointer flex justify-between">
+              <p>Add arena</p>
+              <AiOutlinePlus className="text-xl cursor-pointer" />
+            </DropdownMenuItem>
+          </Link>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

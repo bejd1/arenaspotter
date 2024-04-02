@@ -9,7 +9,6 @@ import DropdownBurger from "@/components/dropdown-burger";
 import { Separator } from "@/components/ui/separator";
 import { Auth } from "./auth";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import DropdownImage from "@/components/dropdown-image";
 
 const Nav = () => {

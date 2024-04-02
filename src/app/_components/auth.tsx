@@ -15,8 +15,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { FaGoogle } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { signIn } from "next-auth/react";
-import { PrismaClient } from "@prisma/client";
-import { handleSignUpCredentials } from "@/actions/myreg";
+import { register } from "@/actions/register";
 import { FormSuccess } from "./formSuccess";
 import { FormError } from "./formError";
 import { FormEvent, useState } from "react";
@@ -24,9 +23,9 @@ import { FormEvent, useState } from "react";
 export function Auth() {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
-
   const [email, setEmail] = useState<undefined | string>();
   const [password, setPassword] = useState<undefined | string>();
+
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     signIn("credentials", {
@@ -115,7 +114,7 @@ export function Auth() {
                   Create a new account
                 </CardTitle>
               </CardHeader>
-              <form action={handleSignUpCredentials}>
+              <form action={register}>
                 <CardContent className="space-y-2">
                   <div className="space-y-1">
                     <Label htmlFor="name">First name</Label>
