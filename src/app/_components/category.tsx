@@ -11,7 +11,7 @@ const Category = () => {
   const category = searchParams.get("category");
 
   return (
-    <div className="flex flex-row justify-between w-full">
+    <div className="flex flex-row justify-between w-full px-4 sm:px-6 lg:px-48">
       <div className="flex gap-2 mb-4">
         <Link href={"?category=football"}>
           <Button>

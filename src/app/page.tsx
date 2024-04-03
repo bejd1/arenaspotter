@@ -7,11 +7,11 @@ import { CustomInput } from "@/components/ui/customInput";
 import Arena from "./arena/page";
 
 const ParentComponent = () => {
-  const [isInputClicked, setIsInputClicked] = useState(false);
+  // const [isInputClicked, setIsInputClicked] = useState(false);
 
   return (
-    <div className="flex flex-col items-center justify-center mt-12">
-      <div className="flex flex-row gap-4">
+    <div className="flex flex-col items-center justify-center">
+      {/* <div className="flex flex-row gap-4">
         <form className="flex flex-col">
           <div
             className={`flex items-center justify-center border w-[420px] rounded-md ${
@@ -34,7 +34,7 @@ const ParentComponent = () => {
         <Button>
           <Link href={"/arena"}>Arena</Link>
         </Button>
-      </div>
+      </div> */}
       <Arena />
     </div>
   );

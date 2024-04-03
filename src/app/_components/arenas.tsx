@@ -7,43 +7,55 @@ import { AiFillStar } from "react-icons/ai";
 import Link from "next/link";
 import { PostT } from "@/types/types";
 
-const Arenas = ({ data }: { data: PostT[] }) => {
+const Arenas = ({ arenas }: { arenas: PostT[] }) => {
   return (
-    <div>
-      <div className="flex gap-4">
-        {data.map((d) => {
-          return (
-            <Link key={d.id} href={`/arena/${d.id}`}>
-              <Card className="cursor-pointer relative">
-                <img
-                  src={d.image}
-                  className="w-[320px] min-h-[200px] max-h-[201px]"
-                />
-                <CardHeader>
-                  <CardTitle className="pb-2 text-lg p-0">{d.name}</CardTitle>
-                  <CardContent className="flex items-center gap-2 p-0">
-                    <FaRegMoneyBillAlt />
-                    <div>
-                      {d?.payment === "Paid" ? <p>${d.cost}</p> : <p>Free</p>}
-                    </div>
-                  </CardContent>
-                  <CardContent className="flex items-center gap-1 p-0">
-                    <CiLocationOn />
-                    <div>{d.city}</div>
-                  </CardContent>
-                  <CardContent className="flex items-center gap-1 p-0">
-                    <IoPeopleSharp />
-                    <div>{d.people}</div>
-                  </CardContent>
-                </CardHeader>
-                <CardContent className="absolute flex items-center justify-center bg-slate-900 text-white top-1 right-1 p-2 rounded-md">
-                  <AiFillStar className="text-2xl hover:text-red-600" />
+    <div className="flex flex-wrap  px-24 gap-4">
+      {arenas?.map((arena) => {
+        const {
+          id,
+          name,
+          city,
+          address,
+          email,
+          image,
+          image2,
+          image3,
+          payment,
+          people,
+          cost,
+        } = arena;
+
+        return (
+          <Link key={id} href={`/arena/${id}`}>
+            <Card className="cursor-pointer relative">
+              <img
+                src={image}
+                className="w-[320px] min-h-[200px] max-h-[201px]"
+              />
+              <CardHeader>
+                <CardTitle className="pb-2 text-lg p-0 w-full h-6">
+                  {name}
+                </CardTitle>
+                <CardContent className="flex items-center gap-2 p-0 w-full h-6">
+                  <FaRegMoneyBillAlt />
+                  <div>{payment === "Paid" ? <p>${cost}</p> : <p>Free</p>}</div>
                 </CardContent>
-              </Card>
-            </Link>
-          );
-        })}
-      </div>
+                <CardContent className="flex items-center gap-1 p-0 w-full h-6">
+                  <CiLocationOn />
+                  <div>{city}</div>
+                </CardContent>
+                <CardContent className="flex items-center gap-1 p-0 w-full h-6">
+                  <IoPeopleSharp />
+                  <div>{people}</div>
+                </CardContent>
+              </CardHeader>
+              <CardContent className="absolute flex items-center justify-center bg-slate-900 text-white top-1 right-1 p-2 rounded-md">
+                <AiFillStar className="text-2xl hover:text-red-600" />
+              </CardContent>
+            </Card>
+          </Link>
+        );
+      })}
     </div>
   );
 };

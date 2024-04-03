@@ -1,33 +1,45 @@
 "use client";
-import React, { Suspense, useEffect, useState } from "react";
-import { PostT } from "@/types/types";
+import React, { useState } from "react";
 import { getData } from "@/actions/post";
 import Category from "../_components/category";
-import { LoadingSkeleton } from "../_components/loading";
+import SandboxPreview from "../_components/loading";
 import Arenas from "../_components/arenas";
+import { useQuery } from "@tanstack/react-query";
+import { Input } from "@/components/ui/input";
+import SearchInput from "../_components/searchInput";
 
 const Arena = () => {
-  const [data, setData] = useState<PostT[]>([]);
+  const {
+    data: arenas = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["arenas"],
+    queryFn: async () => await getData(),
+  });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const responseData = await getData();
-        setData(responseData);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
-  }, []);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearch = (event: any) => {
+    setSearchTerm(event.target.value);
+  };
+
+  if (isLoading) return <SandboxPreview />;
+  if (isError) return <div>Error</div>;
+
+  const filteredArenas = arenas.filter(
+    (arena) =>
+      arena.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      arena.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      arena.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
-    <div className="flex flex-col mt-20 items-center justify-center w-full px-4 sm:px-6 lg:px-96">
+    <div className="flex flex-col mt-8 items-center justify-center w-full">
       <h1 className="text-2xl font-extrabold mb-2">Arenas</h1>
       <Category />
-      <Suspense fallback={<LoadingSkeleton />}>
-        <Arenas data={data} />
-      </Suspense>
+      <SearchInput searchTerm={searchTerm} handleSearch={handleSearch} />
+      <Arenas arenas={filteredArenas} />
     </div>
   );
 };

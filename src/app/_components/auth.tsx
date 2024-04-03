@@ -38,7 +38,7 @@ export function Auth() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="hidden sm:block">Login</Button>
+        <Button className="hidden sm:block ml-2">Login</Button>
       </DialogTrigger>
       <DialogContent className="p-8 sm:p-10">
         <Tabs defaultValue="account">

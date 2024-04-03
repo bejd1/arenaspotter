@@ -1,15 +1,12 @@
 "use client";
-import { ModeToggle } from "@/components/ModeToggle";
 import Link from "next/link";
 import React from "react";
-import { GiSoccerField } from "react-icons/gi";
-import { AiOutlineStar } from "react-icons/ai";
-import { Button } from "@/components/ui/button";
-import DropdownBurger from "@/components/dropdown-burger";
 import { Separator } from "@/components/ui/separator";
 import { Auth } from "./auth";
 import { useSession } from "next-auth/react";
 import DropdownImage from "@/components/dropdown-image";
+import { GiSoccerField } from "react-icons/gi";
+import NavIcons from "./navIcons";
 
 const Nav = () => {
   const { data: session } = useSession();
@@ -25,14 +22,10 @@ const Nav = () => {
         </Link>
         <div className="flex items-center justify-center gap-1 md:gap-4">
           <div className="flex items-center justify-center">
-            <Button variant={"outline"} size="icon">
-              <AiOutlineStar className="text-xl cursor-pointer" />
-            </Button>
-            <ModeToggle />
+            <NavIcons />
             <div>
               {!session?.user ? (
                 <div className="flex flex-row gap-2">
-                  <DropdownBurger />
                   <Auth />
                 </div>
               ) : (

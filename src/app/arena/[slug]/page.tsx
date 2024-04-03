@@ -30,7 +30,7 @@ const ArenaId = async ({ params }: { params: { slug: string } }) => {
   return (
     <div className="my-5 px-40 flex flex-col justyfy-center h-screen mt-8 ">
       <div className="flex items-center justify-center gap-4">
-        <img src={productData?.image} />
+        <img src={productData?.image} className="w-2/3" />
       </div>
       <div className="w-full h-0.5 bg-white my-4"></div>
       <div className="flex justify-between">

@@ -5,10 +5,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { AiOutlinePlus } from "react-icons/ai";
 import { Auth } from "@/app/_components/auth";
 import { signOut, useSession } from "next-auth/react";
-import { IoExitOutline } from "react-icons/io5";
+import { IoExitOutline, IoSettingsOutline } from "react-icons/io5";
+import { CiViewList } from "react-icons/ci";
 
 const DropdownImage = () => {
   const { data: session } = useSession();
@@ -34,11 +34,14 @@ const DropdownImage = () => {
         <DropdownMenuContent>
           <DropdownMenuItem className="cursor-pointer sm:hidden">
             <Auth />
-            fdssf
           </DropdownMenuItem>
           <DropdownMenuItem className="cursor-pointer flex justify-between">
-            <p>Add arena</p>
-            <AiOutlinePlus className="text-xl" />
+            <p>My arenas</p>
+            <CiViewList className="text-xl" />
+          </DropdownMenuItem>
+          <DropdownMenuItem className="cursor-pointer flex justify-between">
+            <p>Settings</p>
+            <IoSettingsOutline className="text-xl" />
           </DropdownMenuItem>
           <DropdownMenuItem className="cursor-pointer flex justify-between">
             <button onClick={() => signOut()}>Sign out</button>

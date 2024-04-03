@@ -25,14 +25,16 @@ const FilterData = () => {
       <Dialog>
         <DialogTrigger>
           More filters
-          {/* <Button></Button> */}
+          {/* <Button> </Button> */}
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>More filters</DialogTitle>
-            <DialogDescription>
-              <Label>Price</Label>
-              <Select>
+            <DialogDescription className="flex flex-col gap-4">
+              <Label>Price free/pay</Label>
+              <Label>Sort price</Label>
+              <Label>Hours</Label>
+              {/* <Select>
                 <SelectTrigger className="">
                   <SelectValue placeholder="Price" />
                 </SelectTrigger>
@@ -40,8 +42,8 @@ const FilterData = () => {
                   <SelectItem value="Free">Free</SelectItem>
                   <SelectItem value="Pay">Pay</SelectItem>
                 </SelectContent>
-              </Select>
-              <RadioGroup defaultValue="option-one">
+              </Select> */}
+              {/* <RadioGroup defaultValue="option-one">
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="option-one" id="option-one" />
                   <Label>Option One</Label>
@@ -50,9 +52,9 @@ const FilterData = () => {
                   <RadioGroupItem value="option-two" id="option-two" />
                   <Label>Option Two</Label>
                 </div>
-              </RadioGroup>
+              </RadioGroup> */}
               <Label>Cost</Label>
-              <div className="flex items-center space-x-2">
+              {/* <div className="flex items-center space-x-2">
                 <Checkbox id="terms" />
                 <label
                   htmlFor="terms"
@@ -67,10 +69,10 @@ const FilterData = () => {
                 >
                   Payment
                 </label>
-              </div>
+              </div> */}
             </DialogDescription>
           </DialogHeader>
-          <Button>Search</Button>
+          {/* <Button>Search</Button> */}
         </DialogContent>
       </Dialog>
     </div>
