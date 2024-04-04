@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -8,71 +8,114 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
+import { DatePicker } from "@/components/ui/dataPicker";
 
 const FilterData = () => {
+  const [priceRange, setPriceRange] = useState({ min: 0, max: 300 });
+  const [isShow, setIsShow] = useState(false);
+  const [selectedStartHour, setSelectedStartHour] = useState("");
+  const [selectedEndHour, setSelectedEndHour] = useState("");
+  const [endHourOptions, setEndHourOptions] = useState<string[]>([]);
+
+  const handlePriceChange = (event: any) => {
+    const { value } = event.target;
+    setPriceRange((prevRange) => ({ ...prevRange, max: parseInt(value) }));
+  };
+
+  const handleStartHourChange = (hour: string) => {
+    setSelectedStartHour(hour);
+  };
+
+  const handleEndHourChange = (hour: string) => {
+    setSelectedEndHour(hour);
+  };
+
+  // Generate hours with 30-minute intervals
+  const generateHours = () => {
+    const hours = [];
+    for (let hour = 0; hour < 24; hour++) {
+      for (let minute = 0; minute < 60; minute += 30) {
+        const formattedHour = `${hour < 10 ? "0" + hour : hour}:${
+          minute === 0 ? "00" : "30"
+        }`;
+        hours.push(formattedHour);
+      }
+    }
+    return hours;
+  };
+
+  useEffect(() => {
+    if (selectedStartHour) {
+      const startHourIndex = generateHours().findIndex(
+        (hour) => hour === selectedStartHour
+      );
+      setEndHourOptions(generateHours().slice(startHourIndex + 1));
+      setSelectedEndHour("");
+    }
+  }, [selectedStartHour]);
+
   return (
     <div>
       <Dialog>
-        <DialogTrigger>
-          More filters
-          {/* <Button> </Button> */}
-        </DialogTrigger>
+        <DialogTrigger>More filters</DialogTrigger>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>More filters</DialogTitle>
-            <DialogDescription className="flex flex-col gap-4">
-              <Label>Price free/pay</Label>
-              <Label>Sort price</Label>
-              <Label>Hours</Label>
-              {/* <Select>
-                <SelectTrigger className="">
-                  <SelectValue placeholder="Price" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Free">Free</SelectItem>
-                  <SelectItem value="Pay">Pay</SelectItem>
-                </SelectContent>
-              </Select> */}
-              {/* <RadioGroup defaultValue="option-one">
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="option-one" id="option-one" />
-                  <Label>Option One</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="option-two" id="option-two" />
-                  <Label>Option Two</Label>
-                </div>
-              </RadioGroup> */}
-              <Label>Cost</Label>
-              {/* <div className="flex items-center space-x-2">
-                <Checkbox id="terms" />
-                <label
-                  htmlFor="terms"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  Free
-                </label>
-                <Checkbox id="terms" />
-                <label
-                  htmlFor="terms"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  Payment
-                </label>
-              </div> */}
-            </DialogDescription>
+
+            <Label>Price</Label>
+            <div className="flex items-center space-x-2">
+              <Switch id="airplane-mode" onClick={() => setIsShow(!isShow)} />
+              <Label htmlFor="airplane-mode">Free</Label>
+            </div>
+            {isShow ? (
+              <div></div>
+            ) : (
+              <div>
+                <Label>Sort price</Label>
+                <Input
+                  type="range"
+                  min="0"
+                  max="300"
+                  value={priceRange.max}
+                  onChange={handlePriceChange}
+                />
+                <Label>
+                  Price range: {priceRange.min}$ - {priceRange.max}$
+                </Label>
+              </div>
+            )}
+            <Label>Date</Label>
+            <DatePicker />
+
+            <Label>Hours (Start)</Label>
+            <select
+              value={selectedStartHour}
+              onChange={(e) => handleStartHourChange(e.target.value)}
+            >
+              {generateHours().map((hour) => (
+                <option key={hour} value={hour}>
+                  {hour}
+                </option>
+              ))}
+            </select>
+            <Label>Hours (End)</Label>
+            <select
+              value={selectedEndHour}
+              onChange={(e) => handleEndHourChange(e.target.value)}
+              disabled={!selectedStartHour}
+            >
+              <option value="">Select</option>
+              {endHourOptions.map((hour) => (
+                <option key={hour} value={hour}>
+                  {hour}
+                </option>
+              ))}
+            </select>
           </DialogHeader>
-          {/* <Button>Search</Button> */}
+          <Button>Search</Button>
         </DialogContent>
       </Dialog>
     </div>

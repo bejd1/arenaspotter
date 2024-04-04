@@ -5,13 +5,19 @@ import Link from "next/link";
 import { BiFootball, BiSolidBasketball } from "react-icons/bi";
 import { PiVolleyball } from "react-icons/pi";
 import FilterData from "./filterData";
+import SearchInput from "./searchInput";
 
-const Category = () => {
+interface CategoryProps {
+  searchTerm: string;
+  handleSearch: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+const Category = ({ searchTerm, handleSearch }: CategoryProps) => {
   const searchParams = useSearchParams();
   const category = searchParams.get("category");
 
   return (
-    <div className="flex flex-row justify-between w-full px-4 sm:px-6 lg:px-48">
+    <div className="flex flex-row justify-between items-center w-full my-4 sm:px-6 mx-48 lg:px-48">
       <div className="flex gap-2 mb-4">
         <Link href={"?category=football"}>
           <Button>
@@ -29,38 +35,10 @@ const Category = () => {
           </Button>
         </Link>
       </div>
+      <SearchInput searchTerm={searchTerm} handleSearch={handleSearch} />
       <FilterData />
     </div>
   );
 };
 
 export default Category;
-// const searchParams = useSearchParams();
-// const cities = searchParams.get("cities");
-// const category = searchParams.get("category");
-
-// const buildHref = (newCities: any, newCategory: any) => {
-//   let href = "/?";
-//   if (newCities) href += `cities=${newCities}&`;
-//   if (newCategory) href += `category=${newCategory}&`;
-//   return href.slice(0, -1); // Remove trailing "&" or "?"
-// };
-
-// <Button>
-// <Link href={buildHref("Szczecinek", category)}>Szczecinek</Link>
-// </Button>
-// <Button>
-// <Link href={buildHref("Poznan", category)}>Poznan</Link>
-// </Button>
-// <Button>
-// <Link href={buildHref("Warszawa", category)}>Warszawa</Link>
-// </Button>
-// <Button>
-// <Link href="/">Clear</Link>
-// </Button>
-// <Button>
-// <Link href={buildHref(cities, "free")}>Free</Link>
-// </Button>
-// <Button>
-// <Link href={buildHref(cities, "paid")}>Paid</Link>
-// </Button>

@@ -23,7 +23,7 @@ export async function getData(): Promise<PostT[]> {
     football: item.football,
     basketball: item.basketball,
     netball: item.netball,
-    cost: item.cost,
+    cost: item.cost || 0,
   }));
 }
 

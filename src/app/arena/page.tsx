@@ -2,13 +2,17 @@
 import React, { useState } from "react";
 import { getData } from "@/actions/post";
 import Category from "../_components/category";
-import SandboxPreview from "../_components/loading";
 import Arenas from "../_components/arenas";
 import { useQuery } from "@tanstack/react-query";
-import { Input } from "@/components/ui/input";
-import SearchInput from "../_components/searchInput";
+import Loading from "../_components/loading";
 
-const Arena = () => {
+const Arena = ({
+  searchParams,
+}: {
+  searchParams?: {
+    category?: string;
+  };
+}) => {
   const {
     data: arenas = [],
     isLoading,
@@ -20,11 +24,11 @@ const Arena = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  const handleSearch = (event: any) => {
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
 
-  if (isLoading) return <SandboxPreview />;
+  if (isLoading) return <Loading />;
   if (isError) return <div>Error</div>;
 
   const filteredArenas = arenas.filter(
@@ -34,11 +38,20 @@ const Arena = () => {
       arena.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  if (filteredArenas.length === 0) {
+    return (
+      <div className="flex flex-col mt-8 items-center justify-center w-full">
+        <h1 className="text-3xl font-extrabold mb-2">Arenas</h1>
+        <Category searchTerm={searchTerm} handleSearch={handleSearch} />
+        <div>Doesn't exist: {searchTerm}</div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col mt-8 items-center justify-center w-full">
-      <h1 className="text-2xl font-extrabold mb-2">Arenas</h1>
-      <Category />
-      <SearchInput searchTerm={searchTerm} handleSearch={handleSearch} />
+      <h1 className="text-3xl font-extrabold mb-2">Arenas</h1>
+      <Category searchTerm={searchTerm} handleSearch={handleSearch} />
       <Arenas arenas={filteredArenas} />
     </div>
   );

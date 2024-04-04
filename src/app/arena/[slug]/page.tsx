@@ -37,22 +37,12 @@ const ArenaId = async ({ params }: { params: { slug: string } }) => {
         <div>
           <h1 className="text-3xl font-extrabold">{productData?.name}</h1>
           <div className="flex my-2 gap-2">
-            {productData?.netball && <Badge>Netball</Badge>}
-            {productData?.football && <Badge>Football</Badge>}
-            {productData?.basketball && <Badge>Basketball</Badge>}
+            {!productData?.netball && <Badge>Netball</Badge>}
+            {!productData?.football && <Badge>Football</Badge>}
+            {!productData?.basketball && <Badge>Basketball</Badge>}
           </div>
         </div>
         <div className="p-2 rounded-md">
-          {/* <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <AiFillHeart className="text-xl hover:text-red-700 cursor-pointer" />
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Add to library</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider> */}
           <AiFillStar className="text-xl hover:text-red-600 cursor-pointer" />
         </div>
       </div>
@@ -86,10 +76,22 @@ const ArenaId = async ({ params }: { params: { slug: string } }) => {
         {/* Price */}
         <div className="flex flex-col">
           <p className="text-2xl font-bold">Price</p>
+          <p>
+            {productData?.cost === null ? (
+              <p>Free</p>
+            ) : (
+              `${productData?.cost}$/h`
+            )}
+          </p>
         </div>
         {/* More */}
         <div className="flex flex-col">
           <p className="text-2xl font-bold">More</p>
+          <p>Max people: {productData?.people}</p>
+          <p>Toilet: </p>
+          <p>Parking:</p>
+          <p>Dressing room:</p>
+          <p>Lighting:</p>
         </div>
       </div>
       <div className="flex flex-col">
