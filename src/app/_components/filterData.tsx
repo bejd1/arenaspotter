@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -20,7 +19,7 @@ const FilterData = () => {
   const [selectedEndHour, setSelectedEndHour] = useState("");
   const [endHourOptions, setEndHourOptions] = useState<string[]>([]);
 
-  const handlePriceChange = (event: any) => {
+  const handlePriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     setPriceRange((prevRange) => ({ ...prevRange, max: parseInt(value) }));
   };
@@ -33,7 +32,6 @@ const FilterData = () => {
     setSelectedEndHour(hour);
   };
 
-  // Generate hours with 30-minute intervals
   const generateHours = () => {
     const hours = [];
     for (let hour = 0; hour < 24; hour++) {

@@ -18,12 +18,11 @@ export async function getData(): Promise<PostT[]> {
     image: item.image,
     image2: item.image2,
     image3: item.image3,
-    payment: item.payment,
     people: item.people,
+    cost: item.cost,
     football: item.football,
     basketball: item.basketball,
     netball: item.netball,
-    cost: item.cost || 0,
   }));
 }
 
@@ -36,13 +35,11 @@ export async function createPost(formData: FormData) {
     const image = formData.get("image") as string;
     const image2 = formData.get("image2") as string;
     const image3 = formData.get("image3") as string;
-    const payment = formData.get("payment") as string;
     const people = parseInt(formData.get("people") as string);
     const cost = parseInt(formData.get("cost") as string);
-    // Assuming 'terms' checkbox values are boolean indicating whether selected or not
-    const football = formData.has("football");
-    const basketball = formData.has("basketball");
-    const netball = formData.has("netball");
+    const football = formData.get("football") as string;
+    const basketball = formData.get("basketball") as string;
+    const netball = formData.get("netball") as string;
 
     await prisma.post.create({
       data: {
@@ -53,7 +50,6 @@ export async function createPost(formData: FormData) {
         image: image,
         image2: image2,
         image3: image3,
-        payment: payment,
         people: people,
         cost: cost,
         football: football,
@@ -62,10 +58,8 @@ export async function createPost(formData: FormData) {
       },
     });
 
-    // Assuming revalidatePath is correct, although typically used with Next.js ISR
     revalidatePath("/");
   } catch (error) {
-    // Handle errors appropriately, for example logging or throwing
     console.error("Error creating post:", error);
     throw error;
   }

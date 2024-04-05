@@ -3,7 +3,12 @@ import { CustomInput } from "@/components/ui/customInput";
 import React, { useState } from "react";
 import { BsSearch } from "react-icons/bs";
 
-const SearchInput = ({ searchTerm, handleSearch }: any) => {
+interface SearchInputI {
+  searchTerm: string;
+  handleSearch: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+const SearchInput = ({ searchTerm, handleSearch }: SearchInputI) => {
   const [isInputClicked, setIsInputClicked] = useState(false);
 
   return (

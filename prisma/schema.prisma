@@ -9,20 +9,19 @@ generator client {
 
 
 model Post {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  city      String
-  address   String
-  email     String
-  image     String
-  image2    String
-  image3    String
-  payment   String
-  people    Int
-  football  Boolean
-  basketball Boolean
-  netball   Boolean
-  cost      Int?
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  city        String
+  address     String
+  email       String
+  image       String
+  image2      String
+  image3      String
+  people      Int
+  football    String?
+  basketball  String?
+  netball     String?
+  cost        Int
 }
 
 enum Role {

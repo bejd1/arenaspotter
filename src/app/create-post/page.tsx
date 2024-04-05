@@ -4,15 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import React, { useRef, useState } from "react";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 
 const CreatePost = () => {
   const ref = useRef<HTMLFormElement>(null);
@@ -54,42 +46,24 @@ const CreatePost = () => {
           <Input type="text" name="image2" placeholder="Image 2" required />
           <Label>Image 3</Label>
           <Input type="text" name="image3" placeholder="Image 3" required />
-          <Label>Payment</Label>
-          <select name="payment" value={payment} onChange={handlePaymentChange}>
-            <option value="Free">Free</option>
-            <option value="Paid">Paid</option>
-          </select>
-          {payment === "Paid" && (
-            <>
-              <Label>Cost $</Label>
-              <Input type="number" name="cost" placeholder="Cost/h" />
-            </>
-          )}
+          <Label>Cost $</Label>
+          <Input
+            type="number"
+            name="cost"
+            placeholder="Cost/h"
+            defaultValue={0}
+            required
+          />
           <Label>People</Label>
           <Input type="number" name="people" placeholder="People" required />
           <Label>Category</Label>
           <div className="flex items-center space-x-2">
-            <Checkbox id="terms" />
-            <label
-              htmlFor="terms"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              Football
-            </label>
-            <Checkbox id="terms" />
-            <label
-              htmlFor="terms"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              Basketball
-            </label>
-            <Checkbox id="terms" />
-            <label
-              htmlFor="terms"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              Netball
-            </label>
+            <input type="checkbox" id="football" name="football" />
+            <label>Football</label>
+            <input type="checkbox" id="basketball" name="basketball" />
+            <label>Basketball</label>
+            <input type="checkbox" id="netball" name="netball" />
+            <label>Netball</label>
           </div>
           <Button variant="default" type="submit">
             Create post

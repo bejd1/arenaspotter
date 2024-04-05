@@ -6,13 +6,9 @@ import Arenas from "../_components/arenas";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../_components/loading";
 
-const Arena = ({
-  searchParams,
-}: {
-  searchParams?: {
-    category?: string;
-  };
-}) => {
+const Arena = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+
   const {
     data: arenas = [],
     isLoading,
@@ -21,8 +17,6 @@ const Arena = ({
     queryKey: ["arenas"],
     queryFn: async () => await getData(),
   });
-
-  const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -38,21 +32,11 @@ const Arena = ({
       arena.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  if (filteredArenas.length === 0) {
-    return (
-      <div className="flex flex-col mt-8 items-center justify-center w-full">
-        <h1 className="text-3xl font-extrabold mb-2">Arenas</h1>
-        <Category searchTerm={searchTerm} handleSearch={handleSearch} />
-        <div>Doesn't exist: {searchTerm}</div>
-      </div>
-    );
-  }
-
   return (
     <div className="flex flex-col mt-8 items-center justify-center w-full">
       <h1 className="text-3xl font-extrabold mb-2">Arenas</h1>
       <Category searchTerm={searchTerm} handleSearch={handleSearch} />
-      <Arenas arenas={filteredArenas} />
+      <Arenas arenas={filteredArenas} searchTerm={searchTerm} />
     </div>
   );
 };
