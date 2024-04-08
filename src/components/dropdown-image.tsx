@@ -9,6 +9,7 @@ import { Auth } from "@/app/_components/auth";
 import { signOut, useSession } from "next-auth/react";
 import { IoExitOutline, IoSettingsOutline } from "react-icons/io5";
 import { CiViewList } from "react-icons/ci";
+import Link from "next/link";
 
 const DropdownImage = () => {
   const { data: session } = useSession();
@@ -18,7 +19,7 @@ const DropdownImage = () => {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <div>
-            {session?.user ? (
+            {!session?.user ? (
               <div className="flex items-center justify-center w-8 h-8 ml-2 bg-blue-600 text-white rounded-full cursor-pointer">
                 {session?.user?.name?.charAt(0).toLocaleUpperCase()}
               </div>
@@ -35,14 +36,18 @@ const DropdownImage = () => {
           <DropdownMenuItem className="cursor-pointer sm:hidden">
             <Auth />
           </DropdownMenuItem>
-          <DropdownMenuItem className="cursor-pointer flex justify-between">
-            <p>My arenas</p>
-            <CiViewList className="text-xl" />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="cursor-pointer flex justify-between">
-            <p>Settings</p>
-            <IoSettingsOutline className="text-xl" />
-          </DropdownMenuItem>
+          <Link href="/my-arenas">
+            <DropdownMenuItem className="cursor-pointer flex justify-between">
+              <p>My arenas</p>
+              <CiViewList className="text-xl" />
+            </DropdownMenuItem>
+          </Link>
+          <Link href="/settings">
+            <DropdownMenuItem className="cursor-pointer flex justify-between">
+              <p>Settings</p>
+              <IoSettingsOutline className="text-xl" />
+            </DropdownMenuItem>
+          </Link>
           <DropdownMenuItem className="cursor-pointer flex justify-between">
             <button onClick={() => signOut()}>Sign out</button>
             <IoExitOutline className="text-xl" />

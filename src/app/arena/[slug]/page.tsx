@@ -2,6 +2,7 @@ import React from "react";
 import { Badge } from "@/components/ui/badge";
 import { AiFillStar } from "react-icons/ai";
 import prisma from "@/app/utlis/db";
+import { ReportArena } from "@/app/report-arena/page";
 
 interface openingHoursI {
   day: string;
@@ -98,8 +99,10 @@ const ArenaId = async ({ params }: { params: { slug: string } }) => {
         <p className="text-2xl font-bold">Location</p>
         <img src={urlMap} className="mb-20" />
       </div>
+      <div className="absolute right-32">
+        <ReportArena id={params.slug} arenaName={productData?.name} />
+      </div>
     </div>
   );
 };
-
 export default ArenaId;

@@ -1,5 +1,5 @@
 "use client";
-import { createPost } from "@/actions/post";
+import { createArena } from "@/actions/post";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import React, { useRef, useState } from "react";
@@ -15,7 +15,7 @@ const CreatePost = () => {
 
   const handleCreateSubmit = async (formData: FormData) => {
     try {
-      await createPost(formData);
+      await createArena(formData);
       ref.current?.reset();
     } catch (error) {
       console.error("Edit function failed", error);

@@ -1,4 +1,3 @@
-"use client";
 import Arena from "./arena/page";
 
 const ParentComponent = () => {

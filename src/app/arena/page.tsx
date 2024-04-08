@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { getData } from "@/actions/post";
+import { getArena } from "@/actions/post";
 import Category from "../_components/category";
 import Arenas from "../_components/arenas";
 import { useQuery } from "@tanstack/react-query";
@@ -15,7 +15,7 @@ const Arena = () => {
     isError,
   } = useQuery({
     queryKey: ["arenas"],
-    queryFn: async () => await getData(),
+    queryFn: async () => await getArena(),
   });
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {

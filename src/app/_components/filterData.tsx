@@ -58,7 +58,9 @@ const FilterData = () => {
   return (
     <div>
       <Dialog>
-        <DialogTrigger>More filters</DialogTrigger>
+        <DialogTrigger className="mb-4 bg-white text-black font-medium px-4 py-2 rounded-md">
+          More filters
+        </DialogTrigger>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>More filters</DialogTitle>

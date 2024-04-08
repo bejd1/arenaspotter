@@ -72,6 +72,11 @@ const Arenas = ({
     setData([...filtered()].filter((a) => a.cost <= value));
   };
 
+  const restartForm = () => {
+    setValue(0);
+    setData(filtered());
+  };
+
   return (
     <div className="flex flex-col">
       <div className="flex items-center justify-center my-4 gap-4">
@@ -81,6 +86,7 @@ const Arenas = ({
         <Button onClick={sortPplDesc}>Sort ppl desc</Button>
         <Button onClick={sortFree}>Free</Button>
         <Button onClick={sortPayment}>Pay only</Button>
+        <Button onClick={restartForm}>Restart</Button>
         <form
           onSubmit={filterCost}
           className="flex flex-row items-center justify-center gap-2"
@@ -118,8 +124,8 @@ const Arenas = ({
             } = arena;
 
             return (
-              <Link key={id} href={`/arena/${id}`}>
-                <Card className="cursor-pointer relative">
+              <Card key={id} className="cursor-pointer relative">
+                <Link href={`/arena/${id}`}>
                   <img
                     src={image}
                     className="w-[320px] min-h-[200px] max-h-[201px]"
@@ -142,11 +148,14 @@ const Arenas = ({
                       <div>{people}</div>
                     </CardContent>
                   </CardHeader>
-                  <CardContent className="absolute flex items-center justify-center bg-slate-900 text-white top-1 right-1 p-2 rounded-md">
-                    <AiFillStar className="text-2xl hover:text-red-600" />
-                  </CardContent>
-                </Card>
-              </Link>
+                </Link>
+                <CardContent className="absolute flex items-center justify-center bg-slate-900 text-white top-1 right-1 p-2 rounded-md z-10">
+                  <AiFillStar
+                    onClick={() => console.log("Add to fav")}
+                    className="text-2xl hover:text-red-600 z-10"
+                  />
+                </CardContent>
+              </Card>
             );
           })
         )}

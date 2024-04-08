@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 
 const prisma = new PrismaClient();
 
-export async function getData(): Promise<PostT[]> {
+export async function getArena(): Promise<PostT[]> {
   const data = await prisma.post.findMany();
 
   return data.map((item) => ({
@@ -26,7 +26,16 @@ export async function getData(): Promise<PostT[]> {
   }));
 }
 
-export async function createPost(formData: FormData) {
+export async function getArenaById(id: string): Promise<PostT | null> {
+  const post = await prisma.post.findUnique({
+    where: {
+      id: id,
+    },
+  });
+  return post;
+}
+
+export async function createArena(formData: FormData) {
   try {
     const name = formData.get("name") as string;
     const city = formData.get("city") as string;
@@ -65,7 +74,7 @@ export async function createPost(formData: FormData) {
   }
 }
 
-export async function deletePost(formData: FormData) {
+export async function deleteArena(formData: FormData) {
   try {
     const id = formData.get("id") as string;
 

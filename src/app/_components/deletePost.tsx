@@ -1,11 +1,11 @@
-import { deletePost } from "@/actions/post";
+import { deleteArena } from "@/actions/post";
 import { Button } from "@/components/ui/button";
 import React from "react";
 
 const DeletePost = ({ id }: { id: string }) => {
   const handleDeleteSubmit = async (formData: FormData) => {
     try {
-      await deletePost(formData);
+      await deleteArena(formData);
     } catch (error) {
       console.error("Edit function failed", error);
     }
