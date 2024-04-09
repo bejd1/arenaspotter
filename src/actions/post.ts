@@ -15,6 +15,7 @@ export async function getArena(): Promise<PostT[]> {
     city: item.city,
     address: item.address,
     email: item.email,
+    author: item.author,
     image: item.image,
     image2: item.image2,
     image3: item.image3,
@@ -35,6 +36,19 @@ export async function getArenaById(id: string): Promise<PostT | null> {
   return post;
 }
 
+export async function getArenaByAuthor(
+  author: string
+): Promise<PostT[] | null> {
+  const posts = await prisma.post.findMany({
+    where: {
+      author: {
+        equals: author,
+      },
+    },
+  });
+  return posts;
+}
+
 export async function createArena(formData: FormData) {
   try {
     const name = formData.get("name") as string;
@@ -49,6 +63,7 @@ export async function createArena(formData: FormData) {
     const football = formData.get("football") as string;
     const basketball = formData.get("basketball") as string;
     const netball = formData.get("netball") as string;
+    const author = formData.get("author") as string;
 
     await prisma.post.create({
       data: {
@@ -56,6 +71,7 @@ export async function createArena(formData: FormData) {
         city: city,
         address: address,
         email: email,
+        author: author,
         image: image,
         image2: image2,
         image3: image3,
@@ -67,10 +83,54 @@ export async function createArena(formData: FormData) {
       },
     });
 
-    revalidatePath("/");
+    revalidatePath("/arena");
   } catch (error) {
     console.error("Error creating post:", error);
     throw error;
+  }
+}
+
+export async function edit(formData: FormData) {
+  try {
+    const id = formData.get("inputId") as string;
+    const name = formData.get("name") as string;
+    const city = formData.get("city") as string;
+    const address = formData.get("address") as string;
+    const email = formData.get("email") as string;
+    const image = formData.get("image") as string;
+    const image2 = formData.get("image2") as string;
+    const image3 = formData.get("image3") as string;
+    const people = parseInt(formData.get("people") as string);
+    const cost = parseInt(formData.get("cost") as string);
+    const football = formData.get("football") as string;
+    const basketball = formData.get("basketball") as string;
+    const netball = formData.get("netball") as string;
+    const author = formData.get("author") as string;
+
+    await prisma.post.update({
+      where: {
+        id: id,
+      },
+      data: {
+        name: name,
+        city: city,
+        address: address,
+        email: email,
+        author: author,
+        image: image,
+        image2: image2,
+        image3: image3,
+        people: people,
+        cost: cost,
+        football: football,
+        basketball: basketball,
+        netball: netball,
+      },
+    });
+
+    revalidatePath("/arena");
+  } catch (error) {
+    console.error("Error while editing the product:", error);
   }
 }
 

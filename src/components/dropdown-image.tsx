@@ -8,7 +8,9 @@ import {
 import { Auth } from "@/app/_components/auth";
 import { signOut, useSession } from "next-auth/react";
 import { IoExitOutline, IoSettingsOutline } from "react-icons/io5";
+import { GrUserAdmin } from "react-icons/gr";
 import { CiViewList } from "react-icons/ci";
+import { MdReportGmailerrorred } from "react-icons/md";
 import Link from "next/link";
 
 const DropdownImage = () => {
@@ -37,18 +39,30 @@ const DropdownImage = () => {
             <Auth />
           </DropdownMenuItem>
           <Link href="/my-arenas">
-            <DropdownMenuItem className="cursor-pointer flex justify-between">
+            <DropdownMenuItem className="cursor-pointer flex gap-2 justify-between">
               <p>My arenas</p>
               <CiViewList className="text-xl" />
             </DropdownMenuItem>
           </Link>
           <Link href="/settings">
-            <DropdownMenuItem className="cursor-pointer flex justify-between">
+            <DropdownMenuItem className="cursor-pointer flex gap-2 justify-between">
               <p>Settings</p>
               <IoSettingsOutline className="text-xl" />
             </DropdownMenuItem>
           </Link>
-          <DropdownMenuItem className="cursor-pointer flex justify-between">
+          <Link href="/panel-admin">
+            <DropdownMenuItem className="cursor-pointer flex gap-2 justify-between">
+              <p>Panel admin</p>
+              <GrUserAdmin className="text-lg" />
+            </DropdownMenuItem>
+          </Link>
+          <Link href="/reports">
+            <DropdownMenuItem className="cursor-pointer flex gap-2 justify-between">
+              <p>Reports</p>
+              <MdReportGmailerrorred className="text-xl" />
+            </DropdownMenuItem>
+          </Link>
+          <DropdownMenuItem className="cursor-pointer flex gap-2 justify-between">
             <button onClick={() => signOut()}>Sign out</button>
             <IoExitOutline className="text-xl" />
           </DropdownMenuItem>

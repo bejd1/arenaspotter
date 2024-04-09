@@ -22,6 +22,7 @@ model Post {
   basketball  String?
   netball     String?
   cost        Int
+  author      String
 }
 
 enum Role {
@@ -36,4 +37,13 @@ model User {
   image         String?
   password      String?
   role          Role     @default(USER)
+}
+
+model ReportArena {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  arenaId       String
+  email         String  
+  title         String
+  message       String
 }

@@ -26,8 +26,8 @@ export function Auth() {
   const [email, setEmail] = useState<undefined | string>();
   const [password, setPassword] = useState<undefined | string>();
 
-  function handleSubmit(e: FormEvent) {
-    e.preventDefault();
+  function handleSubmit(event: FormEvent) {
+    event.preventDefault();
     signIn("credentials", {
       email: email,
       password: password,

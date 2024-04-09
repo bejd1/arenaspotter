@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,6 +12,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useSession } from "next-auth/react";
+import { createReport } from "@/actions/report";
 
 export function ReportArena({
   id,
@@ -20,14 +22,21 @@ export function ReportArena({
   id: string;
   arenaName: string | undefined;
 }) {
-  const [name, setName] = useState("");
+  const { data: session } = useSession();
+  const [email, setEmail] = useState(session?.user?.email?.toString());
+  const ref = useRef<HTMLFormElement>(null);
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
+    setEmail(event.target.value);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleCreateSubmit = async (formData: FormData) => {
+    try {
+      await createReport(formData);
+      ref.current?.reset();
+    } catch (error) {
+      console.error("Edit function failed", error);
+    }
   };
 
   return (
@@ -40,26 +49,53 @@ export function ReportArena({
           <DialogTitle>Report {arenaName}</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          <form onSubmit={handleSubmit}>
-            <input type="hidden" name="inputId" value={id} />
+          <form
+            ref={ref}
+            onSubmit={async (e) => {
+              e.preventDefault();
+              await handleCreateSubmit(
+                new FormData(e.target as HTMLFormElement)
+              );
+            }}
+          >
+            <input name="arenaId" type="hidden" value={id} className="mb-2" />
+            <input
+              name="name"
+              type="hidden"
+              value={arenaName}
+              className="mb-2"
+            />
+            <input
+              name="email"
+              type="hidden"
+              value={session?.user?.email?.toString()}
+              className="mb-2"
+              onChange={handleNameChange}
+            />
             <Label htmlFor="name" className="text-right">
-              Your email
+              Title
             </Label>
             <Input
-              id="Email"
-              value={id}
-              onChange={handleNameChange}
+              id="title"
+              name="title"
+              placeholder="Title"
               className="col-span-3"
+              required
             />
             <Label htmlFor="username" className="text-right">
-              Problem
+              Message
             </Label>
-            <Textarea />
+            <Textarea
+              id="message"
+              name="message"
+              placeholder="Message"
+              required
+            />
+            <DialogFooter className="mt-4">
+              <Button type="submit">Report</Button>
+            </DialogFooter>
           </form>
         </div>
-        <DialogFooter>
-          <Button type="submit">Report</Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

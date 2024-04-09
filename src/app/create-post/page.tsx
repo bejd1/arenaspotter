@@ -2,16 +2,14 @@
 import { createArena } from "@/actions/post";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
+import { useSession } from "next-auth/react";
 
 const CreatePost = () => {
   const ref = useRef<HTMLFormElement>(null);
-  const [payment, setPayment] = useState<string>("Free");
-  const handlePaymentChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setPayment(event.target.value);
-  };
+  const { data: session } = useSession();
 
   const handleCreateSubmit = async (formData: FormData) => {
     try {
@@ -33,6 +31,14 @@ const CreatePost = () => {
           }}
           className="flex flex-col gap-4 mt-4"
         >
+          <Label>author</Label>
+          <Input
+            type="text"
+            name="author"
+            value={session?.user?.email?.toString()}
+            placeholder="Email"
+            required
+          />
           <Label>Name</Label>
           <Input type="text" name="name" placeholder="Name" required />
           <Label>Adress</Label>

@@ -1,36 +1,21 @@
 "use server";
 
-import { PrismaClient } from "@prisma/client";
+import * as z from "zod";
+import { LoginSchema } from "@/schemas";
 import { signIn } from "next-auth/react";
 
-const prisma = new PrismaClient();
+export const login = async (values: z.infer<typeof LoginSchema>) => {
+  const validatedFields = LoginSchema.safeParse(values);
 
-export const login = async (formData: FormData) => {
+  if (!validatedFields.success) {
+    return { error: "Invalid fields" };
+  }
+  const { email, password } = validatedFields.data;
+
   try {
-    const password = formData.get("password") as string;
-    const email = formData.get("email") as string;
-
-    console.log(password, email);
-
-    const existingUser = await prisma.user.findUnique({
-      where: {
-        email: email,
-      },
-    });
-
-    if (!existingUser) {
-      return { error: "User not found" };
-    }
-
-    const bcrypt = require("bcrypt");
-    const passwordMatch = await bcrypt.compare(password, existingUser.password);
-
-    if (!passwordMatch) {
-      return { error: "Invalid email or password" };
-    }
     await signIn("credentials", {
-      email: email,
-      password: password,
+      email,
+      password,
     });
   } catch (error) {
     if (error) {
@@ -42,8 +27,7 @@ export const login = async (formData: FormData) => {
       }
     }
 
-    console.error("Error during login:", error);
-    return { error: "Something went wrong!" };
+    throw error;
   }
   return { success: "Fine" };
 };

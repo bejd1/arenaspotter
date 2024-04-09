@@ -19,22 +19,22 @@ const Category = ({ searchTerm, handleSearch }: CategoryPropsI) => {
   return (
     <div className="flex flex-row justify-between items-center w-full my-4 sm:px-6 mx-48 lg:px-48">
       <div className="flex gap-2 mb-4">
-        <Link href={"/"}>
+        <Link href={"/arena"}>
           <Button variant={category === null ? "secondary" : "default"}>
             All
           </Button>
         </Link>
-        <Link href={`/?category=football`}>
+        <Link href={`/arena/?category=football`}>
           <Button variant={category === "football" ? "secondary" : "default"}>
             <BiFootball className="text-xl" />
           </Button>
         </Link>
-        <Link href={`/?category=basketball`}>
+        <Link href={`/arena/?category=basketball`}>
           <Button variant={category === "basketball" ? "secondary" : "default"}>
             <BiSolidBasketball className="text-xl" />
           </Button>
         </Link>
-        <Link href={`/?category=netball`}>
+        <Link href={`/arena/?category=netball`}>
           <Button variant={category === "netball" ? "secondary" : "default"}>
             <PiVolleyball className="text-xl" />
           </Button>

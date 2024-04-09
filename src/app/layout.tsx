@@ -5,7 +5,7 @@ import "./globals.css";
 import favicon from "./favicon.ico";
 import Nav from "./_components/nav";
 import AuthProvider from "./context/AuthProvider";
-import Provider from "./utlis/provider";
+import QueryProvider from "./utlis/provider";
 
 const inter = Inter({ subsets: ["latin"] });
 const myFavicon = favicon.src;
@@ -26,7 +26,7 @@ export default function RootLayout({
         <link rel="icon" href={myFavicon} />
       </head>
       <body className={inter.className}>
-        <Provider>
+        <QueryProvider>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -40,7 +40,7 @@ export default function RootLayout({
               </div>
             </AuthProvider>
           </ThemeProvider>
-        </Provider>
+        </QueryProvider>
       </body>
     </html>
   );

@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -9,57 +10,69 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { getArenaByAuthor } from "@/actions/post";
+import { PostT } from "@/types/types";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "../_components/loading";
+import EditPost from "../_components/editModal";
 
 const MyArenas = () => {
+  const { data: session } = useSession();
+  const author = session?.user?.email;
+
+  const {
+    data: arenas = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["arenas"],
+    queryFn: async () => await getArenaByAuthor(author as string),
+  });
+
+  if (isLoading) return <Loading />;
+  if (isError) return <div>Error</div>;
+
   return (
     <div className="flex flex-col justify-between px-4 sm:px-6 lg:px-20 py-2">
       <h2 className="text-3xl mt-12 mb-8">My arenas</h2>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[100px]">Name</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Method</TableHead>
-            <TableHead className="text-right">Edit</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          <TableRow>
-            <TableCell className="font-medium">
-              <Link href={"/arena/66101025b8b0a9aafce6219e"}>Orlik 2000</Link>
-            </TableCell>
-            <TableCell>Paid</TableCell>
-            <TableCell>Credit Card</TableCell>
-            <TableCell className="text-right">
-              <Button>Edit</Button>
-            </TableCell>
-          </TableRow>
-        </TableBody>
-        <TableBody>
-          <TableRow>
-            <TableCell className="font-medium">
-              <Link href={"/arena/6610105eb8b0a9aafce621a1"}>Orlik Krakov</Link>
-            </TableCell>
-            <TableCell>Paid</TableCell>
-            <TableCell>Credit Card</TableCell>
-            <TableCell className="text-right">
-              <Button>Edit</Button>
-            </TableCell>
-          </TableRow>
-        </TableBody>
-        <TableBody>
-          <TableRow>
-            <TableCell className="font-medium">
-              <Link href={"/arena/6610105eb8b0a9aafce621a1"}>Orlik Krakov</Link>
-            </TableCell>
-            <TableCell>Paid</TableCell>
-            <TableCell>Credit Card</TableCell>
-            <TableCell className="text-right">
-              <Button>Edit</Button>
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
+      {arenas?.length !== 0 ? (
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>City</TableHead>
+              <TableHead>Adress</TableHead>
+              <TableHead>Cost</TableHead>
+              <TableHead className="text-right">
+                <p>Edit/Delete</p>
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {arenas &&
+              arenas.map((post) => (
+                <TableRow key={post.id}>
+                  <TableCell className="font-medium">
+                    <Link href={`/arena/${post.id}`}>{post.name}</Link>
+                  </TableCell>
+                  <TableCell>{post.city}</TableCell>
+                  <TableCell>{post.address}</TableCell>
+                  <TableCell>{post.cost}$/h</TableCell>
+
+                  <TableCell className="text-right">
+                    <div className="flex justify-end gap-1">
+                      <EditPost post={post} />
+                      <Button>Delete</Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      ) : (
+        <div>Empty</div>
+      )}
     </div>
   );
 };
