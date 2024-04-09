@@ -2,7 +2,7 @@ import React from "react";
 import { Badge } from "@/components/ui/badge";
 import { AiFillStar } from "react-icons/ai";
 import prisma from "@/app/utlis/db";
-import { ReportArena } from "@/app/report-arena/page";
+import ReportModal from "@/app/_components/reportModal";
 
 interface openingHoursI {
   day: string;
@@ -100,7 +100,7 @@ const ArenaId = async ({ params }: { params: { slug: string } }) => {
         <img src={urlMap} className="mb-20" />
       </div>
       <div className="absolute right-32">
-        <ReportArena id={params.slug} arenaName={productData?.name} />
+        <ReportModal id={params.slug} arenaName={productData?.name} />
       </div>
     </div>
   );

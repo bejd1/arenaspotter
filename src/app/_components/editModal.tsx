@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import Modal from "@mui/material/Modal";
 import { useState } from "react";
 import { PostT } from "@/types/types";
+import { BiPencil } from "react-icons/bi";
 
 export default function EditPost({ post }: { post: PostT }) {
   const [open, setOpen] = useState(false);
@@ -15,7 +16,9 @@ export default function EditPost({ post }: { post: PostT }) {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Edit</Button>
+      <Button variant={"outline"} onClick={handleOpen}>
+        <BiPencil />
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -24,7 +27,7 @@ export default function EditPost({ post }: { post: PostT }) {
         className="flex items-center justify-center"
       >
         <Card className="flex flex-col my-8 w-[600px] px-32 py-8">
-          <h2 className="text-2xl font-bold text-center">Create new arena</h2>
+          <h2 className="text-2xl font-bold text-center">Edit arena</h2>
           <form
             onSubmit={async (e) => {
               e.preventDefault();

@@ -107,24 +107,15 @@ const Arenas = ({
           <div>Doesn't exist: {searchTerm}</div>
         ) : (
           data.map((arena) => {
-            const {
-              id,
-              name,
-              city,
-              address,
-              email,
-              image,
-              image2,
-              image3,
-              people,
-              cost,
-              football,
-              basketball,
-              netball,
-            } = arena;
+            const { id, name, city, image, people, cost, status } = arena;
 
             return (
-              <Card key={id} className="cursor-pointer relative">
+              <Card
+                key={id}
+                className={`cursor-pointer relative ${
+                  status !== "Pending" ? "hidden" : "block"
+                }`}
+              >
                 <Link href={`/arena/${id}`}>
                   <img
                     src={image}

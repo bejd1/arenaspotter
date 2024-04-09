@@ -1,11 +1,18 @@
 "use client";
-import { createArena } from "@/actions/post";
+import { createArena } from "@/actions/arena";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import React, { useRef } from "react";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { useSession } from "next-auth/react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const CreatePost = () => {
   const ref = useRef<HTMLFormElement>(null);
@@ -31,9 +38,8 @@ const CreatePost = () => {
           }}
           className="flex flex-col gap-4 mt-4"
         >
-          <Label>author</Label>
           <Input
-            type="text"
+            type="hidden"
             name="author"
             value={session?.user?.email?.toString()}
             placeholder="Email"
@@ -62,6 +68,13 @@ const CreatePost = () => {
           />
           <Label>People</Label>
           <Input type="number" name="people" placeholder="People" required />
+          <Input
+            type="hidden"
+            name="people"
+            value="pending"
+            placeholder="People"
+            required
+          />
           <Label>Category</Label>
           <div className="flex items-center space-x-2">
             <input type="checkbox" id="football" name="football" />

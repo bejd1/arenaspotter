@@ -24,6 +24,7 @@ export async function getArena(): Promise<PostT[]> {
     football: item.football,
     basketball: item.basketball,
     netball: item.netball,
+    status: item.status,
   }));
 }
 
@@ -64,6 +65,7 @@ export async function createArena(formData: FormData) {
     const basketball = formData.get("basketball") as string;
     const netball = formData.get("netball") as string;
     const author = formData.get("author") as string;
+    const status = formData.get("status") as string;
 
     await prisma.post.create({
       data: {
@@ -80,6 +82,7 @@ export async function createArena(formData: FormData) {
         football: football,
         basketball: basketball,
         netball: netball,
+        status: status,
       },
     });
 
@@ -106,6 +109,7 @@ export async function edit(formData: FormData) {
     const basketball = formData.get("basketball") as string;
     const netball = formData.get("netball") as string;
     const author = formData.get("author") as string;
+    const status = formData.get("status") as string;
 
     await prisma.post.update({
       where: {
@@ -125,6 +129,7 @@ export async function edit(formData: FormData) {
         football: football,
         basketball: basketball,
         netball: netball,
+        status: status,
       },
     });
 

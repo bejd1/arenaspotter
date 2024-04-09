@@ -23,6 +23,7 @@ model Post {
   netball     String?
   cost        Int
   author      String
+  status      String
 }
 
 enum Role {

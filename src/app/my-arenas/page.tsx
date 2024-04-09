@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   Table,
   TableBody,
@@ -8,14 +8,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import { getArenaByAuthor } from "@/actions/post";
-import { PostT } from "@/types/types";
+import { getArenaByAuthor } from "@/actions/arena";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../_components/loading";
 import EditPost from "../_components/editModal";
+import DeletePost from "../_components/deletePost";
 
 const MyArenas = () => {
   const { data: session } = useSession();
@@ -63,7 +62,7 @@ const MyArenas = () => {
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-1">
                       <EditPost post={post} />
-                      <Button>Delete</Button>
+                      <DeletePost id={post.id} />
                     </div>
                   </TableCell>
                 </TableRow>

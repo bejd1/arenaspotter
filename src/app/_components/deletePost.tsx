@@ -1,5 +1,6 @@
-import { deleteArena } from "@/actions/post";
+import { deleteArena } from "@/actions/arena";
 import { Button } from "@/components/ui/button";
+import { BsTrash } from "react-icons/bs";
 import React from "react";
 
 const DeletePost = ({ id }: { id: string }) => {
@@ -20,7 +21,9 @@ const DeletePost = ({ id }: { id: string }) => {
         }}
       >
         <input onChange={() => {}} type="hidden" name="id" value={id} />
-        <Button>Delete Post</Button>
+        <Button variant={"outline"}>
+          <BsTrash />
+        </Button>
       </form>
     </div>
   );

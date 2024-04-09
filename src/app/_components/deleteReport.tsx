@@ -1,6 +1,7 @@
 import { deleteReport } from "@/actions/report";
 import { Button } from "@/components/ui/button";
 import React from "react";
+import { BsTrash } from "react-icons/bs";
 
 const DeleteReport = ({ id }: { id: string }) => {
   const handleDeleteSubmit = async (formData: FormData) => {
@@ -20,7 +21,9 @@ const DeleteReport = ({ id }: { id: string }) => {
         }}
       >
         <input onChange={() => {}} type="hidden" name="id" value={id} />
-        <Button>Delete</Button>
+        <Button variant={"outline"}>
+          <BsTrash />
+        </Button>
       </form>
     </div>
   );

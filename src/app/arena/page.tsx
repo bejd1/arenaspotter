@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { getArena } from "@/actions/post";
+import { getArena } from "@/actions/arena";
 import Category from "../_components/category";
 import Arenas from "../_components/arenas";
 import { useQuery } from "@tanstack/react-query";

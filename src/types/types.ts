@@ -13,6 +13,7 @@ export type PostT = {
   football: string | null;
   basketball: string | null;
   netball: string | null;
+  status: string;
 };
 
 export type ReportT = {
