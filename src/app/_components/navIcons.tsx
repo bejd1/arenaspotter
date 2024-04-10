@@ -4,16 +4,25 @@ import Link from "next/link";
 import { AiOutlinePlus, AiOutlineStar } from "react-icons/ai";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/ModeToggle";
+import { useSelector } from "react-redux";
+import { selectFavoriteFootballFields } from "@/features/counter/favoriteSlice";
 
 const NavIcons = () => {
+  const favoriteArena = useSelector(selectFavoriteFootballFields);
+
   return (
     <div className="flex items-center justify-center">
-      <Link href={"/favorite"}>
+      <Link className="relative" href={"/favorite"}>
         <Tooltip title="Favorite">
           <Button variant={"outline"} size="icon">
             <AiOutlineStar className="text-xl cursor-pointer" />
           </Button>
         </Tooltip>
+        {favoriteArena.length > 0 && (
+          <div className="absolute bottom-6 right-0 flex items-center justify-center h-4 w-4 rounded-full p-2 text-sm bg-blue-600 text-white">
+            {favoriteArena.length}
+          </div>
+        )}
       </Link>
       <ModeToggle />
       <Link href={"/create-post"}>

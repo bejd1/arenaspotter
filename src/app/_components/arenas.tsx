@@ -11,6 +11,8 @@ import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { addFavoriteArena } from "@/features/counter/favoriteSlice";
+import { useDispatch } from "react-redux";
 
 const Arenas = ({
   arenas,
@@ -24,6 +26,15 @@ const Arenas = ({
   const [value, setValue] = useState(0);
   const params = useSearchParams();
   const category = params.get("category");
+  const dispatch = useDispatch();
+  const handleAddField = (id: string, name: string, image: string) => {
+    const newField = {
+      id: id,
+      name: name,
+      image: image,
+    };
+    dispatch(addFavoriteArena(newField));
+  };
 
   useEffect(() => {
     setData(filtered());
@@ -142,7 +153,7 @@ const Arenas = ({
                 </Link>
                 <CardContent className="absolute flex items-center justify-center bg-slate-900 text-white top-1 right-1 p-2 rounded-md z-10">
                   <AiFillStar
-                    onClick={() => console.log("Add to fav")}
+                    onClick={() => handleAddField(id, name, image)}
                     className="text-2xl hover:text-red-600 z-10"
                   />
                 </CardContent>

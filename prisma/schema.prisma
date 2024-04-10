@@ -25,6 +25,14 @@ model Post {
   author      String
   status      String
 }
+model ReportArena {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  arenaId       String
+  email         String  
+  title         String
+  message       String
+}
 
 enum Role {
   USER
@@ -38,13 +46,4 @@ model User {
   image         String?
   password      String?
   role          Role     @default(USER)
-}
-
-model ReportArena {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  name          String
-  arenaId       String
-  email         String  
-  title         String
-  message       String
 }

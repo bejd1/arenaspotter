@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   Table,
@@ -8,9 +9,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  removeFavoriteArena,
+  selectFavoriteFootballFields,
+} from "@/features/counter/favoriteSlice";
 
 const Favorite = () => {
+  const favoriteArena = useSelector(selectFavoriteFootballFields);
+  const dispatch = useDispatch();
+
   return (
     <div className="flex flex-col justify-between px-4 sm:px-6 lg:px-20 py-2">
       <h2 className="text-3xl mt-12 mb-8">Favorite</h2>
@@ -23,13 +31,26 @@ const Favorite = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow>
-            <TableCell className="font-medium">
-              <Link href={"/arena/66101025b8b0a9aafce6219e"}>Orlik 2000</Link>
-            </TableCell>
-            <TableCell>Paid</TableCell>
-            <TableCell className="text-right">Paid</TableCell>
-          </TableRow>
+          {favoriteArena.map((favArena) => {
+            return (
+              <TableRow key={favArena.id}>
+                <TableCell className="font-medium">
+                  <Link href={`/arena/${favArena.id}`}>{favArena.name}</Link>
+                </TableCell>
+                <TableCell>{favArena.id}</TableCell>
+                <TableCell className="text-right">
+                  <button
+                    className="border border-white py-2 px-4"
+                    onClick={() => {
+                      dispatch(removeFavoriteArena(favArena.id));
+                    }}
+                  >
+                    WYJEB MNIE
+                  </button>
+                </TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </div>
