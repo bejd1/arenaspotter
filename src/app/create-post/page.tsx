@@ -6,13 +6,6 @@ import React, { useRef } from "react";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { useSession } from "next-auth/react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 const CreatePost = () => {
   const ref = useRef<HTMLFormElement>(null);
@@ -75,6 +68,7 @@ const CreatePost = () => {
             placeholder="People"
             required
           />
+          <Input type="hidden" name="status" value={"Pending"} required />
           <Label>Category</Label>
           <div className="flex items-center space-x-2">
             <input type="checkbox" id="football" name="football" />

@@ -3,6 +3,8 @@ import { Badge } from "@/components/ui/badge";
 import { AiFillStar } from "react-icons/ai";
 import prisma from "@/app/utlis/db";
 import ReportModal from "@/app/_components/reportModal";
+import { Tooltip } from "@mui/material";
+import { Button } from "@/components/ui/button";
 
 interface openingHoursI {
   day: string;
@@ -44,7 +46,11 @@ const ArenaId = async ({ params }: { params: { slug: string } }) => {
           </div>
         </div>
         <div className="p-2 rounded-md">
-          <AiFillStar className="text-xl hover:text-red-600 cursor-pointer" />
+          <Tooltip title="Add to favorite">
+            <Button variant={"outline"} size="icon">
+              <AiFillStar className="text-xl hover:text-red-600 cursor-pointer" />
+            </Button>
+          </Tooltip>
         </div>
       </div>
       <div className="bg-[#ececec] text-[#373727] my-3 p-2 px-10  rounded-md w-max">

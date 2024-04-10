@@ -27,9 +27,9 @@ const Arena = () => {
 
   const filteredArenas = arenas.filter(
     (arena) =>
-      arena.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      arena.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      arena.name.toLowerCase().includes(searchTerm.toLowerCase())
+      (arena.city?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
+      (arena.address?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
+      (arena.name?.toLowerCase() || "").includes(searchTerm.toLowerCase())
   );
 
   return (

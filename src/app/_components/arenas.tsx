@@ -66,7 +66,7 @@ const Arenas = ({
     setData([...filtered()].filter((a) => a.cost !== 0));
   };
 
-  const filterCost = (e: any) => {
+  const filterCost = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setData([...filtered()].filter((a) => a.cost <= value));
@@ -113,7 +113,7 @@ const Arenas = ({
               <Card
                 key={id}
                 className={`cursor-pointer relative ${
-                  status !== "Pending" ? "hidden" : "block"
+                  status === "Pending" ? "hidden" : "block"
                 }`}
               >
                 <Link href={`/arena/${id}`}>

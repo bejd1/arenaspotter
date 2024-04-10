@@ -16,24 +16,65 @@ import { FaGoogle } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { signIn } from "next-auth/react";
 import { register } from "@/actions/register";
-import { FormSuccess } from "./formSuccess";
-import { FormError } from "./formError";
-import { FormEvent, useState } from "react";
+import * as z from "zod";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
+
+const FormSchema = z.object({
+  email: z.string().email({
+    message: "Invalid email address.",
+  }),
+  password: z.string().min(3, {
+    message: "Password must be at least 6 characters.",
+  }),
+});
+
+type FormData = z.infer<typeof FormSchema>;
 
 export function Auth() {
-  const [error, setError] = useState<string | undefined>("");
-  const [success, setSuccess] = useState<string | undefined>("");
-  const [email, setEmail] = useState<undefined | string>();
-  const [password, setPassword] = useState<undefined | string>();
+  const router = useRouter();
 
-  function handleSubmit(event: FormEvent) {
-    event.preventDefault();
-    signIn("credentials", {
-      email: email,
-      password: password,
-    });
-    console.log(email, password);
-  }
+  const form = useForm({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = async (data: FormData) => {
+    console.log("Submitting form", data);
+
+    const { email, password } = data;
+
+    try {
+      const response: any = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
+      console.log({ response });
+      if (!response?.error) {
+        router.push("/");
+        router.refresh();
+      }
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      // Process response here
+    } catch (error: any) {
+      console.error("Login Failed:", error);
+    }
+  };
 
   return (
     <Dialog>
@@ -54,35 +95,52 @@ export function Auth() {
                   Log Into My Account
                 </CardTitle>
               </CardHeader>
-              <form onSubmit={handleSubmit}>
-                <CardContent className="space-y-2">
-                  <div className="space-y-1">
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      type="email"
+
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)}>
+                  <CardContent className="space-y-2">
+                    <FormField
+                      control={form.control}
                       name="email"
-                      placeholder="youremail@email.com"
-                      onChange={(e) => setEmail(e.target.value)}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Email</FormLabel>
+                          <FormControl>
+                            <Input
+                              id="email"
+                              type="email"
+                              {...field}
+                              placeholder="youremail@email.com"
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
                     />
-                  </div>
-                  <div className="space-y-1">
-                    <Label htmlFor="password">Password</Label>
-                    <Input
-                      id="password"
-                      type="password"
+                    <FormField
+                      control={form.control}
                       name="password"
-                      placeholder="••••••••"
-                      onChange={(e) => setPassword(e.target.value)}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Password</FormLabel>
+                          <FormControl>
+                            <Input
+                              id="password"
+                              type="password"
+                              {...field}
+                              placeholder="••••••••"
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
                     />
-                  </div>
-                </CardContent>
-                <CardFooter className="py-0">
-                  <Button type="submit" className="w-full">
-                    Login
-                  </Button>
-                </CardFooter>
-              </form>
+                  </CardContent>
+                  <CardFooter className="py-0">
+                    <Button type="submit" className="w-full">
+                      Login
+                    </Button>
+                  </CardFooter>
+                </form>
+              </Form>
               <div className="flex items-center justify-center flex-row">
                 <div className="bg-slate-200 h-0.5 w-full mr-4 ml-6"></div>
                 <p className="text-center py-2">or</p>
@@ -171,8 +229,6 @@ export function Auth() {
                   <FaGithub className="text-xl" />
                 </Button>
               </CardFooter>
-              {success ? <FormSuccess message={success} /> : <></>}
-              {!error ? <FormError message={error} /> : <></>}
             </Card>
           </TabsContent>
         </Tabs>

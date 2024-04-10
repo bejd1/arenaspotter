@@ -10,6 +10,8 @@ import { createReport } from "@/actions/report";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
+import { MdOutlineReportProblem } from "react-icons/md";
+import { Tooltip } from "@mui/material";
 
 export default function ReportModal({
   id,
@@ -40,7 +42,11 @@ export default function ReportModal({
 
   return (
     <div>
-      <Button onClick={handleOpen}>REPORT</Button>
+      <Tooltip title="Report">
+        <Button variant={"outline"} size="icon" onClick={handleOpen}>
+          <MdOutlineReportProblem className="text-xl" />
+        </Button>
+      </Tooltip>
       <Modal
         open={open}
         onClose={handleClose}
