@@ -16,10 +16,6 @@ import Link from "next/link";
 const DropdownImage = () => {
   const { data: session } = useSession();
 
-  {
-    session?.user?.email;
-  }
-
   return (
     <div>
       <DropdownMenu>
@@ -53,18 +49,23 @@ const DropdownImage = () => {
               <IoSettingsOutline className="text-xl" />
             </DropdownMenuItem>
           </Link>
-          <Link href="/panel-admin">
-            <DropdownMenuItem className="cursor-pointer flex gap-2 justify-between">
-              <p>Panel admin</p>
-              <GrUserAdmin className="text-lg" />
-            </DropdownMenuItem>
-          </Link>
-          <Link href="/reports">
-            <DropdownMenuItem className="cursor-pointer flex gap-2 justify-between">
-              <p>Reports</p>
-              <MdReportGmailerrorred className="text-xl" />
-            </DropdownMenuItem>
-          </Link>
+          {session?.user?.role === "admin" && (
+            <>
+              <Link href="/panel-admin">
+                <DropdownMenuItem className="cursor-pointer flex gap-2 justify-between">
+                  <p>Panel admin</p>
+                  <GrUserAdmin className="text-lg" />
+                </DropdownMenuItem>
+              </Link>
+              <Link href="/reports">
+                <DropdownMenuItem className="cursor-pointer flex gap-2 justify-between">
+                  <p>Reports</p>
+                  <MdReportGmailerrorred className="text-xl" />
+                </DropdownMenuItem>
+              </Link>
+            </>
+          )}
+
           <DropdownMenuItem
             onClick={() => signOut()}
             className="cursor-pointer flex gap-2 justify-between"

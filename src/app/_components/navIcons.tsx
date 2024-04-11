@@ -1,14 +1,20 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Tooltip from "@mui/material/Tooltip";
 import Link from "next/link";
 import { AiOutlinePlus, AiOutlineStar } from "react-icons/ai";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/ModeToggle";
 import { useSelector } from "react-redux";
-import { selectFavoriteFootballFields } from "@/features/counter/favoriteSlice";
+import { selectFavoriteArena } from "@/features/favorite/favoriteSlice";
 
 const NavIcons = () => {
-  const favoriteArena = useSelector(selectFavoriteFootballFields);
+  const favoriteArena = useSelector(selectFavoriteArena);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   return (
     <div className="flex items-center justify-center">
@@ -18,7 +24,7 @@ const NavIcons = () => {
             <AiOutlineStar className="text-xl cursor-pointer" />
           </Button>
         </Tooltip>
-        {favoriteArena.length > 0 && (
+        {isClient && favoriteArena.length > 0 && (
           <div className="absolute bottom-6 right-0 flex items-center justify-center h-4 w-4 rounded-full p-2 text-sm bg-blue-600 text-white">
             {favoriteArena.length}
           </div>

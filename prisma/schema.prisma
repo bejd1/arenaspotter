@@ -34,16 +34,39 @@ model ReportArena {
   message       String
 }
 
-enum Role {
-  USER
-  ADMIN
-}
 
 model User {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  name          String?
-  email         String?   @unique
-  image         String?
-  password      String?
-  role          Role     @default(USER)
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  name           String?
+  password       String?
+  email          String?   @unique
+  emailVerified  DateTime?
+  image          String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  role           String    @default("user")
+
+  accounts       Account[]
+
+  @@map("user")
+}
+
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  token_type        String?
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  id_token          String? @db.String
+  scope             String?
+  session_state     String?
+  expires_at        Int?
+
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId            String  @db.ObjectId
+
+  @@unique([provider, providerAccountId])
+  @@map("account")
 }

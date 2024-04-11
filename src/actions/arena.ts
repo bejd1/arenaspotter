@@ -37,14 +37,10 @@ export async function getArenaById(id: string): Promise<PostT | null> {
   return post;
 }
 
-export async function getArenaByAuthor(
-  author: string
-): Promise<PostT[] | null> {
+export async function getArenaByAuthor(author: string) {
   const posts = await prisma.post.findMany({
     where: {
-      author: {
-        equals: author,
-      },
+      author: author,
     },
   });
   return posts;

@@ -5,6 +5,7 @@ import prisma from "@/app/utlis/db";
 import ReportModal from "@/app/_components/reportModal";
 import { Tooltip } from "@mui/material";
 import { Button } from "@/components/ui/button";
+import FavoriteBtn from "@/app/_components/favoriteBtn";
 
 interface openingHoursI {
   day: string;
@@ -48,7 +49,11 @@ const ArenaId = async ({ params }: { params: { slug: string } }) => {
         <div className="p-2 rounded-md">
           <Tooltip title="Add to favorite">
             <Button variant={"outline"} size="icon">
-              <AiFillStar className="text-xl hover:text-red-600 cursor-pointer" />
+              <FavoriteBtn
+                id={productData?.id}
+                name={productData?.name}
+                image={productData?.image}
+              />
             </Button>
           </Tooltip>
         </div>

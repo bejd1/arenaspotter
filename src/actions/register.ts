@@ -37,7 +37,6 @@ export async function register(formData: FormData) {
     });
     console.log(`created new user : ${name}, ${email}, ${password}`);
   } catch (error) {
-    // Obsłuż błędy
     console.error("Error during user creation:", error);
   }
   return { success: "Registration successful" };
