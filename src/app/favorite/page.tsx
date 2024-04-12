@@ -17,6 +17,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../_components/loading";
 import { PostT } from "@/types/types";
+import ErrorComponent from "../_components/errorComponent";
 
 const Favorite = () => {
   const [isClient, setIsClient] = useState(false);
@@ -38,7 +39,7 @@ const Favorite = () => {
   const dispatch = useDispatch();
 
   if (isLoading) return <Loading />;
-  if (isError) return <div>Error</div>;
+  if (isError) return <ErrorComponent />;
 
   return (
     <div className="flex flex-col justify-between px-4 sm:px-6 lg:px-20 py-2">

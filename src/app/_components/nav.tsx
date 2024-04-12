@@ -7,9 +7,10 @@ import { useSession } from "next-auth/react";
 import DropdownImage from "@/components/dropdown-image";
 import { GiSoccerField } from "react-icons/gi";
 import NavIcons from "./navIcons";
+import { CircularProgress } from "@mui/material";
 
 const Nav = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   return (
     <div>
@@ -23,15 +24,19 @@ const Nav = () => {
         <div className="flex items-center justify-center gap-1 md:gap-4">
           <div className="flex items-center justify-center">
             <NavIcons />
-            <div>
-              {!session?.user ? (
-                <div className="flex flex-row gap-2">
-                  <Auth />
-                </div>
-              ) : (
-                <DropdownImage />
-              )}
-            </div>
+            {status === "loading" ? (
+              <CircularProgress size={20} className="ml-1" />
+            ) : (
+              <div>
+                {!session?.user ? (
+                  <div className="flex flex-row gap-2">
+                    <Auth />
+                  </div>
+                ) : (
+                  <DropdownImage />
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>

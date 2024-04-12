@@ -13,8 +13,11 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "../_components/loading";
 import { getReport } from "@/actions/report";
 import DeleteReport from "../_components/deleteReport";
+import ErrorComponent from "../_components/errorComponent";
+import { useSession } from "next-auth/react";
 
 const Reports = () => {
+  const { data: session } = useSession();
   const {
     data: reports = [],
     isLoading,
@@ -25,7 +28,9 @@ const Reports = () => {
   });
 
   if (isLoading) return <Loading />;
-  if (isError) return <div>Error</div>;
+  if (isError) return <ErrorComponent />;
+
+  if (session?.user?.role !== "admin") return null;
 
   return (
     <div className="flex flex-col justify-between px-4 sm:px-6 lg:px-20 py-2">

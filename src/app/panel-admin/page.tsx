@@ -9,26 +9,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { editStatusArena, getArenaByStatus } from "@/actions/newArena";
 import Loading from "../_components/loading";
 import { useQuery } from "@tanstack/react-query";
+import ErrorComponent from "../_components/errorComponent";
+import { useSession } from "next-auth/react";
 
 const PanelAdmin = () => {
-  const handleEditSubmit = async (formData: FormData) => {
-    try {
-      await editStatusArena(formData);
-    } catch (error) {
-      console.error("Edit function failed", error);
-    }
-  };
-
+  const { data: session } = useSession();
   const {
     data: pendingPosts = [],
     isLoading,
@@ -37,9 +25,17 @@ const PanelAdmin = () => {
     queryKey: ["pendingPosts"],
     queryFn: async () => await getArenaByStatus("Pending"),
   });
+  const handleEditSubmit = async (formData: FormData) => {
+    try {
+      await editStatusArena(formData);
+    } catch (error) {
+      console.error("Edit function failed", error);
+    }
+  };
 
   if (isLoading) return <Loading />;
-  if (isError) return <div>Error</div>;
+  if (isError) return <ErrorComponent />;
+  if (session?.user?.role !== "admin") return null;
 
   return (
     <div className="flex flex-col justify-between px-4 sm:px-6 lg:px-20 py-2">

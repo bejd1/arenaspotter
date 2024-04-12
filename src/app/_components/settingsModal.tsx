@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 import * as React from "react";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input";
 import Modal from "@mui/material/Modal";
 import { useState } from "react";
 import { BiPencil } from "react-icons/bi";
-import { getUserByEmail } from "@/actions/user";
 
 interface SettingsModalI {
   id: string | undefined;
@@ -16,7 +15,7 @@ interface SettingsModalI {
   image: string | undefined;
 }
 
-export default async function SettingsModal({
+export default function SettingsModal({
   id,
   name,
   email,
@@ -25,9 +24,9 @@ export default async function SettingsModal({
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-  // const myEmail = email;
-  // const myData = await getUserByEmail(myEmail);
+  const [newName, setNewName] = useState(name);
+  const [newEmail, setNewEmail] = useState(email);
+  const [newImage, setNewImage] = useState(image);
 
   return (
     <div>
@@ -50,18 +49,18 @@ export default async function SettingsModal({
             className="flex flex-col gap-4 mt-4"
           >
             <Input
-              type="text"
+              type="hidden"
               name="inputId"
-              placeholder="id"
-              value={id}
-              required
+              defaultValue={id || ""}
+              onChange={() => {}}
             />
             <Label>Name</Label>
             <Input
               type="text"
               name="name"
               placeholder="Name"
-              value={name}
+              value={newName || ""}
+              onChange={(e) => setNewName(e.target.value)}
               required
             />
             <Label>Email</Label>
@@ -69,7 +68,8 @@ export default async function SettingsModal({
               type="text"
               name="email"
               placeholder="Email"
-              value={email}
+              value={newEmail || ""}
+              onChange={(e) => setNewEmail(e.target.value)}
               required
             />
             <Label>Image</Label>
@@ -77,7 +77,8 @@ export default async function SettingsModal({
               type="text"
               name="image"
               placeholder="Image"
-              value={image}
+              value={newImage || ""}
+              onChange={(e) => setNewImage(e.target.value)}
               required
             />
 

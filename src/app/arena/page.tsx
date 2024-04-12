@@ -5,6 +5,7 @@ import Category from "../_components/category";
 import Arenas from "../_components/arenas";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../_components/loading";
+import ErrorComponent from "../_components/errorComponent";
 
 const Arena = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -23,7 +24,7 @@ const Arena = () => {
   };
 
   if (isLoading) return <Loading />;
-  if (isError) return <div>Error</div>;
+  if (isError) return <ErrorComponent />;
 
   const filteredArenas = arenas.filter(
     (arena) =>

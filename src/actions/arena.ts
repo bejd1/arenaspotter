@@ -40,7 +40,7 @@ export async function getArenaById(id: string): Promise<PostT | null> {
 export async function getArenaByAuthor(author: string) {
   const posts = await prisma.post.findMany({
     where: {
-      author: author,
+      email: author,
     },
   });
   return posts;
