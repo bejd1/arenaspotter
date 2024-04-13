@@ -17,5 +17,12 @@ export default withAuth(
 export const adminConfig = { matcher: ["/admin"] };
 
 export const config = {
-  matcher: ["/settings", "/my-arenas", "/reports", "/panel-admin"],
+  matcher: [
+    "/settings",
+    "/my-arenas",
+    "/reports",
+    "/panel-admin",
+    "/my-account",
+    "/(.)my-account",
+  ],
 };

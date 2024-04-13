@@ -2,12 +2,12 @@
 import Link from "next/link";
 import React from "react";
 import { Separator } from "@/components/ui/separator";
-import { Auth } from "./auth";
 import { useSession } from "next-auth/react";
 import DropdownImage from "@/components/dropdown-image";
 import { GiSoccerField } from "react-icons/gi";
 import NavIcons from "./navIcons";
 import { CircularProgress } from "@mui/material";
+import { Button } from "@/components/ui/button";
 
 const Nav = () => {
   const { data: session, status } = useSession();
@@ -30,7 +30,9 @@ const Nav = () => {
               <div>
                 {!session?.user ? (
                   <div className="flex flex-row gap-2">
-                    <Auth />
+                    <Link href={`/my-account`}>
+                      <Button>Login</Button>
+                    </Link>
                   </div>
                 ) : (
                   <DropdownImage />

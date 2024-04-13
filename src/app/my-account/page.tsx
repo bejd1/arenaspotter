@@ -1,5 +1,4 @@
 "use client";
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,7 +10,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { FaGoogle } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { signIn } from "next-auth/react";
@@ -39,9 +37,7 @@ const FormSchema = z.object({
 
 type FormData = z.infer<typeof FormSchema>;
 
-export function Auth() {
-  const router = useRouter();
-
+const MyAccount = () => {
   const form = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -50,6 +46,7 @@ export function Auth() {
     },
   });
 
+  const router = useRouter();
   const onSubmit = async (data: FormData) => {
     console.log("Submitting form", data);
 
@@ -77,11 +74,8 @@ export function Auth() {
   };
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button className="hidden sm:block ml-2">Login</Button>
-      </DialogTrigger>
-      <DialogContent className="p-8 sm:p-10">
+    <div className="w-full h-[80vh] flex items-center justify-center">
+      <Card className="w-[500px] p-12">
         <Tabs defaultValue="account">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="account">Login</TabsTrigger>
@@ -143,7 +137,7 @@ export function Auth() {
               </Form>
               <div className="flex items-center justify-center flex-row">
                 <div className="bg-slate-200 h-0.5 w-full mr-4 ml-6"></div>
-                <p className="text-center py-2">or</p>
+                <p className="text-center text-sm py-2">or</p>
                 <div className="bg-slate-200 h-0.5 w-full mr-6 ml-4"></div>
               </div>
               <CardFooter className="flex gap-4">
@@ -210,7 +204,7 @@ export function Auth() {
               </form>
               <div className="flex items-center justify-center flex-row">
                 <div className="bg-slate-200 h-0.5 w-full mr-4 ml-6"></div>
-                <p className="text-center py-2">or</p>
+                <p className="text-center text-sm py-2">or</p>
                 <div className="bg-slate-200 h-0.5 w-full mr-6 ml-4"></div>
               </div>
               <CardFooter className="flex gap-4">
@@ -232,7 +226,9 @@ export function Auth() {
             </Card>
           </TabsContent>
         </Tabs>
-      </DialogContent>
-    </Dialog>
+      </Card>
+    </div>
   );
-}
+};
+
+export default MyAccount;

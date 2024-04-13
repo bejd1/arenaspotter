@@ -5,13 +5,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Auth } from "@/app/_components/auth";
 import { signOut, useSession } from "next-auth/react";
 import { IoExitOutline, IoSettingsOutline } from "react-icons/io5";
 import { GrUserAdmin } from "react-icons/gr";
 import { CiViewList } from "react-icons/ci";
 import { MdReportGmailerrorred } from "react-icons/md";
 import Link from "next/link";
+import { Button } from "./ui/button";
 
 const DropdownImage = () => {
   const { data: session } = useSession();
@@ -35,7 +35,7 @@ const DropdownImage = () => {
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem className="cursor-pointer sm:hidden">
-            <Auth />
+            <Button>Login</Button>
           </DropdownMenuItem>
           <Link href="/my-arenas">
             <DropdownMenuItem className="cursor-pointer flex gap-2 justify-between">
