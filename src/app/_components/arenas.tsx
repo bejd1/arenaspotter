@@ -4,7 +4,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { CiLocationOn } from "react-icons/ci";
 import { IoPeopleSharp } from "react-icons/io5";
-import { AiFillStar } from "react-icons/ai";
 import Link from "next/link";
 import { PostT } from "@/types/types";
 import { useSearchParams } from "next/navigation";
@@ -44,65 +43,42 @@ const Arenas = ({
     }
   };
 
-  const sortCostAsc = () => {
-    setData([...filtered()].sort((a, b) => a.cost - b.cost));
-  };
+  // const sortCostAsc = () => {
+  //   setData([...filtered()].sort((a, b) => a.cost - b.cost));
+  // };
 
-  const sortCostDesc = () => {
-    setData([...filtered()].sort((a, b) => b.cost - a.cost));
-  };
+  // const sortCostDesc = () => {
+  //   setData([...filtered()].sort((a, b) => b.cost - a.cost));
+  // };
 
-  const sortPplAsc = () => {
-    setData([...filtered()].sort((a, b) => a.people - b.people));
-  };
+  // const sortPplAsc = () => {
+  //   setData([...filtered()].sort((a, b) => a.people - b.people));
+  // };
 
-  const sortPplDesc = () => {
-    setData([...filtered()].sort((a, b) => b.people - a.people));
-  };
-  const sortFree = () => {
-    setData([...filtered()].filter((a) => a.cost === 0));
-  };
+  // const sortPplDesc = () => {
+  //   setData([...filtered()].sort((a, b) => b.people - a.people));
+  // };
+  // const sortFree = () => {
+  //   setData([...filtered()].filter((a) => a.cost === 0));
+  // };
 
-  const sortPayment = () => {
-    setData([...filtered()].filter((a) => a.cost !== 0));
-  };
+  // const sortPayment = () => {
+  //   setData([...filtered()].filter((a) => a.cost !== 0));
+  // };
 
-  const filterCost = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  // const filterCost = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
 
-    setData([...filtered()].filter((a) => a.cost <= value));
-  };
+  //   setData([...filtered()].filter((a) => a.cost <= value));
+  // };
 
-  const restartForm = () => {
-    setValue(0);
-    setData(filtered());
-  };
+  // const restartForm = () => {
+  //   setValue(0);
+  //   setData(filtered());
+  // };
 
   return (
     <div className="flex flex-col">
-      <div className="flex items-center justify-center my-4 gap-4">
-        <Button onClick={sortCostAsc}>Sort cost asc</Button>
-        <Button onClick={sortCostDesc}>Sort cost desc</Button>
-        <Button onClick={sortPplAsc}>Sort ppl asc</Button>
-        <Button onClick={sortPplDesc}>Sort ppl desc</Button>
-        <Button onClick={sortFree}>Free</Button>
-        <Button onClick={sortPayment}>Pay only</Button>
-        <Button onClick={restartForm}>Restart</Button>
-        <form
-          onSubmit={filterCost}
-          className="flex flex-row items-center justify-center gap-2"
-        >
-          <Label>Cost:</Label>
-          <Input
-            type="number"
-            value={value}
-            onChange={(e) => setValue(Number(e.target.value))}
-            placeholder="Price"
-            className="w-[200px]"
-          />
-          <Button>Search</Button>
-        </form>
-      </div>
       <div className="flex flex-wrap px-24 gap-4">
         {filtered().length === 0 ? (
           <div>Doesn't exist: {searchTerm}</div>

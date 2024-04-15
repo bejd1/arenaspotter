@@ -18,6 +18,7 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "../_components/loading";
 import { PostT } from "@/types/types";
 import ErrorComponent from "../_components/errorComponent";
+// import FavoriteBtn from "../_components/favoriteBtn";
 
 const Favorite = () => {
   const [isClient, setIsClient] = useState(false);
@@ -30,6 +31,7 @@ const Favorite = () => {
     data: favoriteArenaData = [] as PostT[],
     isLoading,
     isError,
+    refetch,
   } = useQuery({
     queryKey: ["favoriteArenaData"],
     queryFn: async () => await favoriteArena,
@@ -37,6 +39,12 @@ const Favorite = () => {
 
   const favoriteArena = useSelector(selectFavoriteArena);
   const dispatch = useDispatch();
+
+  const handleRemoveFavorite = async (id: string) => {
+    await dispatch(removeFavoriteArena(id));
+
+    refetch();
+  };
 
   if (isLoading) return <Loading />;
   if (isError) return <ErrorComponent />;
@@ -61,16 +69,22 @@ const Favorite = () => {
                     <Link href={`/arena/${favArena.id}`}>{favArena.name}</Link>
                   </TableCell>
                   <TableCell>
-                    <img src={favArena.image} alt="" />
+                    <p>{favArena.id}</p>
                   </TableCell>
+
                   <TableCell className="text-right">
+                    {/* <FavoriteBtn
+                      id={favArena.id}
+                      name={favArena.name}
+                      image={favArena.image}
+                    /> */}
                     <button
                       className="border border-white py-2 px-4"
                       onClick={() => {
-                        dispatch(removeFavoriteArena(favArena.id as string));
+                        handleRemoveFavorite(favArena.id!); // Use the handleRemoveFavorite function
                       }}
                     >
-                      WYJEB MNIE
+                      Remove
                     </button>
                   </TableCell>
                 </TableRow>

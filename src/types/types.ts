@@ -24,3 +24,12 @@ export type ReportT = {
   title: string;
   message: string;
 };
+
+export type SiteConfigT = {
+  name: string;
+  url: string;
+  description: string;
+  links: {
+    github: string;
+  };
+};

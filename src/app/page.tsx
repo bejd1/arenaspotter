@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { GiSoccerField } from "react-icons/gi";
+import Toast from "./_components/toast";
 
 export const metadata: Metadata = {
   title: "Arena Spotter",
@@ -28,6 +29,17 @@ const ParentComponent = () => {
           <AiOutlineArrowRight />
         </Button>
       </Link>
+      {/* <Toast
+        title={"Scheduled: Catch up"}
+        description={"Friday, February 10, 2023 at 5:57 PM"}
+        variant={"success"}
+      />
+      <Toast
+        title={"działam"}
+        description={"Edward sinooo"}
+        variant={"error"}
+      /> */}
+      {/* <UploadBtn /> */}
     </div>
   );
 };

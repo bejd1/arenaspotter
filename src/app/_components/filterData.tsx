@@ -11,17 +11,17 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { DatePicker } from "@/components/ui/dataPicker";
+import { Slider } from "@/components/ui/slider";
+import SelectSort from "./selectSort";
 
 const FilterData = () => {
-  const [priceRange, setPriceRange] = useState({ min: 0, max: 300 });
-  const [isShow, setIsShow] = useState(false);
   const [selectedStartHour, setSelectedStartHour] = useState("");
+  const [range, setRange] = useState([0, 300]);
   const [selectedEndHour, setSelectedEndHour] = useState("");
   const [endHourOptions, setEndHourOptions] = useState<string[]>([]);
 
-  const handlePriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    setPriceRange((prevRange) => ({ ...prevRange, max: parseInt(value) }));
+  const handleRangeChange = (value: number[]) => {
+    setRange(value);
   };
 
   const handleStartHourChange = (hour: string) => {
@@ -30,6 +30,18 @@ const FilterData = () => {
 
   const handleEndHourChange = (hour: string) => {
     setSelectedEndHour(hour);
+  };
+
+  const handleMinSalaryChange = (e: any) => {
+    const newMinSalary = parseInt(e.target.value);
+    const newRange = [newMinSalary, range[1]];
+    setRange(newRange);
+  };
+
+  const handleMaxSalaryChange = (e: any) => {
+    const newMaxSalary = parseInt(e.target.value);
+    const newRange = [range[0], newMaxSalary];
+    setRange(newRange);
   };
 
   const generateHours = () => {
@@ -58,36 +70,43 @@ const FilterData = () => {
   return (
     <div>
       <Dialog>
-        <DialogTrigger className="mb-4 bg-white text-black font-medium px-4 py-2 rounded-md">
-          More filters
-        </DialogTrigger>
+        <div className=" flex flex-row gap-2">
+          <SelectSort />
+          <DialogTrigger className="mb-4 bg-white text-black rounded-md">
+            <Button>More filters</Button>
+          </DialogTrigger>
+        </div>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>More filters</DialogTitle>
-
-            <Label>Price</Label>
-            <div className="flex items-center space-x-2">
-              <Switch id="airplane-mode" onClick={() => setIsShow(!isShow)} />
-              <Label htmlFor="airplane-mode">Free</Label>
-            </div>
-            {isShow ? (
-              <div></div>
-            ) : (
-              <div>
-                <Label>Sort price</Label>
-                <Input
-                  type="range"
-                  min="0"
-                  max="300"
-                  value={priceRange.max}
-                  onChange={handlePriceChange}
-                />
-                <Label>
-                  Price range: {priceRange.min}$ - {priceRange.max}$
-                </Label>
+            <div>
+              <Label className="text-md">Salary</Label>
+              <div className="flex flex-row gap-4">
+                <div>
+                  <Label>Salary Min</Label>
+                  <Input value={range[0]} onChange={handleMinSalaryChange} />
+                </div>
+                <div>
+                  <Label>Salary Max</Label>
+                  <Input value={range[1]} onChange={handleMaxSalaryChange} />
+                </div>
               </div>
-            )}
-            <Label>Date</Label>
+              <Slider
+                value={range}
+                max={300}
+                min={0}
+                step={1}
+                minStepsBetweenThumbs={1}
+                onValueChange={handleRangeChange}
+                className="mt-2"
+              />
+              <div className="flex flex-row justify-between">
+                <p>{range[0]}$</p>
+                <p>{range[1]}$</p>
+              </div>
+            </div>
+
+            {/* <Label>Date</Label>
             <DatePicker />
 
             <Label>Hours (Start)</Label>
@@ -113,7 +132,7 @@ const FilterData = () => {
                   {hour}
                 </option>
               ))}
-            </select>
+            </select> */}
           </DialogHeader>
           <Button>Search</Button>
         </DialogContent>

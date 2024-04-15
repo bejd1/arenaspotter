@@ -7,6 +7,10 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "../_components/loading";
 import ErrorComponent from "../_components/errorComponent";
 
+// export const metadata: Metadata = {
+//   title: "About us",
+// };
+
 const Arena = () => {
   const [searchTerm, setSearchTerm] = useState("");
 

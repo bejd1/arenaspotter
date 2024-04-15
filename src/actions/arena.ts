@@ -87,6 +87,7 @@ export async function createArena(formData: FormData) {
     console.error("Error creating post:", error);
     throw error;
   }
+  return { success: "success" };
 }
 
 export async function edit(formData: FormData) {

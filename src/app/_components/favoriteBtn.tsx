@@ -41,7 +41,7 @@ const FavoriteBtn = ({ id, name, image }: FavoriteBtnI) => {
           }
         }}
         className={`text-2xl hover:text-red-600 z-10 ${
-          isFavorite ? "text-red-600" : ""
+          isFavorite ? "text-red-600 hover:text-slate-200" : ""
         }`}
       />
     </div>

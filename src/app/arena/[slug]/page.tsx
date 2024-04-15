@@ -1,6 +1,5 @@
 import React from "react";
 import { Badge } from "@/components/ui/badge";
-import { AiFillStar } from "react-icons/ai";
 import prisma from "@/app/utlis/db";
 import ReportModal from "@/app/_components/reportModal";
 import { Tooltip } from "@mui/material";
