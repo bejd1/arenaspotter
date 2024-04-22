@@ -6,10 +6,36 @@ import { revalidatePath } from "next/cache";
 
 const prisma = new PrismaClient();
 
-export async function getArena(): Promise<PostT[]> {
-  const data = await prisma.post.findMany();
+export async function getArena(
+  sortByCost: string,
+  sortByPeople: string,
+  category: string | null
+) {
+  let orderBy: any = {};
 
-  return data.map((item) => ({
+  // Sortowanie wg kategorii
+  if (category) {
+    orderBy = { [category]: "asc" };
+  }
+
+  const data: PostT[] = await prisma.post.findMany({
+    orderBy,
+  });
+
+  // Jeśli wybrano sortowanie wg kosztu lub liczby osób, dodaj odpowiednie sortowanie
+  if (sortByCost) {
+    orderBy = { cost: sortByCost === "asc" ? "asc" : "desc" };
+    data.sort((a, b) =>
+      sortByCost === "asc" ? a.cost - b.cost : b.cost - a.cost
+    );
+  } else if (sortByPeople) {
+    orderBy = { people: sortByPeople === "asc" ? "asc" : "desc" };
+    data.sort((a, b) =>
+      sortByPeople === "asc" ? a.people - b.people : b.people - a.people
+    );
+  }
+
+  return data.map((item: PostT) => ({
     id: item.id,
     name: item.name,
     city: item.city,
@@ -28,19 +54,19 @@ export async function getArena(): Promise<PostT[]> {
   }));
 }
 
-export async function getArenaById(id: string): Promise<PostT | null> {
+export async function getArenaById(myId: string): Promise<PostT | null> {
   const post = await prisma.post.findUnique({
     where: {
-      id: id,
+      id: myId,
     },
   });
   return post;
 }
 
-export async function getArenaByAuthor(author: string) {
+export async function getArenaByAuthor(id: string) {
   const posts = await prisma.post.findMany({
     where: {
-      email: author,
+      author: id,
     },
   });
   return posts;

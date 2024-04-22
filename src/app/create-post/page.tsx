@@ -34,7 +34,7 @@ const CreatePost = () => {
           <Input
             type="hidden"
             name="author"
-            value={session?.user?.email?.toString()}
+            value={session?.user?.id?.toString()}
             placeholder="Email"
             required
           />

@@ -19,18 +19,17 @@ import ErrorComponent from "../_components/errorComponent";
 
 const MyArenas = () => {
   const { data: session, status } = useSession();
-  const [author, setAuthor] = useState("");
+  const [myId, setMyId] = useState("");
 
   const { data: arenas = [], isError } = useQuery({
     queryKey: ["arenas"],
-    queryFn: async () => await getArenaByAuthor(author),
-    enabled: !!author,
+    queryFn: async () => await getArenaByAuthor(myId),
+    enabled: !!myId,
   });
 
   useEffect(() => {
-    if (session?.user?.email) {
-      // Ustawienie 'author' na wartość z sesji
-      setAuthor(session?.user?.email);
+    if (session?.user?.id) {
+      setMyId(session?.user?.id);
     }
   }, [session]);
 

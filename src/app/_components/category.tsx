@@ -17,7 +17,7 @@ const Category = ({ searchTerm, handleSearch }: CategoryPropsI) => {
   const category = searchParams.get("category");
 
   return (
-    <div className="flex flex-row justify-between items-center w-full my-4 sm:px-6 mx-48 lg:px-48">
+    <div className="flex flex-row justify-between items-center w-full my-4 mx-48 sm:px-6 lg:px-32 mb-8">
       <div className="flex gap-2 mb-4">
         <Link href={"/arena"}>
           <Button variant={category === null ? "secondary" : "default"}>

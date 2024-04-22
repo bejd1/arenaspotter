@@ -73,21 +73,21 @@ const FilterData = () => {
         <div className=" flex flex-row gap-2">
           <SelectSort />
           <DialogTrigger className="mb-4 bg-white text-black rounded-md">
-            <Button>More filters</Button>
+            <Button className="hidden">More filters</Button>
           </DialogTrigger>
         </div>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>More filters</DialogTitle>
             <div>
-              <Label className="text-md">Salary</Label>
+              <Label className="text-md">Cost</Label>
               <div className="flex flex-row gap-4">
                 <div>
-                  <Label>Salary Min</Label>
+                  <Label>Cost Min</Label>
                   <Input value={range[0]} onChange={handleMinSalaryChange} />
                 </div>
                 <div>
-                  <Label>Salary Max</Label>
+                  <Label>Cost Max</Label>
                   <Input value={range[1]} onChange={handleMaxSalaryChange} />
                 </div>
               </div>
@@ -105,34 +105,6 @@ const FilterData = () => {
                 <p>{range[1]}$</p>
               </div>
             </div>
-
-            {/* <Label>Date</Label>
-            <DatePicker />
-
-            <Label>Hours (Start)</Label>
-            <select
-              value={selectedStartHour}
-              onChange={(e) => handleStartHourChange(e.target.value)}
-            >
-              {generateHours().map((hour) => (
-                <option key={hour} value={hour}>
-                  {hour}
-                </option>
-              ))}
-            </select>
-            <Label>Hours (End)</Label>
-            <select
-              value={selectedEndHour}
-              onChange={(e) => handleEndHourChange(e.target.value)}
-              disabled={!selectedStartHour}
-            >
-              <option value="">Select</option>
-              {endHourOptions.map((hour) => (
-                <option key={hour} value={hour}>
-                  {hour}
-                </option>
-              ))}
-            </select> */}
           </DialogHeader>
           <Button>Search</Button>
         </DialogContent>

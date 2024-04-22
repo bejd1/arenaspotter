@@ -50,7 +50,6 @@ const SelectSort = () => {
           <SelectItem value="systsdsem">
             <div className="flex flex-row justify-between items-center w-max gap-1">
               Payment only
-              <GrMoney className="text-lg" />
             </div>
           </SelectItem>
           <SelectItem value="dfsystsdsem" className="flex flex-row">

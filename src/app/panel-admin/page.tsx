@@ -21,6 +21,7 @@ const PanelAdmin = () => {
     data: pendingPosts = [],
     isLoading,
     isError,
+    refetch,
   } = useQuery({
     queryKey: ["pendingPosts"],
     queryFn: async () => await getArenaByStatus("Pending"),
@@ -64,6 +65,7 @@ const PanelAdmin = () => {
                     <form
                       onSubmit={async (e) => {
                         e.preventDefault();
+                        refetch();
                         await handleEditSubmit(
                           new FormData(e.target as HTMLFormElement)
                         );
