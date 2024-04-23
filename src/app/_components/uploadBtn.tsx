@@ -8,7 +8,7 @@ const UploadBtn = () => {
   const [key, setKey] = useState("");
   return (
     <div className="mt-4">
-      {/* <UploadButton
+      <UploadButton
         endpoint="imageUploader"
         onClientUploadComplete={(res) => {
           res.map((r) => {
@@ -22,8 +22,8 @@ const UploadBtn = () => {
           // Do something with the error.
           alert(`ERROR! ${error.message}`);
         }}
-      /> */}
-      <UploadDropzone
+      />
+      {/* <UploadDropzone
         endpoint="imageUploader"
         onClientUploadComplete={(res) => {
           res.map((r) => {
@@ -38,9 +38,13 @@ const UploadBtn = () => {
           alert(`ERROR! ${error.message}`);
         }}
         className="bg-slate-800 ut-label:text-lg ut-allowed-content:ut-uploading:text-red-300 px-20"
-      />
-      <h2 className="text-xl my-4">url: {url}</h2>
-      <DeleteBtn url={url} />
+      /> */}
+      {url.length !== 0 && (
+        <div>
+          <h2 className="text-xl my-4">url: {url}</h2>
+          <DeleteBtn url={url} />
+        </div>
+      )}
     </div>
   );
 };
