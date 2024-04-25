@@ -93,15 +93,3 @@ const PanelAdmin = () => {
 };
 
 export default PanelAdmin;
-
-{
-  /* <Select>
-<SelectTrigger className="w-[180px]">
-  <SelectValue placeholder={status} />
-</SelectTrigger>
-<SelectContent>
-  <SelectItem value="accept">Accept</SelectItem>
-  <SelectItem value="rejected">Rejected</SelectItem>
-</SelectContent>
-</Select> */
-}

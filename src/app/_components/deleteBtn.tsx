@@ -12,7 +12,6 @@ const DeleteBtn = ({ url, setUrl }: DeleteBtnProps) => {
       await axios.delete("api/uploadthing", {
         data: { url: url },
       });
-      // Assuming deletion was successful, then update the URL state
       setUrl("");
     } catch (error) {
       console.error("Error deleting data:", error);

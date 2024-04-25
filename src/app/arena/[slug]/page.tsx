@@ -105,13 +105,10 @@ const ArenaId = async ({ params }: { params: { slug: string } }) => {
       </div>
       <div className="flex flex-col">
         <p className="text-2xl font-bold">Location</p>
-<<<<<<< HEAD
         <MapComponent />
-=======
-        {/* <div className="w-full my-8">
+        <div className="w-full my-8">
           <MapComponent />
-        </div> */}
->>>>>>> aa526b0cdc21896fb7975e29c44f52da95cfd306
+        </div>
       </div>
       <div className="absolute right-32">
         <ReportModal id={params.slug} arenaName={productData?.name} />
