@@ -1,11 +1,13 @@
 "use client";
 import React, { useState } from "react";
 import { UploadButton, UploadDropzone } from "../utlis/uploadthing";
-import DeleteBtn from "./deleteBtn";
 
-const UploadBtn = () => {
-  const [url, setUrl] = useState("");
-  const [key, setKey] = useState("");
+interface UploadBtnProps {
+  setUrl: (url: string) => void;
+  setKey: (key: string) => void;
+}
+
+const UploadBtn = ({ setUrl, setKey }: UploadBtnProps) => {
   return (
     <div className="mt-4">
       {/* <UploadButton
@@ -26,21 +28,18 @@ const UploadBtn = () => {
       <UploadDropzone
         endpoint="imageUploader"
         onClientUploadComplete={(res) => {
-          res.map((r) => {
-            setUrl(r.url);
-            setKey(r.key);
-            return r.url;
+          res.map((res) => {
+            setUrl(res.url);
+            setKey(res.key);
+            return res.url;
           });
           console.log("Files: ", res);
-          alert("Upload Completed");
         }}
         onUploadError={(error: Error) => {
           alert(`ERROR! ${error.message}`);
         }}
-        className="bg-slate-800 ut-label:text-lg ut-allowed-content:ut-uploading:text-red-300 px-20"
+        className="bg-slate-800 ut-label:text-lg ut-allowed-content:ut-uploading:text-red-300 px-20 py-8 cursor-pointer"
       />
-      <h2 className="text-xl my-4">url: {url}</h2>
-      <DeleteBtn url={url} />
     </div>
   );
 };

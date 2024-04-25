@@ -2,17 +2,23 @@ import React from "react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 
-const DeleteBtn = ({ url }: { url: string }) => {
+interface DeleteBtnProps {
+  setUrl: (url: string) => void;
+  url: string;
+}
+const DeleteBtn = ({ url, setUrl }: DeleteBtnProps) => {
   const deleteImage = async () => {
     try {
       await axios.delete("api/uploadthing", {
         data: { url: url },
       });
-      console.log("delete image");
+      // Assuming deletion was successful, then update the URL state
+      setUrl("");
     } catch (error) {
       console.error("Error deleting data:", error);
     }
   };
+
   return (
     <div>
       <Button onClick={deleteImage}>Delete</Button>

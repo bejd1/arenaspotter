@@ -71,7 +71,11 @@ const PanelAdmin = () => {
                         );
                       }}
                     >
-                      <select name="status" value="pending">
+                      <select
+                        name="status"
+                        defaultValue="pending"
+                        onChange={() => {}}
+                      >
                         <option value="accept">accept</option>
                         <option value="rejected">rejected</option>
                       </select>

@@ -5,6 +5,7 @@ import ReportModal from "@/app/_components/reportModal";
 import { Tooltip } from "@mui/material";
 import { Button } from "@/components/ui/button";
 import FavoriteBtn from "@/app/_components/favoriteBtn";
+import { MapComponent } from "@/app/_components/map";
 
 interface openingHoursI {
   day: string;
@@ -26,9 +27,6 @@ const ArenaId = async ({ params }: { params: { slug: string } }) => {
       id: params.slug,
     },
   });
-
-  const urlMap =
-    "https://cdn.discordapp.com/attachments/1182760469459632179/1224466610387943464/map.png?ex=661d9865&is=660b2365&hm=157449de97e976234f26cd481f514d2644c59f6a35a854fa943b1f571513e593&";
 
   return (
     <div className="my-5 px-40 flex flex-col justyfy-center h-screen mt-8 ">
@@ -107,7 +105,7 @@ const ArenaId = async ({ params }: { params: { slug: string } }) => {
       </div>
       <div className="flex flex-col">
         <p className="text-2xl font-bold">Location</p>
-        <img src={urlMap} className="mb-20" />
+        <MapComponent />
       </div>
       <div className="absolute right-32">
         <ReportModal id={params.slug} arenaName={productData?.name} />

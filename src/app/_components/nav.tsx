@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import DropdownImage from "@/components/dropdown-image";
 import { GiSoccerField } from "react-icons/gi";
 import NavIcons from "./navIcons";
-import { CircularProgress } from "@mui/material";
+import { MdPerson } from "react-icons/md";
 import { Button } from "@/components/ui/button";
 
 const Nav = () => {
@@ -25,7 +25,7 @@ const Nav = () => {
           <div className="flex items-center justify-center">
             <NavIcons />
             {status === "loading" ? (
-              <CircularProgress size={20} className="ml-1" />
+              <MdPerson className="text-2xl ml-1 cursor-pointer" />
             ) : (
               <div>
                 {!session?.user ? (
