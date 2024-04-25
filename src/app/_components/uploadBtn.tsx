@@ -10,7 +10,7 @@ interface UploadBtnProps {
 const UploadBtn = ({ setUrl, setKey }: UploadBtnProps) => {
   return (
     <div className="mt-4">
-      {/* <UploadButton
+      <UploadButton
         endpoint="imageUploader"
         onClientUploadComplete={(res) => {
           res.map((r) => {
@@ -24,8 +24,8 @@ const UploadBtn = ({ setUrl, setKey }: UploadBtnProps) => {
           // Do something with the error.
           alert(`ERROR! ${error.message}`);
         }}
-      /> */}
-      <UploadDropzone
+      />
+      {/* <UploadDropzone
         endpoint="imageUploader"
         onClientUploadComplete={(res) => {
           res.map((res) => {
@@ -38,8 +38,19 @@ const UploadBtn = ({ setUrl, setKey }: UploadBtnProps) => {
         onUploadError={(error: Error) => {
           alert(`ERROR! ${error.message}`);
         }}
+<<<<<<< HEAD
         className="bg-slate-800 ut-label:text-lg ut-allowed-content:ut-uploading:text-red-300 px-20 py-8 cursor-pointer"
       />
+=======
+        className="bg-slate-800 ut-label:text-lg ut-allowed-content:ut-uploading:text-red-300 px-20"
+      /> */}
+      {url.length !== 0 && (
+        <div>
+          <h2 className="text-xl my-4">url: {url}</h2>
+          <DeleteBtn url={url} />
+        </div>
+      )}
+>>>>>>> aa526b0cdc21896fb7975e29c44f52da95cfd306
     </div>
   );
 };

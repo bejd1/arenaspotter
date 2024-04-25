@@ -40,7 +40,6 @@ const ParentComponent = () => {
         description={"Edward sinooo"}
         variant={"error"}
       /> */}
-      {/* <UploadBtn /> */}
     </div>
   );
 };
