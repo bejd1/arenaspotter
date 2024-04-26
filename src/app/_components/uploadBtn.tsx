@@ -38,7 +38,7 @@ const UploadBtn = ({ setUrl, setKey }: UploadBtnProps) => {
         onUploadError={(error: Error) => {
           alert(`ERROR! ${error.message}`);
         }}
-        className="bg-slate-800 ut-label:text-lg ut-allowed-content:ut-uploading:text-red-300 px-20 py-8 cursor-pointer"
+        className="bg-slate-800 ut-label:text-lg ut-allowed-content:ut-uploading:text-red-300 px-20 py-4 cursor-pointer m-0"
       />
     </div>
   );

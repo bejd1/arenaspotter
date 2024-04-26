@@ -13,16 +13,13 @@ export async function getArena(
 ) {
   let orderBy: any = {};
 
-  // Sortowanie wg kategorii
   if (category) {
     orderBy = { [category]: "asc" };
   }
-
   const data: PostT[] = await prisma.post.findMany({
     orderBy,
   });
 
-  // Jeśli wybrano sortowanie wg kosztu lub liczby osób, dodaj odpowiednie sortowanie
   if (sortByCost) {
     orderBy = { cost: sortByCost === "asc" ? "asc" : "desc" };
     data.sort((a, b) =>
@@ -37,20 +34,46 @@ export async function getArena(
 
   return data.map((item: PostT) => ({
     id: item.id,
+    author: item.author,
     name: item.name,
     city: item.city,
-    address: item.address,
+    zipOrPostalCode: item.zipOrPostalCode,
+    street: item.street,
     email: item.email,
-    author: item.author,
-    image: item.image,
-    image2: item.image2,
-    image3: item.image3,
+    phoneNumber: item.phoneNumber,
     people: item.people,
     cost: item.cost,
+    status: item.status,
     football: item.football,
     basketball: item.basketball,
     netball: item.netball,
-    status: item.status,
+    size: item.size,
+    surface: item.surface,
+    toilet: item.toilet,
+    parking: item.parking,
+    showers: item.showers,
+    dressingRoom: item.dressingRoom,
+    lighting: item.lighting,
+    openingMonday: item.openingMonday,
+    openingHoursMonday: item.openingHoursMonday,
+    openingTuesday: item.openingTuesday,
+    openingHoursTuesday: item.openingHoursTuesday,
+    openingWednesday: item.openingWednesday,
+    openingHoursWednesday: item.openingHoursWednesday,
+    openingThursday: item.openingThursday,
+    openingHoursThursday: item.openingHoursThursday,
+    openingFriday: item.openingFriday,
+    openingHoursFriday: item.openingHoursFriday,
+    openingSaturday: item.openingSaturday,
+    openingHoursSaturday: item.openingHoursSaturday,
+    openingSunday: item.openingSunday,
+    openingHoursSunday: item.openingHoursSunday,
+    description: item.description,
+    instagram: item.instagram,
+    facebook: item.facebook,
+    website: item.website,
+    image: item.image,
+    premium: item.premium,
   }));
 }
 
@@ -74,37 +97,91 @@ export async function getArenaByAuthor(id: string) {
 
 export async function createArena(formData: FormData) {
   try {
+    const author = formData.get("author") as string;
     const name = formData.get("name") as string;
     const city = formData.get("city") as string;
-    const address = formData.get("address") as string;
+    const zipOrPostalCode = formData.get("zipOrPostalCode") as string;
+    const street = formData.get("street") as string;
     const email = formData.get("email") as string;
-    const image = formData.get("image") as string;
-    const image2 = formData.get("image2") as string;
-    const image3 = formData.get("image3") as string;
+    const phoneNumber = formData.get("phoneNumber") as string;
     const people = parseInt(formData.get("people") as string);
     const cost = parseInt(formData.get("cost") as string);
+    const status = formData.get("status") as string;
     const football = formData.get("football") as string;
     const basketball = formData.get("basketball") as string;
     const netball = formData.get("netball") as string;
-    const author = formData.get("author") as string;
-    const status = formData.get("status") as string;
+    const size = formData.get("size") as string;
+    const surface = formData.get("surface") as string;
+    const toilet = formData.get("toilet") as string;
+    const parking = formData.get("parking") as string;
+    const showers = formData.get("showers") as string;
+    const dressingRoom = formData.get("dressingRoom") as string;
+    const lighting = formData.get("lighting") as string;
+    const openingMonday = formData.get("openingMonday") as string;
+    const openingHoursMonday = formData.get("openingHoursMonday") as string;
+    const openingTuesday = formData.get("openingTuesday") as string;
+    const openingHoursTuesday = formData.get("openingHoursTuesday") as string;
+    const openingWednesday = formData.get("openingWednesday") as string;
+    const openingHoursWednesday = formData.get(
+      "openingHoursWednesday"
+    ) as string;
+    const openingThursday = formData.get("openingThursday") as string;
+    const openingHoursThursday = formData.get("openingHoursThursday") as string;
+    const openingFriday = formData.get("openingFriday") as string;
+    const openingHoursFriday = formData.get("openingHoursFriday") as string;
+    const openingSaturday = formData.get("openingSaturday") as string;
+    const openingHoursSaturday = formData.get("openingHoursSaturday") as string;
+    const openingSunday = formData.get("openingSunday") as string;
+    const openingHoursSunday = formData.get("openingHoursSunday") as string;
+    const description = formData.get("description") as string;
+    const instagram = formData.get("instagram") as string;
+    const facebook = formData.get("facebook") as string;
+    const website = formData.get("website") as string;
+    const image = formData.get("image") as string;
+    const premium = formData.get("premium") as string;
 
     await prisma.post.create({
       data: {
+        author: author,
         name: name,
         city: city,
-        address: address,
+        zipOrPostalCode: zipOrPostalCode,
+        street: street,
         email: email,
-        author: author,
-        image: image,
-        image2: image2,
-        image3: image3,
+        phoneNumber: phoneNumber,
         people: people,
         cost: cost,
+        status: status,
         football: football,
         basketball: basketball,
         netball: netball,
-        status: status,
+        size: size,
+        surface: surface,
+        toilet: toilet,
+        parking: parking,
+        showers: showers,
+        dressingRoom: dressingRoom,
+        lighting: lighting,
+        openingMonday: openingMonday,
+        openingHoursMonday: openingHoursMonday,
+        openingTuesday: openingTuesday,
+        openingHoursTuesday: openingHoursTuesday,
+        openingWednesday: openingWednesday,
+        openingHoursWednesday: openingHoursWednesday,
+        openingThursday: openingThursday,
+        openingHoursThursday: openingHoursThursday,
+        openingFriday: openingFriday,
+        openingHoursFriday: openingHoursFriday,
+        openingSaturday: openingSaturday,
+        openingHoursSaturday: openingHoursSaturday,
+        openingSunday: openingSunday,
+        openingHoursSunday: openingHoursSunday,
+        description: description,
+        instagram: instagram,
+        facebook: facebook,
+        website: website,
+        image: image,
+        premium: premium,
       },
     });
 
@@ -119,40 +196,95 @@ export async function createArena(formData: FormData) {
 export async function edit(formData: FormData) {
   try {
     const id = formData.get("inputId") as string;
+    const author = formData.get("author") as string;
     const name = formData.get("name") as string;
     const city = formData.get("city") as string;
-    const address = formData.get("address") as string;
+    const zipOrPostalCode = formData.get("zipOrPostalCode") as string;
+    const street = formData.get("street") as string;
     const email = formData.get("email") as string;
-    const image = formData.get("image") as string;
-    const image2 = formData.get("image2") as string;
-    const image3 = formData.get("image3") as string;
+    const phoneNumber = formData.get("phoneNumber") as string;
     const people = parseInt(formData.get("people") as string);
     const cost = parseInt(formData.get("cost") as string);
+    const status = formData.get("status") as string;
     const football = formData.get("football") as string;
     const basketball = formData.get("basketball") as string;
     const netball = formData.get("netball") as string;
-    const author = formData.get("author") as string;
-    const status = formData.get("status") as string;
+    const size = formData.get("size") as string;
+    const surface = formData.get("surface") as string;
+    const toilet = formData.get("toilet") as string;
+    const parking = formData.get("parking") as string;
+    const showers = formData.get("showers") as string;
+    const dressingRoom = formData.get("dressingRoom") as string;
+    const lighting = formData.get("lighting") as string;
+    const allTime = formData.get("allTime") as string;
+    const openingMonday = formData.get("openingMonday") as string;
+    const openingHoursMonday = formData.get("openingHoursMonday") as string;
+    const openingTuesday = formData.get("openingTuesday") as string;
+    const openingHoursTuesday = formData.get("openingHoursTuesday") as string;
+    const openingWednesday = formData.get("openingWednesday") as string;
+    const openingHoursWednesday = formData.get(
+      "openingHoursWednesday"
+    ) as string;
+    const openingThursday = formData.get("openingThursday") as string;
+    const openingHoursThursday = formData.get("openingHoursThursday") as string;
+    const openingFriday = formData.get("openingFriday") as string;
+    const openingHoursFriday = formData.get("openingHoursFriday") as string;
+    const openingSaturday = formData.get("openingSaturday") as string;
+    const openingHoursSaturday = formData.get("openingHoursSaturday") as string;
+    const openingSunday = formData.get("openingSunday") as string;
+    const openingHoursSunday = formData.get("openingHoursSunday") as string;
+    const description = formData.get("description") as string;
+    const instagram = formData.get("instagram") as string;
+    const facebook = formData.get("facebook") as string;
+    const website = formData.get("website") as string;
+    const image = formData.get("image") as string;
+    const premium = formData.get("premium") as string;
 
     await prisma.post.update({
       where: {
         id: id,
       },
       data: {
+        author: author,
         name: name,
         city: city,
-        address: address,
+        zipOrPostalCode: zipOrPostalCode,
+        street: street,
         email: email,
-        author: author,
-        image: image,
-        image2: image2,
-        image3: image3,
+        phoneNumber: phoneNumber,
         people: people,
         cost: cost,
+        status: status,
         football: football,
         basketball: basketball,
         netball: netball,
-        status: status,
+        size: size,
+        surface: surface,
+        toilet: toilet,
+        parking: parking,
+        showers: showers,
+        dressingRoom: dressingRoom,
+        lighting: lighting,
+        openingMonday: openingMonday,
+        openingHoursMonday: openingHoursMonday,
+        openingTuesday: openingTuesday,
+        openingHoursTuesday: openingHoursTuesday,
+        openingWednesday: openingWednesday,
+        openingHoursWednesday: openingHoursWednesday,
+        openingThursday: openingThursday,
+        openingHoursThursday: openingHoursThursday,
+        openingFriday: openingFriday,
+        openingHoursFriday: openingHoursFriday,
+        openingSaturday: openingSaturday,
+        openingHoursSaturday: openingHoursSaturday,
+        openingSunday: openingSunday,
+        openingHoursSunday: openingHoursSunday,
+        description: description,
+        instagram: instagram,
+        facebook: facebook,
+        website: website,
+        image: image,
+        premium: premium,
       },
     });
 

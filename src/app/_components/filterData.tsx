@@ -72,7 +72,7 @@ const FilterData = () => {
       <Dialog>
         <div className=" flex flex-row gap-2">
           <SelectSort />
-          <DialogTrigger className="mb-4 bg-white text-black rounded-md px-4 py-1 font-medium">
+          <DialogTrigger className="hidden mb-4 bg-white text-black rounded-md px-4 py-1 font-medium">
             More filters
           </DialogTrigger>
         </div>

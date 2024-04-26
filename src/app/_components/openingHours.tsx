@@ -31,7 +31,6 @@ for (let i = 0; i < 24; i++) {
     times.push({ label: `${hour}:${minute}`, value: `${hour}:${minute}` });
   }
 }
-// Dodanie godziny "24:00"
 times.push({ label: "24:00", value: "24:00" });
 
 const OpeningHours = () => {
@@ -60,7 +59,7 @@ const OpeningHours = () => {
         <div key={day.value}>
           <Label>{day.label}</Label>
           <div className="flex flex-row gap-2">
-            <Select required>
+            <Select name={`opening${day.label}`} required>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Select Time" />
               </SelectTrigger>
@@ -76,7 +75,7 @@ const OpeningHours = () => {
                 ))}
               </SelectContent>
             </Select>
-            <Select required>
+            <Select name={`openingHours${day.label}`} required>
               {/* <Select required disabled={!selectedStartTime}> */}
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Select Time" />

@@ -9,22 +9,50 @@ generator client {
 
 
 model Post {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  city        String
-  address     String
-  email       String
-  image       String
-  image2      String
-  image3      String
-  people      Int
-  football    String?
-  basketball  String?
-  netball     String?
-  cost        Int
-  author      String
-  status      String
+  id                      String    @id @default(auto()) @map("_id") @db.ObjectId
+  author                  String
+  name                    String
+  city                    String
+  zipOrPostalCode         String
+  street                  String
+  email                   String
+  phoneNumber             String
+  people                  Int
+  cost                    Int
+  status                  String
+  football                String?
+  basketball              String?
+  netball                 String?
+  size                    String
+  surface                 String
+  toilet                  String
+  parking                 String
+  showers                 String
+  dressingRoom            String
+  lighting                String
+  // allTime              String
+  openingMonday           String?
+  openingHoursMonday      String?
+  openingTuesday          String?
+  openingHoursTuesday     String?
+  openingWednesday        String?
+  openingHoursWednesday   String?
+  openingThursday         String?
+  openingHoursThursday    String?
+  openingFriday           String?
+  openingHoursFriday      String?
+  openingSaturday         String?
+  openingHoursSaturday    String?
+  openingSunday           String?
+  openingHoursSunday      String?
+  description             String?
+  instagram               String? 
+  facebook                String?
+  website                 String?
+  image                   String
+  premium                 String
 }
+
 model ReportArena {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name          String

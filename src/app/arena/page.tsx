@@ -33,7 +33,7 @@ const Arena = () => {
   });
 
   useEffect(() => {
-    refetch(); // Ponowne pobranie danych po zmianie wartości forceRefresh
+    refetch();
   }, [forceRefresh]);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,20 +46,10 @@ const Arena = () => {
   const filteredArenas = arenas.filter(
     (arena) =>
       (arena.city?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
-      (arena.address?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
+      (arena.street?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
       (arena.name?.toLowerCase() || "").includes(searchTerm.toLowerCase())
   );
 
-  const buildUrlWithParams = (additionalParams: any) => {
-    const params = new URLSearchParams();
-    for (const key in additionalParams) {
-      params.set(key, additionalParams[key]);
-    }
-    if (category) {
-      params.set("category", category);
-    }
-    return `${pathname}?${params.toString()}`;
-  };
   return (
     <div className="flex flex-col mt-8 items-center justify-center w-full">
       <Category searchTerm={searchTerm} handleSearch={handleSearch} />

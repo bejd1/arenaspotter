@@ -12,11 +12,7 @@ import StoreProvider from "./utlis/store-provider";
 import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
-<<<<<<< HEAD
 import { MapProvider } from "./utlis/map-provider";
-=======
-// import { MapProvider } from "./utlis/map-provider";
->>>>>>> aa526b0cdc21896fb7975e29c44f52da95cfd306
 
 export const metadata: Metadata = {
   title: {
@@ -51,7 +47,6 @@ export default function RootLayout({
               disableTransitionOnChange
             >
               <AuthProvider>
-<<<<<<< HEAD
                 <MapProvider>
                   <div>
                     <Nav />
@@ -63,19 +58,6 @@ export default function RootLayout({
                     {modal}
                   </div>
                 </MapProvider>
-=======
-                {/* <MapProvider> */}
-                <div>
-                  <Nav />
-                  <NextSSRPlugin
-                    routerConfig={extractRouterConfig(ourFileRouter)}
-                  />
-                  <Toaster />
-                  {children}
-                  {modal}
-                </div>
-                {/* </MapProvider> */}
->>>>>>> aa526b0cdc21896fb7975e29c44f52da95cfd306
               </AuthProvider>
             </ThemeProvider>
           </QueryProvider>

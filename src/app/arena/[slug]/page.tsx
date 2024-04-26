@@ -6,21 +6,13 @@ import { Tooltip } from "@mui/material";
 import { Button } from "@/components/ui/button";
 import FavoriteBtn from "@/app/_components/favoriteBtn";
 import { MapComponent } from "@/app/_components/map";
+import { IoMdClose } from "react-icons/io";
+import { FaCheck } from "react-icons/fa6";
+import { FaInstagram } from "react-icons/fa";
+import { CgWebsite } from "react-icons/cg";
+import { FaFacebook } from "react-icons/fa";
+import Link from "next/link";
 
-interface openingHoursI {
-  day: string;
-  hours: string;
-}
-
-const openingHours: openingHoursI[] = [
-  { day: "Monday", hours: "7:30am - 9:30pm" },
-  { day: "Tuesday", hours: "7:30am - 9:30pm" },
-  { day: "Wednesday", hours: "7:30am - 9:30pm" },
-  { day: "Thursday", hours: "7:30am - 9:30pm" },
-  { day: "Friday", hours: "7:30am - 9:30pm" },
-  { day: "Saturday", hours: "7:30am - 9:30pm" },
-  { day: "Sunday", hours: "7:30am - 9:30pm" },
-];
 const ArenaId = async ({ params }: { params: { slug: string } }) => {
   const productData = await prisma.post.findUnique({
     where: {
@@ -38,9 +30,9 @@ const ArenaId = async ({ params }: { params: { slug: string } }) => {
         <div>
           <h1 className="text-3xl font-extrabold">{productData?.name}</h1>
           <div className="flex my-2 gap-2">
-            {!productData?.netball && <Badge>Netball</Badge>}
-            {!productData?.football && <Badge>Football</Badge>}
-            {!productData?.basketball && <Badge>Basketball</Badge>}
+            {productData?.netball && <Badge>Netball</Badge>}
+            {productData?.football && <Badge>Football</Badge>}
+            {productData?.basketball && <Badge>Basketball</Badge>}
           </div>
         </div>
         <div className="p-2 rounded-md">
@@ -64,48 +56,133 @@ const ArenaId = async ({ params }: { params: { slug: string } }) => {
         <div className="flex gap-10">
           {/* Opening */}
           <div className="flex flex-col">
-            <p className="text-2xl font-bold">Opening Hours</p>
+            <h3 className="text-2xl font-bold">Opening Hours</h3>
             <div>
-              {openingHours.map((openingHour) => (
-                <p key={openingHour.day}>
-                  {openingHour.day}: {openingHour.hours}
-                </p>
-              ))}
+              <p>
+                Monday {productData?.openingMonday} -
+                {productData?.openingHoursMonday}
+              </p>
+              <p>
+                Tuesday {productData?.openingTuesday} -
+                {productData?.openingHoursTuesday}
+              </p>
+              <p>
+                Wednesday {productData?.openingWednesday} -
+                {productData?.openingHoursWednesday}
+              </p>
+              <p>
+                Thursday {productData?.openingThursday} -
+                {productData?.openingHoursThursday}
+              </p>
+              <p>
+                Friday {productData?.openingFriday} -
+                {productData?.openingHoursFriday}
+              </p>
+              <p>
+                Saturday {productData?.openingSaturday} -
+                {productData?.openingHoursSaturday}
+              </p>
+              <p>
+                Sunday {productData?.openingSunday} -
+                {productData?.openingHoursSunday}
+              </p>
             </div>
           </div>
         </div>
         {/* Info */}
         <div className="flex flex-col">
-          <p className="text-2xl font-bold">Info</p>
+          <h3 className="text-2xl font-bold">Info</h3>
           <p>City: {productData?.city}</p>
-          <p>Adress: {productData?.address}</p>
-          <p>Phone number: +48 999 999 999</p>
+          <p>Street: {productData?.street}</p>
+          <p>ZIP/PostalCode: {productData?.zipOrPostalCode}</p>
+          <p>Phone number: {productData?.phoneNumber}</p>
           <p>Email: {productData?.email}</p>
         </div>
         {/* Price */}
         <div className="flex flex-col">
-          <p className="text-2xl font-bold">Price</p>
+          <h3 className="text-2xl font-bold">Price</h3>
           <p>
-            {productData?.cost === null ? (
-              <p>Free</p>
-            ) : (
-              `${productData?.cost}$/h`
-            )}
+            {productData?.cost === 0 ? <p>Free</p> : `${productData?.cost}$/h`}
           </p>
         </div>
         {/* More */}
         <div className="flex flex-col">
-          <p className="text-2xl font-bold">More</p>
+          <h3 className="text-2xl font-bold">More</h3>
           <p>Max people: {productData?.people}</p>
-          <p>Toilet: </p>
-          <p>Parking:</p>
-          <p>Dressing room:</p>
-          <p>Lighting:</p>
+          <p className="flex flex-row items-center gap-1">
+            Toilet:
+            {productData?.toilet === "true" ? (
+              <FaCheck />
+            ) : (
+              <IoMdClose className="text-lg" />
+            )}
+          </p>
+          <p className="flex flex-row items-center gap-1">
+            Parking:
+            {productData?.parking === "true" ? (
+              <FaCheck />
+            ) : (
+              <IoMdClose className="text-lg" />
+            )}
+          </p>
+          <p className="flex flex-row items-center gap-1">
+            Showers:
+            {productData?.showers === "true" ? (
+              <FaCheck />
+            ) : (
+              <IoMdClose className="text-lg" />
+            )}
+          </p>
+          <p className="flex flex-row items-center gap-1">
+            Dressing room:
+            {productData?.dressingRoom === "true" ? (
+              <FaCheck />
+            ) : (
+              <IoMdClose className="text-lg" />
+            )}
+          </p>
+          <p className="flex flex-row items-center gap-1">
+            Lighting:
+            {productData?.lighting === "true" ? (
+              <FaCheck />
+            ) : (
+              <IoMdClose className="text-lg" />
+            )}
+          </p>
+        </div>
+        {/* Description */}
+        <div className="flex flex-col">
+          <p className="text-2xl font-bold">Description</p>
+          {productData?.description?.length !== 0 ? (
+            <p>No desciption yet.</p>
+          ) : (
+            <p>{productData?.description}</p>
+          )}
+        </div>
+        {/* Description */}
+        <div className="flex flex-col">
+          <h3 className="text-2xl font-bold">Socials</h3>
+          <div className="flex flex-row gap-2 mt-2">
+            {productData?.instagram?.length === 0 ? (
+              <></>
+            ) : (
+              <FaInstagram className="text-xl cursor-pointer" />
+            )}
+            {productData?.facebook?.length === 0 ? (
+              <></>
+            ) : (
+              <FaFacebook className="text-xl cursor-pointer" />
+            )}
+            {productData?.website?.length === 0 ? (
+              <></>
+            ) : (
+              <CgWebsite className="text-xl cursor-pointer" />
+            )}
+          </div>
         </div>
       </div>
       <div className="flex flex-col">
         <p className="text-2xl font-bold">Location</p>
-        <MapComponent />
         <div className="w-full my-8">
           <MapComponent />
         </div>

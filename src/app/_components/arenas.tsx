@@ -24,7 +24,7 @@ const Arenas = ({
 
   useEffect(() => {
     setSortedArenas(arenas);
-    setData(arenas.slice(0, 10)); // Initially show only 10 items
+    setData(arenas.slice(0, 10));
   }, [arenas]);
 
   const filtered = () => {
@@ -42,10 +42,9 @@ const Arenas = ({
   };
 
   const loadMore = () => {
-    // Load more items (e.g., next 10 items) when the user scrolls
     const currentLength = data.length;
     const newItems = filtered().slice(currentLength, currentLength + 10);
-    setData([...data, ...newItems.slice(0, 10)]); // Changed here
+    setData([...data, ...newItems.slice(0, 10)]);
   };
 
   return (
@@ -53,7 +52,7 @@ const Arenas = ({
       <InfiniteScroll
         pageStart={0}
         loadMore={loadMore}
-        hasMore={data.length < filtered().length} // Check if there are more items to load
+        hasMore={data.length < filtered().length}
         loader={
           <div className="loader" key={0}>
             Loading ...
@@ -66,7 +65,8 @@ const Arenas = ({
             <div>Doesn't exist: {searchTerm}</div>
           ) : (
             data.map((arena) => {
-              const { id, name, city, image, people, cost, status } = arena;
+              const { id, name, city, street, image, people, cost, status } =
+                arena;
 
               return (
                 <Card
@@ -91,7 +91,9 @@ const Arenas = ({
                       </CardContent>
                       <CardContent className="flex items-center gap-1 p-0 w-full h-6">
                         <CiLocationOn />
-                        <div>{city}</div>
+                        <p className="text-sm">
+                          {city}, {street}
+                        </p>
                       </CardContent>
                       <CardContent className="flex items-center gap-1 p-0 w-full h-6">
                         <IoPeopleSharp />
