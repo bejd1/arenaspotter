@@ -14,6 +14,7 @@ import Loading from "../_components/loading";
 import { useQuery } from "@tanstack/react-query";
 import ErrorComponent from "../_components/errorComponent";
 import { useSession } from "next-auth/react";
+import { Button } from "@/components/ui/button";
 
 const PanelAdmin = () => {
   const { data: session } = useSession();
@@ -40,7 +41,10 @@ const PanelAdmin = () => {
 
   return (
     <div className="flex flex-col justify-between px-4 sm:px-6 lg:px-20 py-2">
-      <h2 className="text-3xl mt-12 mb-8">Panel admin</h2>
+      <h2 className="text-xl sm:text-3xl mt-6 sm:mt-12 mb-4 sm:mb-8">
+        Panel admin
+      </h2>
+
       <Table>
         <TableHeader>
           <TableRow>
@@ -61,7 +65,7 @@ const PanelAdmin = () => {
                   </TableCell>
                   <TableCell>{status}</TableCell>
                   <TableCell>Credit Card</TableCell>
-                  <TableCell className="flex w-full justify-end items-right">
+                  <TableCell className="flex w-full justify-end items-right px-0">
                     <form
                       onSubmit={async (e) => {
                         e.preventDefault();
@@ -70,6 +74,7 @@ const PanelAdmin = () => {
                           new FormData(e.target as HTMLFormElement)
                         );
                       }}
+                      className="flex flex-col sm:flex-row items-end p-0 m-0"
                     >
                       <select
                         name="status"
@@ -80,7 +85,9 @@ const PanelAdmin = () => {
                         <option value="rejected">rejected</option>
                       </select>
                       <input type="hidden" name="inputId" value={id} />
-                      <button type="submit">Change</button>
+                      <Button variant={"default"} type="submit">
+                        Change
+                      </Button>
                     </form>
                   </TableCell>
                 </TableRow>

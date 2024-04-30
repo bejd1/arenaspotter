@@ -7,8 +7,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { BsArrowDownRight, BsArrowUpRight } from "react-icons/bs";
-import { GrMoney } from "react-icons/gr";
 import { IoRefreshSharp } from "react-icons/io5";
+import Link from "next/link";
 
 const SelectSort = () => {
   return (
@@ -20,15 +20,20 @@ const SelectSort = () => {
         <SelectContent>
           <SelectItem value="light">
             <div className="flex flex-row justify-between items-center w-max gap-1">
-              Sort by price
-              <BsArrowUpRight />
+              <Link href={"/arena/?price=asc"}>
+                Sort by price
+                <BsArrowUpRight />
+              </Link>
             </div>
           </SelectItem>
           <SelectItem value="dark">
-            <div className="flex flex-row justify-between items-center w-max gap-1">
+            <Link
+              href={"/arena/?price=asc"}
+              className="flex flex-row justify-between items-center w-max gap-1"
+            >
               Sort by price
               <BsArrowDownRight />
-            </div>
+            </Link>
           </SelectItem>
           <SelectItem value="syss">
             <div className="flex flex-row justify-between items-center w-max gap-1">

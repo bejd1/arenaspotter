@@ -7,6 +7,8 @@ import { Input } from "@/components/ui/input";
 import Modal from "@mui/material/Modal";
 import { useState } from "react";
 import { BiPencil } from "react-icons/bi";
+import UploadBtn from "./uploadBtn";
+import DeleteBtn from "./deleteBtn";
 
 interface SettingsModalI {
   id: string | undefined;
@@ -24,9 +26,10 @@ export default function SettingsModal({
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [url, setUrl] = useState(image);
+  const [key, setKey] = useState("");
   const [newName, setNewName] = useState(name);
   const [newEmail, setNewEmail] = useState(email);
-  const [newImage, setNewImage] = useState(image);
 
   return (
     <div>
@@ -38,9 +41,9 @@ export default function SettingsModal({
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-        className="flex items-center justify-center"
+        className="flex justify-center"
       >
-        <Card className="flex flex-col my-8 w-[600px] px-32 py-8">
+        <Card className="flex flex-col my-8 w-[600px] px-32 py-8 overflow-auto">
           <h2 className="text-2xl font-bold text-center">Change profile</h2>
           <form
             onSubmit={async (e) => {
@@ -73,17 +76,17 @@ export default function SettingsModal({
               required
             />
             <Label>Image</Label>
-            <Input
-              type="text"
-              name="image"
-              placeholder="Image"
-              value={newImage || ""}
-              onChange={(e) => setNewImage(e.target.value)}
-              required
-            />
+            {url?.length !== 0 ? (
+              <div>
+                <img src={url} alt="My image" />
+                <DeleteBtn url={url} setUrl={setUrl} />
+              </div>
+            ) : (
+              <UploadBtn setUrl={setUrl} setKey={setKey} />
+            )}
 
             <Button variant="default" type="submit" className="mt-4">
-              Create post
+              Change
             </Button>
           </form>
         </Card>

@@ -11,21 +11,41 @@ interface FavoriteBtnI {
   id: string | undefined;
   name: string | undefined;
   image: string | undefined;
+  city: string;
+  street: string;
+  cost: number;
+  people: number;
 }
 
-const FavoriteBtn = ({ id, name, image }: FavoriteBtnI) => {
+const FavoriteBtn = ({
+  id,
+  name,
+  image,
+  city,
+  street,
+  cost,
+  people,
+}: FavoriteBtnI) => {
   const favoriteArena = useSelector(selectFavoriteArena);
   const isFavorite = favoriteArena.find((f) => f.id === id);
   const dispatch = useDispatch();
   const handleAddField = (
     id: string | undefined,
     name: string | undefined,
-    image: string | undefined
+    image: string | undefined,
+    city: string,
+    street: string,
+    cost: number,
+    people: number
   ) => {
     const newField = {
       id: id,
       name: name,
       image: image,
+      city: city,
+      street: street,
+      cost: cost,
+      people: people,
     };
     dispatch(addFavoriteArena(newField));
   };
@@ -37,7 +57,7 @@ const FavoriteBtn = ({ id, name, image }: FavoriteBtnI) => {
           if (isFavorite) {
             dispatch(removeFavoriteArena(id as string));
           } else {
-            handleAddField(id, name, image);
+            handleAddField(id, name, image, city, street, cost, people);
           }
         }}
         className={`text-2xl hover:text-red-600 z-10 ${

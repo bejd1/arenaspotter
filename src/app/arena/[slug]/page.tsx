@@ -11,7 +11,8 @@ import { FaCheck } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa";
 import { CgWebsite } from "react-icons/cg";
 import { FaFacebook } from "react-icons/fa";
-import Link from "next/link";
+import { Separator } from "@/components/ui/separator";
+import Image from "next/image";
 
 const ArenaId = async ({ params }: { params: { slug: string } }) => {
   const productData = await prisma.post.findUnique({
@@ -21,14 +22,22 @@ const ArenaId = async ({ params }: { params: { slug: string } }) => {
   });
 
   return (
-    <div className="my-5 px-40 flex flex-col justyfy-center h-screen mt-8 ">
-      <div className="flex items-center justify-center gap-4">
-        <img src={productData?.image} className="w-2/3" />
+    <div className="my-5 px-4 sm:px-8 lg:px-20 xl:px-40 flex flex-col justyfy-center h-screen mt-8">
+      <div className="flex items-center justify-center">
+        <Image
+          src={productData?.image || ""}
+          width={300}
+          height={100}
+          alt="Arena image"
+          className="min-w-[90%] max-w-[91%] max-h-[700px] sm:min-w-[60%] sm:max-w-[61%] sm:max-h-[700px]"
+        />
       </div>
-      <div className="w-full h-0.5 bg-white my-4"></div>
+      <Separator className="my-4" />
       <div className="flex justify-between">
         <div>
-          <h1 className="text-3xl font-extrabold">{productData?.name}</h1>
+          <h1 className="text-xl lg:text-3xl font-extrabold">
+            {productData?.name}
+          </h1>
           <div className="flex my-2 gap-2">
             {productData?.netball && <Badge>Netball</Badge>}
             {productData?.football && <Badge>Football</Badge>}
@@ -47,43 +56,43 @@ const ArenaId = async ({ params }: { params: { slug: string } }) => {
           </Tooltip>
         </div>
       </div>
-      <div className="bg-[#ececec] text-[#373727] my-3 p-2 px-10  rounded-md w-max">
-        <h2 className="text-2xl font-bold">
+      <div className="bg-[#ececec] text-[#373727] my-3 p-2 px-4 lg:px-10 rounded-md w-max">
+        <h2 className="text-lg lg:text-2xl font-bold">
           Location, Opening Hours and Prices
         </h2>
       </div>
-      <div className="flex flex-row gap-20 my-8">
+      <div className="flex flex-col md:flex-row gap-4 md:gap-20 my-8">
         <div className="flex gap-10">
           {/* Opening */}
           <div className="flex flex-col">
             <h3 className="text-2xl font-bold">Opening Hours</h3>
             <div>
               <p>
-                Monday {productData?.openingMonday} -
+                Monday: {productData?.openingMonday} -
                 {productData?.openingHoursMonday}
               </p>
               <p>
-                Tuesday {productData?.openingTuesday} -
+                Tuesday: {productData?.openingTuesday} -
                 {productData?.openingHoursTuesday}
               </p>
               <p>
-                Wednesday {productData?.openingWednesday} -
+                Wednesday: {productData?.openingWednesday} -
                 {productData?.openingHoursWednesday}
               </p>
               <p>
-                Thursday {productData?.openingThursday} -
+                Thursday: {productData?.openingThursday} -
                 {productData?.openingHoursThursday}
               </p>
               <p>
-                Friday {productData?.openingFriday} -
+                Friday: {productData?.openingFriday} -
                 {productData?.openingHoursFriday}
               </p>
               <p>
-                Saturday {productData?.openingSaturday} -
+                Saturday: {productData?.openingSaturday} -
                 {productData?.openingHoursSaturday}
               </p>
               <p>
-                Sunday {productData?.openingSunday} -
+                Sunday: {productData?.openingSunday} -
                 {productData?.openingHoursSunday}
               </p>
             </div>
@@ -187,7 +196,7 @@ const ArenaId = async ({ params }: { params: { slug: string } }) => {
           <MapComponent />
         </div>
       </div>
-      <div className="absolute right-32">
+      <div className="absolute right-3 sm:right-12 md:right-32 top-20">
         <ReportModal id={params.slug} arenaName={productData?.name} />
       </div>
     </div>

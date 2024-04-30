@@ -9,10 +9,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
-import { DatePicker } from "@/components/ui/dataPicker";
 import { Slider } from "@/components/ui/slider";
 import SelectSort from "./selectSort";
+import Link from "next/link";
 
 const FilterData = () => {
   const [selectedStartHour, setSelectedStartHour] = useState("");
@@ -32,15 +31,15 @@ const FilterData = () => {
     setSelectedEndHour(hour);
   };
 
-  const handleMinSalaryChange = (e: any) => {
-    const newMinSalary = parseInt(e.target.value);
-    const newRange = [newMinSalary, range[1]];
+  const handleMinSalaryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newMinSalary: number = parseInt(e.target.value);
+    const newRange: [number, number] = [newMinSalary, range[1]];
     setRange(newRange);
   };
 
-  const handleMaxSalaryChange = (e: any) => {
-    const newMaxSalary = parseInt(e.target.value);
-    const newRange = [range[0], newMaxSalary];
+  const handleMaxSalaryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newMaxSalary: number = parseInt(e.target.value);
+    const newRange: [number, number] = [range[0], newMaxSalary];
     setRange(newRange);
   };
 
@@ -70,7 +69,7 @@ const FilterData = () => {
   return (
     <div>
       <Dialog>
-        <div className=" flex flex-row gap-2">
+        <div className="flex flex-row gap-2">
           <SelectSort />
           <DialogTrigger className="hidden mb-4 bg-white text-black rounded-md px-4 py-1 font-medium">
             More filters

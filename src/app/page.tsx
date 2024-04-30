@@ -1,4 +1,3 @@
-// "use client";
 import { Button } from "@/components/ui/button";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -12,13 +11,13 @@ export const metadata: Metadata = {
 
 const ParentComponent = () => {
   return (
-    <div className="flex flex-col items-center justify-center text-center h-[70vh]">
-      <h2 className="text-9xl">
-        <GiSoccerField className="text-9xl" />
-      </h2>
+    <div className="flex flex-col items-center justify-center text-center h-[70vh] px-4">
+      <GiSoccerField className="text-8xl sm:text-9xl" />
 
-      <h1 className="text-4xl font-extrabold">Search arenas near you</h1>
-      <h3 className="text-xl text-zinc-400 w-[700px] my-4">
+      <h1 className="text-xl sm:text-4xl font-extrabold">
+        Search arenas near you
+      </h1>
+      <h3 className="text-lg sm:text-xl text-zinc-400 sm:w-[700px] my-4">
         Beautifully designed components that you can copy and paste into your
         apps. Accessible. Customizable. Open Source. Get Started GitHub
       </h3>

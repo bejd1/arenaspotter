@@ -4,19 +4,33 @@ import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import Modal from "@mui/material/Modal";
 import { useState } from "react";
 import { PostT } from "@/types/types";
 import { BiPencil } from "react-icons/bi";
+import OpeningHours from "./openingHours";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function EditPost({ post }: { post: PostT }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [showSize, setShowSize] = useState(false);
+
+  const handleShowSize = () => {
+    setShowSize(!showSize);
+  };
 
   return (
     <div>
-      <Button variant={"outline"} onClick={handleOpen}>
+      <Button variant={"outline"} onClick={handleOpen} className="p-3 sm:p-4">
         <BiPencil />
       </Button>
       <Modal
@@ -24,9 +38,9 @@ export default function EditPost({ post }: { post: PostT }) {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-        className="flex items-center justify-center"
+        className="flex justify-center"
       >
-        <Card className="flex flex-col my-8 w-[600px] px-32 py-8">
+        <Card className="flex flex-col my-8 w-[600px] px-32 py-8 overflow-scroll">
           <h2 className="text-2xl font-bold text-center">Edit arena</h2>
           <form
             onSubmit={async (e) => {
@@ -34,102 +48,230 @@ export default function EditPost({ post }: { post: PostT }) {
             }}
             className="flex flex-col gap-4 mt-4"
           >
-            <Label>Name</Label>
+            <Input
+              type="hidden"
+              name="author"
+              value={post?.author}
+              onChange={() => {}}
+              required
+            />
+            <Input
+              type="hidden"
+              name="premium"
+              value={post?.premium}
+              onChange={() => {}}
+              required
+            />
+            <Label>Name*</Label>
             <Input
               type="text"
+              defaultValue={post?.name}
               name="name"
               placeholder="Name"
-              defaultValue={post.name}
               required
             />
-            <Label>Adress</Label>
+            {/* Adress */}
+            <Label>Adress*</Label>
             <Input
               type="text"
+              defaultValue={post?.city}
               name="city"
               placeholder="City"
-              defaultValue={post.city}
               required
             />
             <Input
               type="text"
-              name="address"
-              placeholder="Address"
-              defaultValue={post.address}
+              defaultValue={post?.zipOrPostalCode}
+              name="zipOrPostalCode"
+              placeholder="ZIP/Postal Code"
               required
             />
-            <Label>Email</Label>
             <Input
               type="text"
+              defaultValue={post?.street}
+              name="street"
+              placeholder="Street"
+              required
+            />
+            {/* Contact */}
+            <Label>Contact*</Label>
+            <Input
+              type="text"
+              defaultValue={post?.email}
               name="email"
               placeholder="Email"
-              defaultValue={post.email}
               required
             />
-            <Label>Image</Label>
             <Input
-              type="text"
-              name="image"
-              placeholder="Image"
-              defaultValue={post.image}
+              type="tel"
+              defaultValue={post?.phoneNumber}
+              name="phoneNumber"
+              placeholder="Phone number"
               required
             />
-            <Label>Image 2</Label>
-            <Input
-              type="text"
-              name="image2"
-              placeholder="Image 2"
-              defaultValue={post.image2}
-              required
-            />
-            <Label>Image 3</Label>
-            <Input
-              type="text"
-              name="image3"
-              placeholder="Image 3"
-              defaultValue={post.image3}
-              required
-            />
-            <Label>Cost $</Label>
+            {/* Info */}
+            <Label>Cost $/h*</Label>
             <Input
               type="number"
+              defaultValue={post?.cost}
               name="cost"
-              placeholder="Cost/h"
-              defaultValue={post.cost}
+              placeholder="Cost $/h"
               required
             />
-            <Label>People</Label>
+            <Label>People*</Label>
             <Input
               type="number"
+              defaultValue={post?.people}
               name="people"
               placeholder="People"
-              defaultValue={post.people}
               required
             />
-            <Label>Category</Label>
+            <Input type="hidden" name="status" value={"Pending"} required />
+            <Label>Category*</Label>
             <div className="flex items-center space-x-2">
               <input
                 type="checkbox"
                 id="football"
-                defaultChecked={!!post.football}
                 name="football"
+                onClick={handleShowSize}
               />
-              <label htmlFor="football">Football</label>
-              <input
-                type="checkbox"
-                id="basketball"
-                defaultChecked={!!post.basketball}
-                name="basketball"
-              />
-              <label htmlFor="basketball">Basketball</label>
-              <input
-                type="checkbox"
-                id="netball"
-                defaultChecked={!!post.netball}
-                name="netball"
-              />
-              <label htmlFor="netball">Netball</label>
+              <label>Football</label>
+              <input type="checkbox" id="basketball" name="basketball" />
+              <label>Basketball</label>
+              <input type="checkbox" id="netball" name="netball" />
+              <label>Netball</label>
             </div>
-            <Button variant="default" type="submit">
+            {showSize && (
+              <div>
+                <Label>Size*</Label>
+                <Select name="size" required>
+                  <SelectTrigger>
+                    <SelectValue
+                      placeholder="Select"
+                      defaultValue={post?.size}
+                    />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="fullSize">Full size</SelectItem>
+                    <SelectItem value="orlik">Orlik</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Label>Surface</Label>
+                <Select name="surface" required>
+                  <SelectTrigger>
+                    <SelectValue
+                      placeholder="Select"
+                      defaultValue={post?.surface}
+                    />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="natural">Natural</SelectItem>
+                    <SelectItem value="artificial">Artificial</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+            <Label>Toilet*</Label>
+            <Select name="toilet" required>
+              <SelectTrigger>
+                <SelectValue placeholder="Select" defaultValue={post?.toilet} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="true">True</SelectItem>
+                <SelectItem value="false">False</SelectItem>
+              </SelectContent>
+            </Select>
+            <Label>Parking*</Label>
+            <Select name="parking" required>
+              <SelectTrigger>
+                <SelectValue
+                  placeholder="Select"
+                  defaultValue={post?.parking}
+                />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="true">True</SelectItem>
+                <SelectItem value="false">False</SelectItem>
+              </SelectContent>
+            </Select>
+            <Label>Showers*</Label>
+            <Select name="showers" required>
+              <SelectTrigger>
+                <SelectValue
+                  placeholder="Select"
+                  defaultValue={post?.showers}
+                />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="true">True</SelectItem>
+                <SelectItem value="false">False</SelectItem>
+              </SelectContent>
+            </Select>
+            <Label>Dressing room*</Label>
+            <Select name="dressingRoom" required>
+              <SelectTrigger>
+                <SelectValue
+                  placeholder="Select"
+                  defaultValue={post?.dressingRoom}
+                />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="true">True</SelectItem>
+                <SelectItem value="false">False</SelectItem>
+              </SelectContent>
+            </Select>
+            <Label>Lighting*</Label>
+            <Select name="lighting" required>
+              <SelectTrigger>
+                <SelectValue
+                  placeholder="Select"
+                  defaultValue={post?.lighting}
+                />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="true">True</SelectItem>
+                <SelectItem value="false">False</SelectItem>
+              </SelectContent>
+            </Select>
+            {/*  */}
+            <Label>Opening hours*</Label>
+            <div className="flex flex-row gap-1">
+              <input type="checkbox" id="allTime" name="allTime" />
+              <label>24/7</label>
+            </div>
+            <OpeningHours />
+            <Label>Description</Label>
+            <Textarea
+              defaultValue={post?.description || ""}
+              placeholder="Description"
+              name="description"
+            />
+            <Label>Instagram</Label>
+            <Input
+              type="string"
+              defaultValue={post?.instagram || ""}
+              name="instagram"
+              placeholder="Instagram"
+            />
+            <Label>Facebook</Label>
+            <Input
+              type="string"
+              defaultValue={post?.facebook || ""}
+              name="facebook"
+              placeholder="Facebook"
+            />
+            <Label>Website</Label>
+            <Input
+              type="string"
+              defaultValue={post?.website || ""}
+              name="website"
+              placeholder="Website"
+            />
+            <Label>Image*</Label>
+            {/* {url.length === 0 && <UploadBtn setUrl={setUrl} setKey={setKey} />} */}
+            {/* <Input type="hidden" name="image" value={url} required /> */}
+            <Button variant="default" type="submit" className="mt-4">
               Create post
             </Button>
           </form>

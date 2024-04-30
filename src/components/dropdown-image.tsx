@@ -34,9 +34,12 @@ const DropdownImage = () => {
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem className="cursor-pointer sm:hidden">
-            <Button>Login</Button>
-          </DropdownMenuItem>
+          {!session?.user && (
+            <DropdownMenuItem className="cursor-pointer sm:hidden">
+              <Button>Login</Button>
+            </DropdownMenuItem>
+          )}
+
           <Link href="/my-arenas">
             <DropdownMenuItem className="cursor-pointer flex gap-2 justify-between">
               <p>My arenas</p>

@@ -4,7 +4,6 @@ import React from "react";
 import { Separator } from "@/components/ui/separator";
 import { useSession } from "next-auth/react";
 import DropdownImage from "@/components/dropdown-image";
-import { GiSoccerField } from "react-icons/gi";
 import NavIcons from "./navIcons";
 import { MdPerson } from "react-icons/md";
 import { Button } from "@/components/ui/button";
@@ -14,11 +13,10 @@ const Nav = () => {
 
   return (
     <div>
-      <div className="flex justify-between px-4 sm:px-6 lg:px-20 py-2">
+      <div className="flex justify-between items-center px-4 sm:px-6 lg:px-20 py-4">
         <Link href={"/"}>
           <div className="flex items-center justify-center gap-2">
-            <GiSoccerField className="text-4xl sm:text-5xl" />
-            <h2 className="text-sm sm:text-xl font-semibold">Arena Spotter</h2>
+            <h2 className="text-md sm:text-xl font-extrabold">Arena Spotter</h2>
           </div>
         </Link>
         <div className="flex items-center justify-center gap-1 md:gap-4">
@@ -29,7 +27,7 @@ const Nav = () => {
             ) : (
               <div>
                 {!session?.user ? (
-                  <div className="flex flex-row gap-2">
+                  <div className="flex flex-row gap-2 ml-2">
                     <Link href={`/my-account`}>
                       <Button>Login</Button>
                     </Link>

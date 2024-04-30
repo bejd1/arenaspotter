@@ -9,6 +9,8 @@ import { PostT } from "@/types/types";
 import { useSearchParams } from "next/navigation";
 import FavoriteBtn from "./favoriteBtn";
 import InfiniteScroll from "react-infinite-scroller";
+import Image from "next/image";
+import { max } from "date-fns";
 
 const Arenas = ({
   arenas,
@@ -55,12 +57,12 @@ const Arenas = ({
         hasMore={data.length < filtered().length}
         loader={
           <div className="loader" key={0}>
-            Loading ...
+            Loading...
           </div>
         }
         threshold={200}
       >
-        <div className="flex flex-wrap px-24 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 grid-rows-2 sm:px-8 gap-4">
           {filtered().length === 0 ? (
             <div>Doesn't exist: {searchTerm}</div>
           ) : (
@@ -76,11 +78,14 @@ const Arenas = ({
                   }`}
                 >
                   <Link href={`/arena/${id}`}>
-                    <img
+                    <Image
                       src={image}
-                      className="w-[320px] min-h-[200px] max-h-[201px]"
+                      width={300}
+                      height={200}
+                      alt="Arena image"
+                      className="min-h-[200px] max-h-[201px]"
                     />
-                    <CardHeader>
+                    <CardHeader className="p-3 sm:p-4">
                       <CardTitle className="pb-2 text-lg p-0 w-full h-6">
                         {name}
                       </CardTitle>
@@ -102,7 +107,15 @@ const Arenas = ({
                     </CardHeader>
                   </Link>
                   <CardContent className="absolute flex items-center justify-center bg-slate-900 text-white top-1 right-1 p-2 rounded-md z-10">
-                    <FavoriteBtn id={id} name={name} image={image} />
+                    <FavoriteBtn
+                      id={id}
+                      name={name}
+                      image={image}
+                      city={city}
+                      street={street}
+                      cost={cost}
+                      people={people}
+                    />
                   </CardContent>
                 </Card>
               );

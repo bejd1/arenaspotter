@@ -1,11 +1,8 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { BiFootball, BiSolidBasketball } from "react-icons/bi";
-import { PiVolleyball } from "react-icons/pi";
 import FilterData from "./filterData";
 import SearchInput from "./searchInput";
 import { useSearchParams } from "next/navigation";
+import CategoryBtn from "./categoryBtn";
 
 interface CategoryPropsI {
   searchTerm: string;
@@ -17,31 +14,17 @@ const Category = ({ searchTerm, handleSearch }: CategoryPropsI) => {
   const category = searchParams.get("category");
 
   return (
-    <div className="flex flex-row justify-between items-center w-full my-4 mx-48 sm:px-6 lg:px-32 mb-8">
-      <div className="flex gap-2 mb-4">
-        <Link href={"/arena"}>
-          <Button variant={category === null ? "secondary" : "default"}>
-            All
-          </Button>
-        </Link>
-        <Link href={`/arena/?category=football`}>
-          <Button variant={category === "football" ? "secondary" : "default"}>
-            <BiFootball className="text-xl" />
-          </Button>
-        </Link>
-        <Link href={`/arena/?category=basketball`}>
-          <Button variant={category === "basketball" ? "secondary" : "default"}>
-            <BiSolidBasketball className="text-xl" />
-          </Button>
-        </Link>
-        <Link href={`/arena/?category=netball`}>
-          <Button variant={category === "netball" ? "secondary" : "default"}>
-            <PiVolleyball className="text-xl" />
-          </Button>
-        </Link>
+    <div className="flex flex-col md:flex-row justify-between md:items-center w-full px-8 md:px-16 lg:px-32 my-8 gap-3">
+      <div className="hidden md:block">
+        <CategoryBtn category={category} />
       </div>
       <SearchInput searchTerm={searchTerm} handleSearch={handleSearch} />
-      <FilterData />
+      <div className="flex gap-4 flex-col sm:flex-row">
+        <div className="block md:hidden">
+          <CategoryBtn category={category} />
+        </div>
+        <FilterData />
+      </div>
     </div>
   );
 };

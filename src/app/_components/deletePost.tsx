@@ -21,7 +21,7 @@ const DeletePost = ({ id }: { id: string }) => {
         }}
       >
         <input onChange={() => {}} type="hidden" name="id" value={id} />
-        <Button variant={"outline"}>
+        <Button variant={"outline"} className="p-3 sm:p-4 ml-1">
           <BsTrash />
         </Button>
       </form>

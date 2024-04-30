@@ -57,7 +57,7 @@ const OpeningHours = () => {
     <>
       {daysOfWeek.map((day) => (
         <div key={day.value}>
-          <Label>{day.label}</Label>
+          <Label>{day.label}*</Label>
           <div className="flex flex-row gap-2">
             <Select name={`opening${day.label}`} required>
               <SelectTrigger className="w-[180px]">

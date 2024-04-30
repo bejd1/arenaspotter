@@ -18,6 +18,7 @@ import DeleteBtn from "../_components/deleteBtn";
 import OpeningHours from "../_components/openingHours";
 import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "@/components/ui/use-toast";
 
 const CreatePost = () => {
   const { data: session } = useSession();
@@ -28,7 +29,6 @@ const CreatePost = () => {
   const [key, setKey] = useState("");
   const ref = useRef<HTMLFormElement>(null);
   const premium = "false";
-  const [value, setValue] = useState();
 
   const handleCreateSubmit = async (formData: FormData) => {
     try {
@@ -36,6 +36,13 @@ const CreatePost = () => {
       ref.current?.reset();
       router.push("/arena");
       setUrl("");
+      toast({
+        title: "Success!",
+        description: "Created",
+        variant: "success",
+        duration: 5000,
+        className: "mb-2",
+      });
     } catch (error) {
       console.error("Edit function failed", error);
     }
@@ -71,10 +78,10 @@ const CreatePost = () => {
             onChange={() => {}}
             required
           />
-          <Label>Name</Label>
+          <Label>Name*</Label>
           <Input type="text" name="name" placeholder="Name" required />
           {/* Adress */}
-          <Label>Adress</Label>
+          <Label>Adress*</Label>
           <Input type="text" name="city" placeholder="City" required />
           <Input
             type="text"
@@ -84,11 +91,16 @@ const CreatePost = () => {
           />
           <Input type="text" name="street" placeholder="Street" required />
           {/* Contact */}
-          <Label>Contact</Label>
+          <Label>Contact*</Label>
           <Input type="text" name="email" placeholder="Email" required />
-
+          <Input
+            type="tel"
+            name="phoneNumber"
+            placeholder="Phone number"
+            required
+          />
           {/* Info */}
-          <Label>Cost $/h</Label>
+          <Label>Cost $/h*</Label>
           <Input
             type="number"
             name="cost"
@@ -96,10 +108,10 @@ const CreatePost = () => {
             defaultValue={0}
             required
           />
-          <Label>People</Label>
+          <Label>People*</Label>
           <Input type="number" name="people" placeholder="People" required />
           <Input type="hidden" name="status" value={"Pending"} required />
-          <Label>Category</Label>
+          <Label>Category*</Label>
           <div className="flex items-center space-x-2">
             <input
               type="checkbox"
@@ -115,7 +127,7 @@ const CreatePost = () => {
           </div>
           {showSize && (
             <div>
-              <Label>Size</Label>
+              <Label>Size*</Label>
               <Select name="size" required>
                 <SelectTrigger>
                   <SelectValue placeholder="Select" />
@@ -138,7 +150,7 @@ const CreatePost = () => {
               </Select>
             </div>
           )}
-          <Label>Toilet</Label>
+          <Label>Toilet*</Label>
           <Select name="toilet" required>
             <SelectTrigger>
               <SelectValue placeholder="Select" />
@@ -148,7 +160,7 @@ const CreatePost = () => {
               <SelectItem value="false">False</SelectItem>
             </SelectContent>
           </Select>
-          <Label>Parking</Label>
+          <Label>Parking*</Label>
           <Select name="parking" required>
             <SelectTrigger>
               <SelectValue placeholder="Select" />
@@ -158,7 +170,7 @@ const CreatePost = () => {
               <SelectItem value="false">False</SelectItem>
             </SelectContent>
           </Select>
-          <Label>Showers</Label>
+          <Label>Showers*</Label>
           <Select name="showers" required>
             <SelectTrigger>
               <SelectValue placeholder="Select" />
@@ -168,7 +180,7 @@ const CreatePost = () => {
               <SelectItem value="false">False</SelectItem>
             </SelectContent>
           </Select>
-          <Label>Dressing room</Label>
+          <Label>Dressing room*</Label>
           <Select name="dressingRoom" required>
             <SelectTrigger>
               <SelectValue placeholder="Select" />
@@ -178,7 +190,7 @@ const CreatePost = () => {
               <SelectItem value="false">False</SelectItem>
             </SelectContent>
           </Select>
-          <Label>Lighting</Label>
+          <Label>Lighting*</Label>
           <Select name="lighting" required>
             <SelectTrigger>
               <SelectValue placeholder="Select" />
@@ -189,7 +201,7 @@ const CreatePost = () => {
             </SelectContent>
           </Select>
           {/*  */}
-          <Label>Opening hours</Label>
+          <Label>Opening hours*</Label>
           <div className="flex flex-row gap-1">
             <input type="checkbox" id="allTime" name="allTime" />
             <label>24/7</label>
@@ -203,7 +215,7 @@ const CreatePost = () => {
           <Input type="string" name="facebook" placeholder="Facebook" />
           <Label>Website</Label>
           <Input type="string" name="website" placeholder="Website" />
-          <Label>Image</Label>
+          <Label>Image*</Label>
           {url.length === 0 && <UploadBtn setUrl={setUrl} setKey={setKey} />}
           <Input type="hidden" name="image" value={url} required />
           <Button variant="default" type="submit" className="mt-4">
@@ -212,7 +224,7 @@ const CreatePost = () => {
         </form>
         {url.length !== 0 && (
           <div>
-            <img src={url} alt="d" className="w-full py-2" />
+            <img src={url} alt="Your image" className="w-full py-2" />
             <DeleteBtn url={url} setUrl={setUrl} />
           </div>
         )}

@@ -20,11 +20,11 @@ export default function ReportModal({
   id: string;
   arenaName: string | undefined;
 }) {
+  const { data: session } = useSession();
+  const [email, setEmail] = useState(session?.user?.email?.toString());
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { data: session } = useSession();
-  const [email, setEmail] = useState(session?.user?.email?.toString());
   const ref = useRef<HTMLFormElement>(null);
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,72 +42,64 @@ export default function ReportModal({
 
   return (
     <div>
-      <Tooltip title="Report">
-        <Button variant={"outline"} size="icon" onClick={handleOpen}>
-          <MdOutlineReportProblem className="text-xl" />
-        </Button>
-      </Tooltip>
+      <Button
+        variant={"outline"}
+        onClick={handleOpen}
+        className="border border-white"
+      >
+        <MdOutlineReportProblem className="text-xl" />
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        className="flex justify-center items-center mb-12"
       >
-        <div className="flex items-center justify-center w-full h-[90vh]">
-          <Card className="w-[600px] p-4">
-            <div className="grid gap-4 py-4">
-              <form
-                ref={ref}
-                onSubmit={async (e) => {
-                  e.preventDefault();
-                  await handleCreateSubmit(
-                    new FormData(e.target as HTMLFormElement)
-                  );
-                }}
-              >
-                <input
-                  name="arenaId"
-                  type="hidden"
-                  value={id}
-                  className="mb-2"
-                />
-                <input
-                  name="name"
-                  type="hidden"
-                  value={arenaName}
-                  className="mb-2"
-                />
-                <input
-                  name="email"
-                  type="hidden"
-                  value={session?.user?.email?.toString()}
-                  className="mb-2"
-                  onChange={handleNameChange}
-                />
-                <Label htmlFor="name" className="text-right">
-                  Title
-                </Label>
-                <Input
-                  id="title"
-                  name="title"
-                  placeholder="Title"
-                  className="col-span-3"
-                  required
-                />
-                <Label htmlFor="username" className="text-right">
-                  Message
-                </Label>
-                <Textarea
-                  id="message"
-                  name="message"
-                  placeholder="Message"
-                  required
-                />
-                <Button type="submit">Report</Button>
-              </form>
-            </div>
-          </Card>
-        </div>
+        <Card className="flex flex-col my-8 w-[600px] px-12 py-8">
+          <h2 className="text-2xl font-bold text-center">Report</h2>
+          <form
+            ref={ref}
+            onSubmit={async (e) => {
+              e.preventDefault();
+              await handleCreateSubmit(
+                new FormData(e.target as HTMLFormElement)
+              );
+            }}
+            className="w-full"
+          >
+            <input name="arenaId" type="hidden" value={id} />
+            <input name="name" type="hidden" value={arenaName} />
+            <input
+              name="email"
+              type="hidden"
+              value={session?.user?.email?.toString()}
+              className="mb-2"
+              onChange={handleNameChange}
+            />
+            <Label htmlFor="name" className="text-right">
+              Title
+            </Label>
+            <Input
+              id="title"
+              name="title"
+              placeholder="Title"
+              className="col-span-3"
+              required
+            />
+            <Label htmlFor="username" className="text-right">
+              Message
+            </Label>
+            <Textarea
+              id="message"
+              name="message"
+              placeholder="Message"
+              className="mb-2"
+              required
+            />
+            <Button type="submit">Report</Button>
+          </form>
+        </Card>
       </Modal>
     </div>
   );
