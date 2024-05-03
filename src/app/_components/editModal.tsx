@@ -15,6 +15,7 @@ import Modal from "@mui/material/Modal";
 import { useState } from "react";
 import { PostT } from "@/types/types";
 import { BiPencil } from "react-icons/bi";
+import { IoMdClose } from "react-icons/io";
 import OpeningHours from "./openingHours";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -40,7 +41,7 @@ export default function EditPost({ post }: { post: PostT }) {
         aria-describedby="modal-modal-description"
         className="flex justify-center"
       >
-        <Card className="flex flex-col my-8 w-[600px] px-32 py-8 overflow-scroll">
+        <Card className="flex flex-col my-8 sm:w-[600px] px-4 sm:px-32 py-8 overflow-scroll relative">
           <h2 className="text-2xl font-bold text-center">Edit arena</h2>
           <form
             onSubmit={async (e) => {
@@ -275,6 +276,10 @@ export default function EditPost({ post }: { post: PostT }) {
               Create post
             </Button>
           </form>
+          <IoMdClose
+            onClick={handleClose}
+            className="absolute top-4 right-4 cursor-pointer text-xl"
+          />
         </Card>
       </Modal>
     </div>

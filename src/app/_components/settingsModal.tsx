@@ -9,6 +9,7 @@ import { useState } from "react";
 import { BiPencil } from "react-icons/bi";
 import UploadBtn from "./uploadBtn";
 import DeleteBtn from "./deleteBtn";
+import { IoMdClose } from "react-icons/io";
 
 interface SettingsModalI {
   id: string | undefined;
@@ -43,7 +44,7 @@ export default function SettingsModal({
         aria-describedby="modal-modal-description"
         className="flex justify-center"
       >
-        <Card className="flex flex-col my-8 w-[600px] px-32 py-8 overflow-auto">
+        <Card className="flex flex-col my-8 w-full sm:w-[600px] px-4 sm:px-32 py-8 overflow-auto relative">
           <h2 className="text-2xl font-bold text-center">Change profile</h2>
           <form
             onSubmit={async (e) => {
@@ -84,10 +85,13 @@ export default function SettingsModal({
             ) : (
               <UploadBtn setUrl={setUrl} setKey={setKey} />
             )}
-
             <Button variant="default" type="submit" className="mt-4">
               Change
             </Button>
+            <IoMdClose
+              onClick={handleClose}
+              className="absolute top-4 right-4 cursor-pointer text-xl"
+            />
           </form>
         </Card>
       </Modal>

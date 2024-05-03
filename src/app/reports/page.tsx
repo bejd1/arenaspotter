@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -15,6 +15,7 @@ import { getReport } from "@/actions/report";
 import DeleteReport from "../_components/deleteReport";
 import ErrorComponent from "../_components/errorComponent";
 import { useSession } from "next-auth/react";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 const Reports = () => {
   const { data: session } = useSession();
@@ -27,14 +28,22 @@ const Reports = () => {
     queryFn: async () => await getReport(),
   });
 
+  const [openReportId, setOpenReportId] = useState(null);
+
   if (isLoading) return <Loading />;
   if (isError) return <ErrorComponent />;
 
   if (session?.user?.role !== "admin") return null;
 
+  const toggleReportDetails = (reportId: any) => {
+    setOpenReportId(openReportId === reportId ? null : reportId);
+  };
+
   return (
     <div className="flex flex-col justify-between px-4 sm:px-6 lg:px-20 py-2">
-      <h2 className="text-3xl mt-12 mb-8">Reports</h2>
+      <h2 className="text-xl sm:text-3xl mt-6 sm:mt-12 mb-4 sm:mb-8">
+        Reports
+      </h2>
       {!reports ? (
         <div>Empty</div>
       ) : (
@@ -44,8 +53,9 @@ const Reports = () => {
               <TableHead>Name</TableHead>
               <TableHead>Title</TableHead>
               <TableHead>Message</TableHead>
-              <TableHead>Contact</TableHead>
-              <TableHead className="text-right">Delete</TableHead>
+              <TableHead className="hidden sm:block">Contact</TableHead>
+              <TableHead>Delete</TableHead>
+              <TableHead className="text-right">More</TableHead>
             </TableRow>
           </TableHeader>
           {reports.map((report) => {
@@ -55,22 +65,35 @@ const Reports = () => {
                   <TableCell className="font-medium">
                     <Link href={`/arena/${report.arenaId}`}>{report.name}</Link>
                   </TableCell>
-                  <TableCell>{report.message}</TableCell>
                   <TableCell>{report.title}</TableCell>
-                  <TableCell>{report.email}</TableCell>
-                  <TableCell className="hidden">
-                    <input
-                      name="id"
-                      id="id"
-                      type="text"
-                      value={report.id}
-                      onChange={() => {}}
-                    />
+                  <TableCell>{report.message}</TableCell>
+                  <TableCell className="hidden sm:block">
+                    {report.email}
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell>
                     <DeleteReport id={report.id} />
                   </TableCell>
+                  <TableCell className="text-right">
+                    {openReportId === report.id ? (
+                      <IoIosArrowUp
+                        className="cursor-pointer"
+                        onClick={() => toggleReportDetails(report.id)}
+                      />
+                    ) : (
+                      <IoIosArrowDown
+                        className="cursor-pointer"
+                        onClick={() => toggleReportDetails(report.id)}
+                      />
+                    )}
+                  </TableCell>
                 </TableRow>
+                {openReportId === report.id && (
+                  <TableRow>
+                    <TableCell colSpan={6}>
+                      <div className="w-full h-20">Title {report.title}</div>
+                    </TableCell>
+                  </TableRow>
+                )}
               </TableBody>
             );
           })}

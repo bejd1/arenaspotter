@@ -27,7 +27,7 @@ const NavIcons = () => {
         {isClient && favoriteArena.length > 0 && (
           <div
             className={`absolute bottom-6 right-0 flex items-center justify-center  h-4 w-4 rounded-full p-2 text-sm   ${
-              favoriteArena.length > 9 && "text-[11px]"
+              favoriteArena.length > 9 && "text-[10px]"
             } bg-blue-600 text-white`}
           >
             {favoriteArena.length}

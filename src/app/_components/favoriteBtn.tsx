@@ -11,10 +11,10 @@ interface FavoriteBtnI {
   id: string | undefined;
   name: string | undefined;
   image: string | undefined;
-  city: string;
-  street: string;
-  cost: number;
-  people: number;
+  city: string | undefined;
+  street: string | undefined;
+  cost: number | undefined;
+  people: number | undefined;
 }
 
 const FavoriteBtn = ({
@@ -33,19 +33,19 @@ const FavoriteBtn = ({
     id: string | undefined,
     name: string | undefined,
     image: string | undefined,
-    city: string,
-    street: string,
-    cost: number,
-    people: number
+    city: string | undefined,
+    street: string | undefined,
+    cost: number | undefined,
+    people: number | undefined
   ) => {
     const newField = {
-      id: id,
-      name: name,
-      image: image,
-      city: city,
-      street: street,
-      cost: cost,
-      people: people,
+      id: id as string,
+      name: name as string,
+      image: image as string,
+      city: city as string,
+      street: street as string,
+      cost: cost as number,
+      people: people as number,
     };
     dispatch(addFavoriteArena(newField));
   };

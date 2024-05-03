@@ -51,13 +51,17 @@ const ArenaId = async ({ params }: { params: { slug: string } }) => {
                 id={productData?.id}
                 name={productData?.name}
                 image={productData?.image}
+                city={productData?.city}
+                street={productData?.street}
+                cost={productData?.cost}
+                people={productData?.people}
               />
             </Button>
           </Tooltip>
         </div>
       </div>
-      <div className="bg-[#ececec] text-[#373727] my-3 p-2 px-4 lg:px-10 rounded-md w-max">
-        <h2 className="text-lg lg:text-2xl font-bold">
+      <div className="flex flex-wrap bg-[#ececec] text-[#373727] my-3 p-2 px-2 sm:px-4 lg:px-10 rounded-md w-max">
+        <h2 className="text-md lg:text-2xl font-bold">
           Location, Opening Hours and Prices
         </h2>
       </div>

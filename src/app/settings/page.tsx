@@ -9,7 +9,7 @@ const Settings = () => {
   const { data: session, status } = useSession();
 
   return (
-    <div className="flex flex-col justify-between px-4 sm:px-6 lg:px-20 py-2">
+    <div className="flex flex-col justify-between px-4 sm:px-6 lg:px-20 py-2 ">
       <h2 className="text-xl sm:text-3xl mt-6 sm:mt-12 mb-4 sm:mb-8">
         Settings
       </h2>
@@ -17,7 +17,7 @@ const Settings = () => {
         <Loading />
       ) : (
         <>
-          <div className="flex justify-between gap-4 my-6 sm:my-12">
+          <div className="flex justify-between gap-4 my-6 sm:my-12 ml-2">
             <div className="flex flex-row gap-4">
               <div>
                 {session?.user?.image?.toString() === undefined ? (
@@ -26,7 +26,7 @@ const Settings = () => {
                   </div>
                 ) : (
                   <img
-                    src={session?.user?.image?.toString()}
+                    src={session?.user?.image}
                     className="w-40 h-40 rounded-full"
                   />
                 )}
@@ -44,7 +44,7 @@ const Settings = () => {
               image={session?.user?.image}
             />
           </div>
-          <Button variant={"destructive"} className="w-max">
+          <Button variant={"destructive"} className="w-max ml-2">
             Delete account
           </Button>
         </>

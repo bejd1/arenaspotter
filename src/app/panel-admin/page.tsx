@@ -80,6 +80,7 @@ const PanelAdmin = () => {
                         name="status"
                         defaultValue="pending"
                         onChange={() => {}}
+                        className="mb-2  mr-0 sm:mr-2"
                       >
                         <option value="accept">accept</option>
                         <option value="rejected">rejected</option>
