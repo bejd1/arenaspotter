@@ -22,7 +22,7 @@ const ParentComponent = () => {
         apps. Accessible. Customizable. Open Source. Get Started GitHub
       </h3>
       <Link href={"/arena"}>
-        <Button className="flex gap-1 hover:gap-2">
+        <Button className="flex gap-1">
           Arenas
           <AiOutlineArrowRight />
         </Button>

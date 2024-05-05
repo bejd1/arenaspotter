@@ -42,9 +42,9 @@ export default function SettingsModal({
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-        className="flex justify-center"
+        className="flex justify-center items-center"
       >
-        <Card className="flex flex-col my-8 w-full sm:w-[600px] px-4 sm:px-32 py-8 overflow-auto relative">
+        <Card className="flex flex-col my-8 w-full h-[500px] overflow-auto sm:w-[600px] px-4 sm:px-32 py-8 relative">
           <h2 className="text-2xl font-bold text-center">Change profile</h2>
           <form
             onSubmit={async (e) => {

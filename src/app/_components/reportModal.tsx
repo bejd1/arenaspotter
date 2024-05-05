@@ -11,8 +11,13 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { MdOutlineReportProblem } from "react-icons/md";
-import { Tooltip } from "@mui/material";
+import { IoMdClose } from "react-icons/io";
+import { useForm, SubmitHandler } from "react-hook-form";
 
+type Inputs = {
+  title: string;
+  message: string;
+};
 export default function ReportModal({
   id,
   arenaName,
@@ -26,6 +31,13 @@ export default function ReportModal({
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const ref = useRef<HTMLFormElement>(null);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -38,6 +50,16 @@ export default function ReportModal({
     } catch (error) {
       console.error("Edit function failed", error);
     }
+  };
+
+  const handleCombinedSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(ref.current as HTMLFormElement);
+    await handleSubmit((data) => {
+      handleCreateSubmit(formData);
+      onSubmit(data);
+      handleClose();
+    })(e);
   };
 
   return (
@@ -56,17 +78,12 @@ export default function ReportModal({
         aria-describedby="modal-modal-description"
         className="flex justify-center items-center mb-12"
       >
-        <Card className="flex flex-col my-8 w-[600px] px-12 py-8">
+        <Card className="flex flex-col gap-2 my-8 w-full sm:w-[600px] px-4 sm:px-12 py-8 mx-4 relative">
           <h2 className="text-2xl font-bold text-center">Report</h2>
           <form
             ref={ref}
-            onSubmit={async (e) => {
-              e.preventDefault();
-              await handleCreateSubmit(
-                new FormData(e.target as HTMLFormElement)
-              );
-            }}
-            className="w-full"
+            onSubmit={handleCombinedSubmit}
+            className="w-full flex flex-col gap-1 items-start"
           >
             <input name="arenaId" type="hidden" value={id} />
             <input name="name" type="hidden" value={arenaName} />
@@ -77,28 +94,53 @@ export default function ReportModal({
               className="mb-2"
               onChange={handleNameChange}
             />
-            <Label htmlFor="name" className="text-right">
+            <Label
+              htmlFor="name"
+              className={`${errors.title ? "text-red-700" : ""}`}
+            >
               Title
             </Label>
             <Input
+              {...register("title", { required: true })}
               id="title"
               name="title"
               placeholder="Title"
-              className="col-span-3"
-              required
+              className={`col-span-3 ${
+                errors.title ? "border border-red-700" : ""
+              }`}
             />
-            <Label htmlFor="username" className="text-right">
+            {errors.title && (
+              <span className="text-red-700">This field is required</span>
+            )}
+            <Label
+              htmlFor="username"
+              className={`${errors.message ? "text-red-700" : ""}`}
+            >
               Message
             </Label>
             <Textarea
+              {...register("message", { required: true })}
               id="message"
               name="message"
               placeholder="Message"
-              className="mb-2"
-              required
+              className={`h-28 border border-red-400 `}
+              style={{
+                border: `${
+                  errors.message ? "1px solid red" : "1px solid blue"
+                }`,
+              }}
             />
-            <Button type="submit">Report</Button>
+            {errors.message && (
+              <span className="text-red-700">This field is required</span>
+            )}
+            <Button type="submit" className="mt-1">
+              Report
+            </Button>
           </form>
+          <IoMdClose
+            onClick={handleClose}
+            className="absolute top-4 right-4 cursor-pointer text-xl"
+          />
         </Card>
       </Modal>
     </div>

@@ -28,7 +28,7 @@ const Reports = () => {
     queryFn: async () => await getReport(),
   });
 
-  const [openReportId, setOpenReportId] = useState(null);
+  const [openReportIds, setOpenReportIds] = useState<number[]>([]);
 
   if (isLoading) return <Loading />;
   if (isError) return <ErrorComponent />;
@@ -36,7 +36,11 @@ const Reports = () => {
   if (session?.user?.role !== "admin") return null;
 
   const toggleReportDetails = (reportId: any) => {
-    setOpenReportId(openReportId === reportId ? null : reportId);
+    if (openReportIds.includes(reportId)) {
+      setOpenReportIds(openReportIds.filter((id) => id !== reportId));
+    } else {
+      setOpenReportIds([...openReportIds, reportId]);
+    }
   };
 
   return (
@@ -74,7 +78,7 @@ const Reports = () => {
                     <DeleteReport id={report.id} />
                   </TableCell>
                   <TableCell className="text-right">
-                    {openReportId === report.id ? (
+                    {openReportIds.includes(report.id as any) ? (
                       <IoIosArrowUp
                         className="cursor-pointer"
                         onClick={() => toggleReportDetails(report.id)}
@@ -87,10 +91,14 @@ const Reports = () => {
                     )}
                   </TableCell>
                 </TableRow>
-                {openReportId === report.id && (
+                {openReportIds.includes(report.id as any) && (
                   <TableRow>
                     <TableCell colSpan={6}>
-                      <div className="w-full h-20">Title {report.title}</div>
+                      <div className="w-full">
+                        <p>Title: {report.title}</p>
+                        <p>Message: {report.message}</p>
+                        <p>Email: {report.email}</p>
+                      </div>
                     </TableCell>
                   </TableRow>
                 )}

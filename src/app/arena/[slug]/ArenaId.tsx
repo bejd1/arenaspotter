@@ -13,14 +13,16 @@ import { CgWebsite } from "react-icons/cg";
 import { FaFacebook } from "react-icons/fa";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
-import Link from "next/link";
 
-const ArenaId = async ({ params }: { params: { slug: string } }) => {
+export const ArenaId = async ({ params }: { params: { slug: string } }) => {
   const productData = await prisma.post.findUnique({
     where: {
       id: params.slug,
     },
   });
+  console.log(productData?.football);
+  console.log(productData?.netball);
+  console.log(productData?.basketball);
 
   return (
     <div className="my-5 px-4 sm:px-8 lg:px-20 xl:px-40 flex flex-col justyfy-center h-screen mt-8">
@@ -126,48 +128,48 @@ const ArenaId = async ({ params }: { params: { slug: string } }) => {
           <p className="flex flex-row items-center gap-1">
             Toilet:
             {productData?.toilet === "true" ? (
-              <FaCheck className="text-green-700" />
+              <FaCheck />
             ) : (
-              <IoMdClose className="text-lg text-red-600" />
+              <IoMdClose className="text-lg" />
             )}
           </p>
           <p className="flex flex-row items-center gap-1">
             Parking:
             {productData?.parking === "true" ? (
-              <FaCheck className="text-green-700" />
+              <FaCheck />
             ) : (
-              <IoMdClose className="text-lg text-red-600" />
+              <IoMdClose className="text-lg" />
             )}
           </p>
           <p className="flex flex-row items-center gap-1">
             Showers:
             {productData?.showers === "true" ? (
-              <FaCheck className="text-green-700" />
+              <FaCheck />
             ) : (
-              <IoMdClose className="text-lg text-red-600" />
+              <IoMdClose className="text-lg" />
             )}
           </p>
           <p className="flex flex-row items-center gap-1">
             Dressing room:
             {productData?.dressingRoom === "true" ? (
-              <FaCheck className="text-green-700" />
+              <FaCheck />
             ) : (
-              <IoMdClose className="text-lg text-red-600" />
+              <IoMdClose className="text-lg" />
             )}
           </p>
           <p className="flex flex-row items-center gap-1">
             Lighting:
             {productData?.lighting === "true" ? (
-              <FaCheck className="text-green-700" />
+              <FaCheck />
             ) : (
-              <IoMdClose className="text-lg text-red-600" />
+              <IoMdClose className="text-lg" />
             )}
           </p>
         </div>
         {/* Description */}
         <div className="flex flex-col">
           <p className="text-2xl font-bold">Description</p>
-          {productData?.description?.length === 0 ? (
+          {productData?.description?.length !== 0 ? (
             <p>No desciption yet.</p>
           ) : (
             <p>{productData?.description}</p>
@@ -176,31 +178,31 @@ const ArenaId = async ({ params }: { params: { slug: string } }) => {
         {/* Socials */}
         <div>
           <h3 className="text-2xl font-bold">Socials</h3>
-          <div className="flex flex-col">
-            <div className="flex flex-row gap-2 mt-2">
-              {productData?.instagram?.length === 0 ? (
-                <></>
-              ) : (
-                <a href={productData?.instagram || ""}>
-                  <FaInstagram className="text-xl cursor-pointer hover:text-slate-300" />
-                </a>
-              )}
-              {productData?.facebook?.length === 0 ? (
-                <></>
-              ) : (
-                <a href={productData?.facebook || ""}>
-                  <FaFacebook className="text-xl cursor-pointer hover:text-slate-300" />
-                </a>
-              )}
-              {productData?.website?.length === 0 ? (
-                <></>
-              ) : (
-                <a href={productData?.website || ""}>
-                  <CgWebsite className="text-xl cursor-pointer hover:text-slate-300" />
-                </a>
-              )}
+          {productData?.instagram?.length !== 0 &&
+          productData?.facebook?.length !== 0 &&
+          productData?.website?.length !== 0 ? (
+            <div className="flex flex-col">
+              <div className="flex flex-row gap-2 mt-2">
+                {productData?.instagram?.length === 0 ? (
+                  <></>
+                ) : (
+                  <FaInstagram className="text-xl cursor-pointer" />
+                )}
+                {productData?.facebook?.length === 0 ? (
+                  <></>
+                ) : (
+                  <FaFacebook className="text-xl cursor-pointer" />
+                )}
+                {productData?.website?.length === 0 ? (
+                  <></>
+                ) : (
+                  <CgWebsite className="text-xl cursor-pointer" />
+                )}
+              </div>
             </div>
-          </div>
+          ) : (
+            <div>No socials </div>
+          )}
         </div>
       </div>
       <div className="flex flex-col">
@@ -215,4 +217,3 @@ const ArenaId = async ({ params }: { params: { slug: string } }) => {
     </div>
   );
 };
-export default ArenaId;
