@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { UploadButton, UploadDropzone } from "../utlis/uploadthing";
+import { Progress } from "@/components/ui/progress";
 
 interface UploadBtnProps {
   setUrl: (url: string) => void;
@@ -10,23 +11,28 @@ interface UploadBtnProps {
 const UploadBtn = ({ setUrl, setKey }: UploadBtnProps) => {
   return (
     <div className="mt-4">
-      {/* <UploadButton
-        endpoint="imageUploader"
-        onClientUploadComplete={(res) => {
-          res.map((r) => {
-            setUrl(r.url);
-            return r.url;
-          });
-          console.log("Files: ", res);
-          alert("Upload Completed");
-        }}
-        onUploadError={(error: Error) => {
-          // Do something with the error.
-          alert(`ERROR! ${error.message}`);
-        }}
-      /> */}
       <UploadDropzone
         endpoint="imageUploader"
+        content={{
+          button({ ready, isUploading, uploadProgress, fileTypes }) {
+            if (ready) return <div className="px-4">Upload stuff</div>;
+            <div>filetypes: {fileTypes}</div>;
+            if (isUploading)
+              <div className="px-4">
+                {" "}
+                <Progress
+                  value={uploadProgress}
+                  className="mt-2 w-40 h-2 bg-gray-300"
+                />
+              </div>;
+            return "Getting ready...";
+          },
+          label: <span className="">fjut</span>,
+          uploadIcon: (
+            <img src="https://utfs.io/f/6bb5524a-b896-4a94-803d-724e983647cb-phwn23.jpg" />
+          ),
+          allowedContent: <div>cwel</div>,
+        }}
         onClientUploadComplete={(res) => {
           res.map((res) => {
             setUrl(res.url);

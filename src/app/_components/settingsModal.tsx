@@ -10,6 +10,7 @@ import { BiPencil } from "react-icons/bi";
 import UploadBtn from "./uploadBtn";
 import DeleteBtn from "./deleteBtn";
 import { IoMdClose } from "react-icons/io";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 interface SettingsModalI {
   id: string | undefined;
@@ -17,6 +18,12 @@ interface SettingsModalI {
   email: string | undefined;
   image: string | undefined;
 }
+
+type Inputs = {
+  name: string;
+  email: string;
+  image: string;
+};
 
 export default function SettingsModal({
   id,
@@ -31,6 +38,13 @@ export default function SettingsModal({
   const [key, setKey] = useState("");
   const [newName, setNewName] = useState(name);
   const [newEmail, setNewEmail] = useState(email);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
   return (
     <div>
@@ -77,7 +91,7 @@ export default function SettingsModal({
               required
             />
             <Label>Image</Label>
-            {url?.length !== 0 ? (
+            {url?.length === 0 ? (
               <div>
                 <img src={url} alt="My image" />
                 <DeleteBtn url={url} setUrl={setUrl} />

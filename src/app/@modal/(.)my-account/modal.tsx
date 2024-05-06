@@ -19,9 +19,9 @@ export function Modal({ children }: { children: React.ReactNode }) {
       ref={dialogRef}
       onClick={closeModal}
       onClose={router.back}
-      className="backdrop:bg-black/60 backdrop:backdrop-blur-sm text-3xl bg:black px-12"
+      className="backdrop:bg-black/60 backdrop:backdrop-blur-sm text-3xl bg:black sm:px-12 "
     >
-      <div className="h-[80vh]">{children}</div>
+      <div>{children}</div>
     </dialog>
   );
 }

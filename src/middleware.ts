@@ -8,5 +8,6 @@ export const config = {
     "/panel-admin",
     "/my-account",
     "/(.)my-account",
+    "/create-post",
   ],
 };

@@ -13,7 +13,11 @@ import { CgWebsite } from "react-icons/cg";
 import { FaFacebook } from "react-icons/fa";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
-import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Arena",
+};
 
 const ArenaId = async ({ params }: { params: { slug: string } }) => {
   const productData = await prisma.post.findUnique({
@@ -177,29 +181,35 @@ const ArenaId = async ({ params }: { params: { slug: string } }) => {
         <div>
           <h3 className="text-2xl font-bold">Socials</h3>
           <div className="flex flex-col">
-            <div className="flex flex-row gap-2 mt-2">
-              {productData?.instagram?.length === 0 ? (
-                <></>
-              ) : (
-                <a href={productData?.instagram || ""}>
-                  <FaInstagram className="text-xl cursor-pointer hover:text-slate-300" />
-                </a>
-              )}
-              {productData?.facebook?.length === 0 ? (
-                <></>
-              ) : (
-                <a href={productData?.facebook || ""}>
-                  <FaFacebook className="text-xl cursor-pointer hover:text-slate-300" />
-                </a>
-              )}
-              {productData?.website?.length === 0 ? (
-                <></>
-              ) : (
-                <a href={productData?.website || ""}>
-                  <CgWebsite className="text-xl cursor-pointer hover:text-slate-300" />
-                </a>
-              )}
-            </div>
+            {productData?.facebook?.length === 0 &&
+            productData?.instagram?.length === 0 &&
+            productData?.website?.length === 0 ? (
+              <div>No socials yet.</div>
+            ) : (
+              <div className="flex flex-row gap-2 mt-2">
+                {productData?.instagram?.length === 0 ? (
+                  <></>
+                ) : (
+                  <a href={productData?.instagram || ""}>
+                    <FaInstagram className="text-xl cursor-pointer hover:text-slate-300" />
+                  </a>
+                )}
+                {productData?.facebook?.length === 0 ? (
+                  <></>
+                ) : (
+                  <a href={productData?.facebook || ""}>
+                    <FaFacebook className="text-xl cursor-pointer hover:text-slate-300" />
+                  </a>
+                )}
+                {productData?.website?.length === 0 ? (
+                  <></>
+                ) : (
+                  <a href={productData?.website || ""}>
+                    <CgWebsite className="text-xl cursor-pointer hover:text-slate-300" />
+                  </a>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>

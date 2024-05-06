@@ -34,9 +34,9 @@ export default function ReportModal({
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<Inputs>(); // Use the 'useForm' hook to initialize the 'register' function
+
   const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {

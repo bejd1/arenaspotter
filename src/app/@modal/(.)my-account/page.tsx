@@ -1,23 +1,17 @@
-"use client";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { Modal } from "../(.)my-account/modal";
-import MyAccount from "@/app/my-account/page";
+import AuthModal from "@/app/_components/authModal";
+import { Metadata } from "next";
+import React from "react";
 
-export default function MyAccountModal() {
-  const { status } = useSession();
-  const router = useRouter();
+export const metadata: Metadata = {
+  title: "Login or register",
+};
 
-  useEffect(() => {
-    if (status === "authenticated") {
-      router.push("/");
-    }
-  }, [status, router]);
-
+const MyAccountModall = () => {
   return (
-    <Modal>
-      <MyAccount />
-    </Modal>
+    <>
+      <AuthModal />
+    </>
   );
-}
+};
+
+export default MyAccountModall;
