@@ -49,7 +49,7 @@ const ArenasData = ({
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-full px-4">
       <InfiniteScroll
         pageStart={0}
         loadMore={loadMore}

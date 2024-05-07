@@ -11,13 +11,15 @@ export default function AuthModal() {
 
   useEffect(() => {
     if (status === "authenticated") {
-      router.push("/");
+      router.push("/", { scroll: false });
     }
   }, [status, router]);
 
   return (
-    <Modal>
-      <MyAccount />
-    </Modal>
+    <div className="absolute top-0">
+      <Modal>
+        <MyAccount />
+      </Modal>
+    </div>
   );
 }

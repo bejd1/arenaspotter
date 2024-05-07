@@ -1,10 +1,12 @@
-import React from "react";
+"use client";
+import React, { useState, useTransition } from "react";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import {
   Card,
@@ -22,12 +24,13 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { FormError } from "./formError";
 
 const FormSchema = z.object({
   email: z.string().email({
     message: "Invalid email address.",
   }),
-  password: z.string().min(3, {
+  password: z.string().min(6, {
     message: "Password must be at least 6 characters.",
   }),
 });
@@ -35,6 +38,9 @@ const FormSchema = z.object({
 type FormData = z.infer<typeof FormSchema>;
 
 const LoginForm = () => {
+  const [error, setError] = useState<string | undefined>("");
+  const [isPending, startTransition] = useTransition();
+
   const form = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -46,7 +52,6 @@ const LoginForm = () => {
   const router = useRouter();
   const onSubmit = async (data: FormData) => {
     console.log("Submitting form", data);
-
     const { email, password } = data;
 
     try {
@@ -60,11 +65,13 @@ const LoginForm = () => {
         router.push("/");
         router.refresh();
       }
+      if (response.error) {
+        setError("Invalid email or password");
+      }
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      // Process response here
     } catch (error: any) {
       console.error("Login Failed:", error);
     }
@@ -72,7 +79,7 @@ const LoginForm = () => {
 
   return (
     <Card>
-      <CardHeader>
+      <CardHeader className="p-4 sm:px-6">
         <CardTitle className="text-2xl text-center">
           Log Into My Account
         </CardTitle>
@@ -95,6 +102,7 @@ const LoginForm = () => {
                       placeholder="youremail@email.com"
                     />
                   </FormControl>
+                  <FormMessage className="m-0 p-0" />
                 </FormItem>
               )}
             />
@@ -103,8 +111,8 @@ const LoginForm = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
+                  <FormLabel className="m-0">Password</FormLabel>
+                  <FormControl className="m-0">
                     <Input
                       id="password"
                       type="password"
@@ -112,6 +120,7 @@ const LoginForm = () => {
                       placeholder="••••••••"
                     />
                   </FormControl>
+                  <FormMessage className="m-0" />
                 </FormItem>
               )}
             />
@@ -123,6 +132,9 @@ const LoginForm = () => {
           </CardFooter>
         </form>
       </Form>
+      <div className="mt-4">
+        <FormError message={error} />
+      </div>
       <div className="flex items-center justify-center flex-row">
         <div className="bg-slate-200 h-0.5 w-full mr-4 ml-6"></div>
         <p className="text-center text-sm py-2">or</p>

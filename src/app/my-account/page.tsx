@@ -5,9 +5,9 @@ import RegisterForm from "../_components/registerForm";
 
 const MyAccount = () => {
   return (
-    <div className="w-full h-[80vh] flex items-center justify-center">
-      <Card className="w-full sm:w-[500px] sm:p-12">
-        <Tabs defaultValue="account">
+    <div className="w-full flex items-center justify-center my-12">
+      <Card className="w-[400px] sm:w-[500px] p-2 sm:p-12">
+        <Tabs defaultValue="account" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="account">Login</TabsTrigger>
             <TabsTrigger value="password">Register</TabsTrigger>

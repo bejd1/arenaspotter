@@ -50,7 +50,7 @@ const FavoriteList = () => {
 
   return (
     <>
-      {favoriteArenaData.length < 0 ? (
+      {favoriteArenaData.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-[45vh] p-8 sm:p-0">
           <div className="flex flex-col justify-center gap-1">
             <h2 className="text-xl font-bold">

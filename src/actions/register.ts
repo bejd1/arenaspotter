@@ -1,5 +1,4 @@
 "use server";
-
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -19,14 +18,8 @@ export async function register(formData: FormData) {
     });
 
     if (existingUser) {
-      throw new Error("User with this email already exists");
+      console.log("User with this email already exists");
     }
-
-    if (existingUser) {
-      return { error: "Email already in use" };
-    }
-
-    console.log({ name, email, password });
 
     await prisma.user.create({
       data: {
@@ -35,9 +28,10 @@ export async function register(formData: FormData) {
         password: hashedPassword,
       },
     });
-    console.log(`created new user : ${name}, ${email}, ${password}`);
+
+    return { success: "Registration successful" };
   } catch (error) {
     console.error("Error during user creation:", error);
+    return { error: "Email already in use" };
   }
-  return { success: "Registration successful" };
 }

@@ -1,5 +1,5 @@
-import React from "react";
-
+"use client";
+import React, { useState, useTransition } from "react";
 import {
   Card,
   CardContent,
@@ -14,20 +14,49 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { signIn } from "next-auth/react";
 import { register } from "@/actions/register";
+import { FormSuccess } from "./formSuccess";
+import { FormError } from "./formError";
+import Loader from "./loader";
 
 const RegisterForm = () => {
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
+  const [isPending, startTransition] = useTransition();
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const result = await register(formData);
+    startTransition(() => {
+      if (result.error) {
+        setError(result.error);
+        setSuccess(undefined);
+      } else {
+        setSuccess(result.success);
+        setError(undefined);
+      }
+    });
+  };
+
   return (
     <Card>
-      <CardHeader>
+      <CardHeader className="p-4 sm:px-6">
         <CardTitle className="text-2xl text-center">
           Create a new account
         </CardTitle>
       </CardHeader>
-      <form action={register}>
+      <form onSubmit={handleSubmit}>
         <CardContent className="space-y-2">
           <div className="space-y-1">
             <Label htmlFor="name">First name</Label>
-            <Input id="name" type="name" name="name" placeholder="First Name" />
+            <Input
+              id="name"
+              type="name"
+              name="name"
+              placeholder="First Name"
+              required
+            />
           </div>
           <div className="space-y-1">
             <Label htmlFor="email">Email</Label>
@@ -36,6 +65,7 @@ const RegisterForm = () => {
               type="email"
               name="email"
               placeholder="youremail@email.com"
+              required
             />
           </div>
           <div className="space-y-1">
@@ -45,15 +75,25 @@ const RegisterForm = () => {
               type="password"
               name="password"
               placeholder="••••••••"
+              required
             />
           </div>
         </CardContent>
         <CardFooter className="flex flex-col py-0">
-          <Button type="submit" name="submit" className="w-full">
-            Register
+          <Button
+            disabled={isPending}
+            className="w-full"
+            name="submit"
+            type="submit"
+          >
+            {isPending ? <Loader text={"Create account"} /> : "Create account"}
           </Button>
         </CardFooter>
       </form>
+      <div className="mt-4">
+        <FormSuccess message={success} />
+        <FormError message={error} />
+      </div>
       <div className="flex items-center justify-center flex-row">
         <div className="bg-slate-200 h-0.5 w-full mr-4 ml-6"></div>
         <p className="text-center text-sm py-2">or</p>

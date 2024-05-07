@@ -15,13 +15,18 @@ export function Modal({ children }: { children: React.ReactNode }) {
     e.target === dialogRef.current && router.back();
 
   return (
-    <dialog
-      ref={dialogRef}
-      onClick={closeModal}
-      onClose={router.back}
-      className="backdrop:bg-black/60 backdrop:backdrop-blur-sm text-3xl bg:black sm:px-12 "
-    >
-      <div>{children}</div>
-    </dialog>
+    <>
+      <div></div>
+      <div className="sticky top-0">
+        <dialog
+          ref={dialogRef}
+          onClick={closeModal}
+          onClose={router.back}
+          className="backdrop:bg-black/60 backdrop-filter backdrop-blur-sm text-3xl bg-black sm:px-12 fixed bg-fixed"
+        >
+          <div>{children}</div>
+        </dialog>
+      </div>
+    </>
   );
 }

@@ -35,7 +35,7 @@ export default function ReportModal({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>(); // Use the 'useForm' hook to initialize the 'register' function
+  } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
@@ -125,9 +125,7 @@ export default function ReportModal({
               placeholder="Message"
               className={`h-28 border border-red-400 `}
               style={{
-                border: `${
-                  errors.message ? "1px solid red" : "1px solid blue"
-                }`,
+                border: `${errors.message ? "1px solid red" : ""}`,
               }}
             />
             {errors.message && (

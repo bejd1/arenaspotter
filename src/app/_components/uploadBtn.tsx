@@ -14,17 +14,20 @@ const UploadBtn = ({ setUrl, setKey }: UploadBtnProps) => {
       <UploadDropzone
         endpoint="imageUploader"
         content={{
-          button({ ready, isUploading, uploadProgress, fileTypes }) {
-            if (ready) return <div className="px-4">Upload stuff</div>;
-            <div>filetypes: {fileTypes}</div>;
-            if (isUploading)
-              <div className="px-4">
-                {" "}
-                <Progress
-                  value={uploadProgress}
-                  className="mt-2 w-40 h-2 bg-gray-300"
-                />
-              </div>;
+          button({
+            ready,
+            isUploading,
+            uploadProgress,
+            fileTypes,
+            isDragActive,
+          }) {
+            if (ready) return <div className="px-4">ready</div>;
+            if (isUploading) return <div className="px-4">isUploading</div>;
+            if (fileTypes) return <div className="px-4">fileTypes</div>;
+            if (isDragActive) return <div className="px-4">isDragActive</div>;
+            if (uploadProgress)
+              return <div className="px-4">uploadProgress</div>;
+
             return "Getting ready...";
           },
           label: <span className="">fjut</span>,
