@@ -20,6 +20,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { editUser } from "@/actions/user";
 import { useToast } from "@/components/ui/use-toast";
+import Image from "next/image";
 
 interface SettingsI {
   image: string | undefined;
@@ -132,15 +133,14 @@ const SettingsForm = ({
         />
         {/* image */}
         <Label>Image</Label>
-        {url?.length === 0 ? (
+        {url?.length !== 0 ? (
           <div>
-            <img src={url} alt="My image" />
+            <Image src={url || ""} width={100} height={100} alt="My image" />
             <DeleteBtn url={url} setUrl={setUrl} />
           </div>
         ) : (
-          <div>gowno</div>
+          <UploadBtn setUrl={setUrl} setKey={setKey} />
         )}
-        <UploadBtn setUrl={setUrl} setKey={setKey} />
 
         <Button variant="default" type="submit">
           Change

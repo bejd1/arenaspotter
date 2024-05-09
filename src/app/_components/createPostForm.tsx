@@ -18,6 +18,7 @@ import OpeningHours from "../_components/openingHours";
 import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/use-toast";
+import Image from "next/image";
 
 const CreatePostForm = () => {
   const { data: session } = useSession();
@@ -221,7 +222,13 @@ const CreatePostForm = () => {
       </form>
       {url.length !== 0 && (
         <div>
-          <img src={url} alt="Your image" className="w-full py-2" />
+          <Image
+            src={url}
+            width={100}
+            height={100}
+            className="w-full py-2"
+            alt="Your image"
+          />
           <DeleteBtn url={url} setUrl={setUrl} />
         </div>
       )}

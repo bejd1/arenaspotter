@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
-import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import SettingsModal from "../_components/settingsModal";
 import Loading from "../_components/loading";
 import DeleteUserModal from "./deleteUserModal";
+import Image from "next/image";
 
 const SettingsComponent = () => {
   const { data: session, status } = useSession();
@@ -24,9 +24,12 @@ const SettingsComponent = () => {
                     {session?.user?.name?.charAt(0).toLocaleUpperCase()}
                   </div>
                 ) : (
-                  <img
+                  <Image
                     src={session?.user?.image}
+                    width={100}
+                    height={100}
                     className="w-40 h-40 rounded-full"
+                    alt="user image"
                   />
                 )}
               </div>

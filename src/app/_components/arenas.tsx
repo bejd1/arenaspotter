@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { getArena } from "@/actions/arena";
 import Category from "../_components/category";
 import { useQuery } from "@tanstack/react-query";
@@ -10,7 +10,6 @@ import ArenasData from "./arenasData";
 
 const Arenas = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [forceRefresh, setForceRefresh] = useState(false);
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const category = searchParams.get("category");
@@ -30,10 +29,6 @@ const Arenas = () => {
     queryKey: ["arenas", sortByCost, sortByPeople],
     queryFn: async () => await getArena(sortByCost, sortByPeople, category),
   });
-
-  useEffect(() => {
-    refetch();
-  }, [forceRefresh]);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);

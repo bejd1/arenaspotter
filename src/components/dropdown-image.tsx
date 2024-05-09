@@ -12,6 +12,7 @@ import { CiViewList } from "react-icons/ci";
 import { MdReportGmailerrorred } from "react-icons/md";
 import Link from "next/link";
 import { Button } from "./ui/button";
+import Image from "next/image";
 
 const DropdownImage = () => {
   const { data: session } = useSession();
@@ -26,9 +27,12 @@ const DropdownImage = () => {
                 {session?.user?.name?.charAt(0).toLocaleUpperCase()}
               </div>
             ) : (
-              <img
+              <Image
                 src={session?.user?.image?.toString()}
+                width={100}
+                height={100}
                 className="w-8 h-8 ml-2 rounded-full cursor-pointer"
+                alt="user image"
               />
             )}
           </div>
