@@ -3,11 +3,13 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export async function register(formData: FormData) {
+export async function register(data: {
+  name: string;
+  email: string;
+  password: string;
+}) {
   try {
-    const name = formData.get("name") as string;
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
+    const { name, email, password } = data;
     const bcrypt = require("bcrypt");
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -19,6 +21,7 @@ export async function register(formData: FormData) {
 
     if (existingUser) {
       console.log("User with this email already exists");
+      return { error: "Email already in use" };
     }
 
     await prisma.user.create({
@@ -32,6 +35,6 @@ export async function register(formData: FormData) {
     return { success: "Registration successful" };
   } catch (error) {
     console.error("Error during user creation:", error);
-    return { error: "Email already in use" };
+    return { error: "An error occurred during registration" };
   }
 }

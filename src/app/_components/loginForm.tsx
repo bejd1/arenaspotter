@@ -25,31 +25,24 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { FormError } from "./formError";
+import { LoginSchema } from "@/schemas";
+import Loader from "./loader";
 
-const FormSchema = z.object({
-  email: z.string().email({
-    message: "Invalid email address.",
-  }),
-  password: z.string().min(6, {
-    message: "Password must be at least 6 characters.",
-  }),
-});
-
-type FormData = z.infer<typeof FormSchema>;
+type FormData = z.infer<typeof LoginSchema>;
 
 const LoginForm = () => {
   const [error, setError] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   const form = useForm({
-    resolver: zodResolver(FormSchema),
+    resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const router = useRouter();
   const onSubmit = async (data: FormData) => {
     console.log("Submitting form", data);
     const { email, password } = data;
@@ -60,18 +53,19 @@ const LoginForm = () => {
         password,
         redirect: false,
       });
-      console.log({ response });
-      if (!response?.error) {
-        router.push("/");
-        router.refresh();
-      }
-      if (response.error) {
-        setError("Invalid email or password");
-      }
+      startTransition(() => {
+        if (!response?.error) {
+          router.push("/");
+          router.refresh();
+        }
+        if (response.error) {
+          setError("Invalid email or password");
+        }
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+      });
     } catch (error: any) {
       console.error("Login Failed:", error);
     }
@@ -87,7 +81,7 @@ const LoginForm = () => {
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <CardContent className="space-y-2">
+          <CardContent className="m-0">
             <FormField
               control={form.control}
               name="email"
@@ -102,7 +96,7 @@ const LoginForm = () => {
                       placeholder="youremail@email.com"
                     />
                   </FormControl>
-                  <FormMessage className="m-0 p-0" />
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -111,8 +105,8 @@ const LoginForm = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="m-0">Password</FormLabel>
-                  <FormControl className="m-0">
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
                     <Input
                       id="password"
                       type="password"
@@ -120,14 +114,19 @@ const LoginForm = () => {
                       placeholder="••••••••"
                     />
                   </FormControl>
-                  <FormMessage className="m-0" />
+                  <FormMessage />
                 </FormItem>
               )}
             />
           </CardContent>
           <CardFooter className="py-0">
-            <Button type="submit" className="w-full">
-              Login
+            <Button
+              disabled={isPending}
+              className="w-full"
+              name="submit"
+              type="submit"
+            >
+              {isPending ? <Loader text={"Login"} /> : "Login"}
             </Button>
           </CardFooter>
         </form>

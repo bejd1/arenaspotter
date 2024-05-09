@@ -19,21 +19,23 @@ export async function getReport(): Promise<ReportT[]> {
   }));
 }
 
-export async function createReport(formData: FormData) {
+export async function createReport(
+  formData: FormData,
+  arenaId: string,
+  name: string,
+  email: string
+) {
   try {
-    const name = formData.get("name") as string;
-    const arenaId = formData.get("arenaId") as string;
-    const email = formData.get("email") as string;
     const title = formData.get("title") as string;
     const message = formData.get("message") as string;
 
     await prisma.reportArena.create({
       data: {
-        name: name,
-        arenaId: arenaId,
-        email: email,
-        title: title,
-        message: message,
+        name,
+        arenaId,
+        email,
+        title,
+        message,
       },
     });
 

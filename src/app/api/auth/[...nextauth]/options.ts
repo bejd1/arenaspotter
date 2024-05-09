@@ -49,8 +49,8 @@ export const options: NextAuthOptions = {
 
           if (passwordsMatch) {
             return {
-              id: user.id,
               name: user.name,
+              id: user.id,
               email: user.email,
               image: user.image,
               password: null,

@@ -1,3 +1,4 @@
+"use server";
 import { PrismaClient } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
@@ -26,23 +27,48 @@ export const getUserById = async (id: string) => {
 export async function editUser(formData: FormData) {
   try {
     const id = formData.get("inputId") as string;
-    const name = formData.get("name") as string;
+    const firstName = formData.get("firstName") as string;
     const email = formData.get("email") as string;
     const image = formData.get("image") as string;
 
-    await prisma.post.update({
+    await prisma.user.update({
       where: {
         id: id,
       },
       data: {
-        name: name,
+        name: firstName,
         email: email,
         image: image,
       },
     });
 
-    revalidatePath("/arena");
+    revalidatePath("/settings");
   } catch (error) {
     console.error("Error while editing the product:", error);
+  }
+}
+
+export async function deleteUser(formData: FormData) {
+  try {
+    const inputId = formData.get("inputId") as string;
+
+    const existingProduct = await prisma.user.findUnique({
+      where: {
+        id: inputId,
+      },
+    });
+
+    if (existingProduct) {
+      await prisma.user.delete({
+        where: {
+          id: inputId,
+        },
+      });
+      revalidatePath(`/`);
+    } else {
+      console.error(`User with ID ${inputId} not found`);
+    }
+  } catch (error) {
+    console.error("Error deleting user:", error);
   }
 }

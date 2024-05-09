@@ -4,9 +4,11 @@ import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import SettingsModal from "../_components/settingsModal";
 import Loading from "../_components/loading";
+import DeleteUserModal from "./deleteUserModal";
 
 const SettingsComponent = () => {
   const { data: session, status } = useSession();
+  const firstName = session?.user?.name;
 
   return (
     <>
@@ -29,21 +31,20 @@ const SettingsComponent = () => {
                 )}
               </div>
               <div>
-                <p className="font-bold">Name: {session?.user?.name}</p>
+                <p className="font-bold">Name: {firstName}</p>
                 <p>Email: {session?.user?.email}</p>
                 <p>Img: {session?.user?.image}</p>
+                <p>Role: {session?.user?.role}</p>
               </div>
             </div>
             <SettingsModal
               id={session?.user?.id}
-              name={session?.user?.name}
+              firstName={firstName}
               email={session?.user?.email}
               image={session?.user?.image}
             />
           </div>
-          <Button variant={"destructive"} className="w-max ml-2">
-            Delete account
-          </Button>
+          <DeleteUserModal id={session?.user?.id} />
         </>
       )}
     </>
