@@ -63,7 +63,11 @@ const ArenasData = ({
       >
         <div className="grid grid-cols-1 sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 grid-rows-2 sm:px-8 gap-4">
           {filtered().length === 0 ? (
-            <div>Doesn't exist: {searchTerm}</div>
+            <div className="col-span-full flex justify-center">
+              <div className="text-center">
+                Doesn&apos;t exist: {searchTerm}
+              </div>
+            </div>
           ) : (
             data.map((arena) => {
               const { id, name, city, street, image, people, cost, status } =
