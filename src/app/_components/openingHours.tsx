@@ -59,7 +59,7 @@ const OpeningHours = () => {
         <div key={day.value}>
           <Label>{day.label}*</Label>
           <div className="flex flex-row gap-2">
-            <Select name={`opening${day.label}`} required>
+            <Select name={`opening${day.label}`}>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Select Time" />
               </SelectTrigger>
@@ -75,8 +75,8 @@ const OpeningHours = () => {
                 ))}
               </SelectContent>
             </Select>
-            <Select name={`openingHours${day.label}`} required>
-              {/* <Select required disabled={!selectedStartTime}> */}
+            <Select name={`openingHours${day.label}`}>
+              {/* <Select  disabled={!selectedStartTime}> */}
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Select Time" />
               </SelectTrigger>
