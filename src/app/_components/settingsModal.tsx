@@ -10,7 +10,9 @@ interface SettingsModalI {
   id: string | undefined;
   firstName: string | undefined;
   email: string | undefined;
-  image: string | undefined;
+  image: string | null | undefined;
+  update: any;
+  refetch: any;
 }
 
 export default function SettingsModal({
@@ -18,6 +20,8 @@ export default function SettingsModal({
   firstName,
   email,
   image,
+  update,
+  refetch,
 }: SettingsModalI) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -43,6 +47,8 @@ export default function SettingsModal({
             email={email}
             id={id}
             handleClose={handleClose}
+            update={update}
+            refetch={refetch}
           />
         </Card>
       </Modal>

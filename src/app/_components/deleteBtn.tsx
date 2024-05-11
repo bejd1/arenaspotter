@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 interface DeleteBtnProps {
   setUrl: (url: string) => void;
-  url: string | undefined;
+  url: string | undefined | null;
 }
 const DeleteBtn = ({ url, setUrl }: DeleteBtnProps) => {
   const deleteImage = async () => {

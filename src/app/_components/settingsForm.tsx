@@ -23,11 +23,13 @@ import { useToast } from "@/components/ui/use-toast";
 import Image from "next/image";
 
 interface SettingsI {
-  image: string | undefined;
+  image: string | null | undefined;
   firstName: string | undefined;
   email: string | undefined;
   id: string | undefined;
-  handleClose: any;
+  handleClose: () => void;
+  update: any;
+  refetch: any;
 }
 
 type FormData = z.infer<typeof SettingsSchema>;
@@ -38,6 +40,8 @@ const SettingsForm = ({
   email,
   id,
   handleClose,
+  update,
+  refetch,
 }: SettingsI) => {
   const [url, setUrl] = useState(image);
   const [key, setKey] = useState("");
@@ -60,11 +64,19 @@ const SettingsForm = ({
       editData.append("email", formData.email);
       editData.append("image", url || "");
 
-      await editUser(editData);
+      const response = await editUser(editData);
 
       startTransition(() => {
+        refetch();
         handleClose();
+        update({
+          firstName: formData.firstName,
+          email: formData.email,
+          image: url || "",
+        });
       });
+      await update(response);
+
       return toast({
         title: "Success!",
         description: "You have successfully updated your profile",
@@ -72,6 +84,11 @@ const SettingsForm = ({
       });
     } catch (error) {
       console.error("Edit function failed", error);
+      return toast({
+        title: "Error",
+        description: "Failed to update your profile",
+        variant: "error",
+      });
     }
   };
 
@@ -93,7 +110,6 @@ const SettingsForm = ({
           defaultValue={url || ""}
           onChange={() => {}}
         />
-
         <FormField
           control={form.control}
           name="firstName"

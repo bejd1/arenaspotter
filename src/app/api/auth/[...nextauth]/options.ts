@@ -5,7 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { LoginSchema } from "@/schemas";
 import { getUserByEmail } from "@/actions/user";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -74,10 +74,18 @@ export const options: NextAuthOptions = {
     secret: process.env.NEXTAUTH_SECRET,
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       if (user) {
         token.role = user.role;
         token.id = user.id;
+        token.name = user.name;
+        token.email = user.email;
+        token.image = user.image;
+      }
+
+      if (trigger === "update" && session?.firstname && session?.lastname) {
+        token.firstname = session.firstname;
+        token.lastname = session.lastname;
       }
       return token;
     },
