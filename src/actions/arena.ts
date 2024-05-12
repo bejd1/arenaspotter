@@ -7,74 +7,83 @@ import { revalidatePath } from "next/cache";
 const prisma = new PrismaClient();
 
 export async function getArena(
-  sortByCost: string,
-  sortByPeople: string,
-  category: string | null
+  category: string | null,
+  sortBy: string | null = null,
+  sortOrder: "asc" | "desc" | null = null
 ) {
-  let orderBy: any = {};
+  const data: PostT[] = await prisma.post.findMany({});
 
-  if (category) {
-    orderBy = { [category]: "asc" };
+  const sortedData = data
+    .map((item: PostT) => ({
+      id: item.id,
+      author: item.author,
+      name: item.name,
+      city: item.city,
+      zipOrPostalCode: item.zipOrPostalCode,
+      street: item.street,
+      email: item.email,
+      phoneNumber: item.phoneNumber,
+      people: item.people,
+      cost: item.cost,
+      status: item.status,
+      football: item.football,
+      basketball: item.basketball,
+      netball: item.netball,
+      size: item.size,
+      surface: item.surface,
+      toilet: item.toilet,
+      parking: item.parking,
+      showers: item.showers,
+      dressingRoom: item.dressingRoom,
+      lighting: item.lighting,
+      openingMonday: item.openingMonday,
+      openingHoursMonday: item.openingHoursMonday,
+      openingTuesday: item.openingTuesday,
+      openingHoursTuesday: item.openingHoursTuesday,
+      openingWednesday: item.openingWednesday,
+      openingHoursWednesday: item.openingHoursWednesday,
+      openingThursday: item.openingThursday,
+      openingHoursThursday: item.openingHoursThursday,
+      openingFriday: item.openingFriday,
+      openingHoursFriday: item.openingHoursFriday,
+      openingSaturday: item.openingSaturday,
+      openingHoursSaturday: item.openingHoursSaturday,
+      openingSunday: item.openingSunday,
+      openingHoursSunday: item.openingHoursSunday,
+      description: item.description,
+      instagram: item.instagram,
+      facebook: item.facebook,
+      website: item.website,
+      image: item.image,
+      premium: item.premium,
+    }))
+    .filter((item) => {
+      if (category === null) {
+        return true;
+      } else if (category === "football") {
+        return item.football;
+      } else if (category === "basketball") {
+        return item.basketball;
+      } else if (category === "netball") {
+        return item.netball;
+      } else {
+        return false;
+      }
+    });
+
+  if (sortBy && sortOrder) {
+    sortedData.sort((a, b) => {
+      const aSortBy = (a as any)[sortBy];
+      const bSortBy = (b as any)[sortBy];
+      if (sortOrder === "asc") {
+        return aSortBy > bSortBy ? 1 : -1;
+      } else {
+        return aSortBy < bSortBy ? 1 : -1;
+      }
+    });
   }
-  const data: PostT[] = await prisma.post.findMany({
-    orderBy,
-  });
 
-  if (sortByCost) {
-    orderBy = { cost: sortByCost === "asc" ? "asc" : "desc" };
-    data.sort((a, b) =>
-      sortByCost === "asc" ? a.cost - b.cost : b.cost - a.cost
-    );
-  } else if (sortByPeople) {
-    orderBy = { people: sortByPeople === "asc" ? "asc" : "desc" };
-    data.sort((a, b) =>
-      sortByPeople === "asc" ? a.people - b.people : b.people - a.people
-    );
-  }
-
-  return data.map((item: PostT) => ({
-    id: item.id,
-    author: item.author,
-    name: item.name,
-    city: item.city,
-    zipOrPostalCode: item.zipOrPostalCode,
-    street: item.street,
-    email: item.email,
-    phoneNumber: item.phoneNumber,
-    people: item.people,
-    cost: item.cost,
-    status: item.status,
-    football: item.football,
-    basketball: item.basketball,
-    netball: item.netball,
-    size: item.size,
-    surface: item.surface,
-    toilet: item.toilet,
-    parking: item.parking,
-    showers: item.showers,
-    dressingRoom: item.dressingRoom,
-    lighting: item.lighting,
-    openingMonday: item.openingMonday,
-    openingHoursMonday: item.openingHoursMonday,
-    openingTuesday: item.openingTuesday,
-    openingHoursTuesday: item.openingHoursTuesday,
-    openingWednesday: item.openingWednesday,
-    openingHoursWednesday: item.openingHoursWednesday,
-    openingThursday: item.openingThursday,
-    openingHoursThursday: item.openingHoursThursday,
-    openingFriday: item.openingFriday,
-    openingHoursFriday: item.openingHoursFriday,
-    openingSaturday: item.openingSaturday,
-    openingHoursSaturday: item.openingHoursSaturday,
-    openingSunday: item.openingSunday,
-    openingHoursSunday: item.openingHoursSunday,
-    description: item.description,
-    instagram: item.instagram,
-    facebook: item.facebook,
-    website: item.website,
-    image: item.image,
-    premium: item.premium,
-  }));
+  return sortedData;
 }
 
 export async function getArenaById(myId: string): Promise<PostT | null> {

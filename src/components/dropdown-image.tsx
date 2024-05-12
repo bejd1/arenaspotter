@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { signOut, useSession } from "next-auth/react";
 import { IoExitOutline, IoSettingsOutline } from "react-icons/io5";
+import { FcStatistics } from "react-icons/fc";
 import { GrUserAdmin } from "react-icons/gr";
 import { CiViewList } from "react-icons/ci";
 import { MdReportGmailerrorred } from "react-icons/md";
@@ -58,16 +59,10 @@ const DropdownImage = () => {
           </Link>
           {session?.user?.role === "admin" && (
             <>
-              <Link href="/panel-admin">
+              <Link href="/dashboard">
                 <DropdownMenuItem className="cursor-pointer flex gap-2 justify-between">
-                  <p>Panel admin</p>
-                  <GrUserAdmin className="text-lg" />
-                </DropdownMenuItem>
-              </Link>
-              <Link href="/reports">
-                <DropdownMenuItem className="cursor-pointer flex gap-2 justify-between">
-                  <p>Reports</p>
-                  <MdReportGmailerrorred className="text-xl" />
+                  <p>Dashboard</p>
+                  <FcStatistics className="text-lg" />
                 </DropdownMenuItem>
               </Link>
             </>

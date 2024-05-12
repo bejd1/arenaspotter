@@ -105,7 +105,7 @@ const SettingsForm = ({
           onChange={() => {}}
         />
         <Input
-          type="text"
+          type="hidden"
           name="image"
           defaultValue={url || ""}
           onChange={() => {}}

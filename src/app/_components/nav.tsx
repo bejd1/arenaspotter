@@ -7,6 +7,9 @@ import DropdownImage from "@/components/dropdown-image";
 import NavIcons from "./navIcons";
 import { MdPerson } from "react-icons/md";
 import { Button } from "@/components/ui/button";
+import { Bebas_Neue } from "next/font/google";
+
+const bebas = Bebas_Neue({ subsets: ["latin"], weight: "400" });
 
 const Nav = () => {
   const { data: session, status } = useSession();
@@ -15,8 +18,12 @@ const Nav = () => {
     <div>
       <div className="flex justify-between items-center px-4 sm:px-6 lg:px-20 py-4">
         <Link href={"/"}>
-          <div className="flex items-center justify-center gap-2">
-            <h2 className="text-md sm:text-xl font-extrabold">Arena Spotter</h2>
+          <div className="flex items-center justify-center gap-2 mt-1">
+            <h2 className={bebas.className}>
+              <span className="text-xl sm:text-2xl tracking-wide">
+                Arena Spotter
+              </span>
+            </h2>
           </div>
         </Link>
         <div className="flex items-center justify-center gap-1 md:gap-4">

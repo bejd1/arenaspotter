@@ -42,7 +42,7 @@ export default function DeleteUserModal({ id }: { id: string | undefined }) {
       <Button
         onClick={handleOpen}
         variant={"destructive"}
-        className="w-max ml-2"
+        className="w-max ml-2 mt-2"
       >
         Delete account
       </Button>
