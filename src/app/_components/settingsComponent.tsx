@@ -66,6 +66,7 @@ const SettingsComponent = () => {
                   <div>
                     <p className="font-bold">First name: {mySettings.name}</p>
                     <p>Email: {mySettings.email}</p>
+                    <p>Register on: {mySettings.createdAt.toString()}</p>
                   </div>
 
                   <SettingsModal

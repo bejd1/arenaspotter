@@ -4,15 +4,23 @@ import React, { useState } from "react";
 import { BsSearch } from "react-icons/bs";
 
 interface SearchInputI {
-  searchTerm: string;
-  handleSearch: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onSearch: any;
+  searchQuery: any;
+  setSearchQuery: any;
 }
 
-const SearchInput = ({ searchTerm, handleSearch }: SearchInputI) => {
+const SearchInput = ({
+  onSearch,
+  searchQuery,
+  setSearchQuery,
+}: SearchInputI) => {
   const [isInputClicked, setIsInputClicked] = useState(false);
 
   return (
-    <form className="flex items-start flex-col w-full lg:px-16 xl:px-20 ">
+    <form
+      onSubmit={onSearch}
+      className="flex items-start flex-col w-full lg:px-16 xl:px-20 "
+    >
       <div
         className={`flex items-center w-full justify-center border rounded-md ${
           isInputClicked ? "border-slate-900" : "border-slate-300"
@@ -22,8 +30,8 @@ const SearchInput = ({ searchTerm, handleSearch }: SearchInputI) => {
           <CustomInput
             placeholder="Choose arena near you..."
             className="border-none"
-            value={searchTerm}
-            onChange={handleSearch}
+            value={searchQuery || ""}
+            onChange={(event) => setSearchQuery(event.target.value)}
             onFocus={() => setIsInputClicked(true)}
             onBlur={() => setIsInputClicked(false)}
           />

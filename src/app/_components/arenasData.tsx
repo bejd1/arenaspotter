@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { CiLocationOn } from "react-icons/ci";
 import { IoPeopleSharp } from "react-icons/io5";
+import { FaLocationCrosshairs } from "react-icons/fa6";
 import Link from "next/link";
 import { PostT } from "@/types/types";
 import { useSearchParams } from "next/navigation";
@@ -11,13 +12,7 @@ import FavoriteBtn from "./favoriteBtn";
 import InfiniteScroll from "react-infinite-scroller";
 import Image from "next/image";
 
-const ArenasData = ({
-  arenas,
-  searchTerm,
-}: {
-  arenas: PostT[];
-  searchTerm: string;
-}) => {
+const ArenasData = ({ arenas }: { arenas: PostT[] }) => {
   const [data, setData] = useState<PostT[]>([]);
   const [sortedArenas, setSortedArenas] = useState<PostT[]>([]);
   const params = useSearchParams();
@@ -64,9 +59,7 @@ const ArenasData = ({
         <div className="grid grid-cols-1 sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 grid-rows-2 sm:px-8 gap-4">
           {filtered().length === 0 ? (
             <div className="col-span-full flex justify-center">
-              <div className="text-center">
-                Doesn&apos;t exist: {searchTerm}
-              </div>
+              <div className="text-center">Doesn&apos;t exist: nic</div>
             </div>
           ) : (
             data.map((arena) => {
@@ -76,7 +69,7 @@ const ArenasData = ({
               return (
                 <div key={id}>
                   <Card
-                    className={`cursor-pointer relative ${
+                    className={`cursor-pointer relative p-0 ${
                       status === "Pending" ? "hidden" : "block"
                     }`}
                   >
@@ -88,22 +81,26 @@ const ArenasData = ({
                         alt="Arena image"
                         className="w-full min-h-[199px] max-h-[200px] object-cover"
                       />
-                      <CardHeader className="p-3 sm:p-4">
+                      <CardHeader className="sm:p-3">
                         <CardTitle className="pb-2 text-lg p-0 w-full h-6">
                           {name}
                         </CardTitle>
 
-                        <CardContent className="flex items-center gap-2 p-0 w-full h-6">
+                        <CardContent className="flex items-center gap-1 p-0 w-full h-6">
                           <FaRegMoneyBillAlt />
                           <div>
                             {cost !== 0 ? <p>${cost}/h</p> : <p>Free</p>}
                           </div>
                         </CardContent>
-                        <CardContent className="flex items-center gap-1 p-0 w-full h-6">
-                          <CiLocationOn />
-                          <p className="text-sm">
-                            {city}, {street}
-                          </p>
+                        <CardContent className="flex flex-col p-0 w-full">
+                          <div className="flex items-center  h-6">
+                            <CiLocationOn className="mr-[2px]" />
+                            <p className="text-sm">{city}</p>
+                          </div>
+                          <div className="flex gap-1 items-center h-6 mt-[6px]">
+                            <FaLocationCrosshairs />
+                            <p className="text-sm">Ul. {street}</p>
+                          </div>
                         </CardContent>
                         <CardContent className="flex items-center gap-1 p-0 w-full h-6">
                           <IoPeopleSharp />

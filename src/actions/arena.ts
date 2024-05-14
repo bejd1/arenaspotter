@@ -7,13 +7,14 @@ import { revalidatePath } from "next/cache";
 const prisma = new PrismaClient();
 
 export async function getArena(
-  category: string | null,
-  sortBy: string | null = null,
-  sortOrder: "asc" | "desc" | null = null
+  sortBy: string,
+  sortOrder: string,
+  category: any,
+  city: any
 ) {
   const data: PostT[] = await prisma.post.findMany({});
 
-  const sortedData = data
+  const myData = data
     .map((item: PostT) => ({
       id: item.id,
       author: item.author,
@@ -71,17 +72,27 @@ export async function getArena(
       }
     });
 
-  if (sortBy && sortOrder) {
-    sortedData.sort((a, b) => {
-      const aSortBy = (a as any)[sortBy];
-      const bSortBy = (b as any)[sortBy];
+  const filteredData = myData.filter((item) =>
+    (item.city ?? "").toLowerCase().includes(city.toLowerCase())
+  );
+
+  const sortedData = filteredData.sort((a, b) => {
+    if (sortBy === "cost") {
       if (sortOrder === "asc") {
-        return aSortBy > bSortBy ? 1 : -1;
+        return a.cost - b.cost;
       } else {
-        return aSortBy < bSortBy ? 1 : -1;
+        return b.cost - a.cost;
       }
-    });
-  }
+    } else if (sortBy === "people") {
+      if (sortOrder === "asc") {
+        return a.people - b.people;
+      } else {
+        return b.people - a.people;
+      }
+    }
+
+    return 0;
+  });
 
   return sortedData;
 }

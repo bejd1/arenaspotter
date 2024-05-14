@@ -10,7 +10,12 @@ import { BsArrowDownRight, BsArrowUpRight } from "react-icons/bs";
 import { IoRefreshSharp } from "react-icons/io5";
 import Link from "next/link";
 
-const SelectSort = () => {
+interface FilterDataI {
+  handleSortCost: any;
+  handleSortPeople: any;
+}
+
+const SelectSort = ({ handleSortCost, handleSortPeople }: FilterDataI) => {
   return (
     <div>
       <Select>
@@ -18,13 +23,14 @@ const SelectSort = () => {
           <SelectValue placeholder="Sort by" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="light">
-            <div className="flex flex-row justify-between items-center w-max gap-1">
-              <Link href={"/arena/?price=asc"}>
-                Sort by price
-                <BsArrowUpRight />
-              </Link>
-            </div>
+          <SelectItem value="light" onClick={() => handleSortCost("asc")}>
+            <Link
+              href={"/arena/?price=asc"}
+              className="flex flex-row justify-between items-center w-max gap-1"
+            >
+              Sort by price
+              <BsArrowUpRight />
+            </Link>
           </SelectItem>
           <SelectItem value="dark">
             <Link

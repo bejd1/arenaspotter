@@ -11,9 +11,13 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import SelectSort from "./selectSort";
-import Link from "next/link";
 
-const FilterData = () => {
+interface FilterDataI {
+  handleSortCost: any;
+  handleSortPeople: any;
+}
+
+const FilterData = ({ handleSortCost, handleSortPeople }: FilterDataI) => {
   const [selectedStartHour, setSelectedStartHour] = useState("");
   const [range, setRange] = useState([0, 300]);
   const [selectedEndHour, setSelectedEndHour] = useState("");
@@ -70,7 +74,10 @@ const FilterData = () => {
     <div>
       <Dialog>
         <div className="flex flex-row gap-2">
-          <SelectSort />
+          <SelectSort
+            handleSortCost={handleSortCost}
+            handleSortPeople={handleSortPeople}
+          />
           <DialogTrigger className="hidden mb-4 bg-white text-black rounded-md px-4 py-1 font-medium">
             More filters
           </DialogTrigger>

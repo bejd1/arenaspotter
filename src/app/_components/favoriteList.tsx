@@ -18,6 +18,7 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "../_components/loading";
 import { PostT } from "@/types/types";
 import ErrorComponent from "../_components/errorComponent";
+import { FaLocationCrosshairs } from "react-icons/fa6";
 
 const FavoriteList = () => {
   const [isClient, setIsClient] = useState(false);
@@ -96,11 +97,15 @@ const FavoriteList = () => {
                             )}
                           </div>
                         </CardContent>
-                        <CardContent className="flex items-center gap-1 p-0 w-full h-6">
-                          <CiLocationOn />
-                          <p className="text-sm">
-                            {favArena.city}, {favArena.street}
-                          </p>
+                        <CardContent className="flex flex-col p-0 w-full">
+                          <div className="flex items-center  h-6">
+                            <CiLocationOn className="mr-[2px]" />
+                            <p className="text-sm">{favArena.city}</p>
+                          </div>
+                          <div className="flex gap-1 items-center h-6 mt-[6px]">
+                            <FaLocationCrosshairs />
+                            <p className="text-sm">Ul. {favArena.street}</p>
+                          </div>
                         </CardContent>
                         <CardContent className="flex items-center gap-1 p-0 w-full h-6">
                           <IoPeopleSharp />
