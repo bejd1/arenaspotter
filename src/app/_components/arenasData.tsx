@@ -12,7 +12,12 @@ import FavoriteBtn from "./favoriteBtn";
 import InfiniteScroll from "react-infinite-scroller";
 import Image from "next/image";
 
-const ArenasData = ({ arenas }: { arenas: PostT[] }) => {
+interface ArenasDataI {
+  arenas: PostT[];
+  city: string | null;
+}
+
+const ArenasData = ({ arenas, city }: ArenasDataI) => {
   const [data, setData] = useState<PostT[]>([]);
   const [sortedArenas, setSortedArenas] = useState<PostT[]>([]);
   const params = useSearchParams();
@@ -59,7 +64,7 @@ const ArenasData = ({ arenas }: { arenas: PostT[] }) => {
         <div className="grid grid-cols-1 sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 grid-rows-2 sm:px-8 gap-4">
           {filtered().length === 0 ? (
             <div className="col-span-full flex justify-center">
-              <div className="text-center">Doesn&apos;t exist: nic</div>
+              <div className="text-center">Doesn&apos;t exist: {city}</div>
             </div>
           ) : (
             data.map((arena) => {

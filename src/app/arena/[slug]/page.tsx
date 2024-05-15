@@ -26,6 +26,17 @@ const ArenaId = async ({ params }: { params: { slug: string } }) => {
     },
   });
 
+  const formattedDate = productData?.updatedAt?.toLocaleString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    hour12: false,
+  });
+
   return (
     <div className="my-5 px-4 sm:px-8 lg:px-20 xl:px-40 flex flex-col justyfy-center h-screen mt-8">
       <div className="flex items-center justify-center">
@@ -219,6 +230,7 @@ const ArenaId = async ({ params }: { params: { slug: string } }) => {
           <MapComponent />
         </div>
       </div>
+      <div>Last update: {formattedDate}</div>
       <div className="absolute right-3 sm:right-12 md:right-32 top-20">
         <ReportModal id={params.slug} arenaName={productData?.name} />
       </div>

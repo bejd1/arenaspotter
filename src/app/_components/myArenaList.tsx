@@ -99,7 +99,7 @@ const MyArenaList = () => {
                 <h2 className="text-xl font-bold">
                   Your arena list is empty 🙄
                 </h2>
-                <h3>If you add arenat it will appear here.</h3>
+                <h3>If you add arena it will appear here.</h3>
                 <Link href={"/create-post"}>
                   <Button variant={"default"} className="mt-2">
                     Create post

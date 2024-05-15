@@ -4,9 +4,11 @@ import React, { useState } from "react";
 import { BsSearch } from "react-icons/bs";
 
 interface SearchInputI {
-  onSearch: any;
-  searchQuery: any;
-  setSearchQuery: any;
+  onSearch: (event: React.FormEvent) => void;
+  searchQuery: string | null | undefined;
+  setSearchQuery: React.Dispatch<
+    React.SetStateAction<string | null | undefined>
+  >;
 }
 
 const SearchInput = ({

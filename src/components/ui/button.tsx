@@ -21,7 +21,8 @@ const buttonVariants = cva(
           "hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-50",
         link: "text-slate-900 underline-offset-4 hover:underline dark:text-slate-50",
         success:
-          "text-slate-900 underline-offset-4  dark:text-slate-50 bg-emerald-500",
+          "text-white underline-offset-4   bg-emerald-500 hover:bg-emerald-600",
+        noHover: "underline-offset-4  text-slate-50 bg-[#22272e] ",
       },
       size: {
         default: "h-9 px-4 py-2",

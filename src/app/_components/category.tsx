@@ -4,12 +4,14 @@ import SearchInput from "./searchInput";
 import CategoryBtn from "./categoryBtn";
 
 interface CategoryPropsI {
-  handleSortCategory: any;
-  handleSortPeople: any;
-  handleSortCost: any;
-  onSearch: any;
-  searchQuery: any;
-  setSearchQuery: any;
+  handleSortCategory: (category: string) => void;
+  handleSortCost: (order: "asc" | "desc") => void;
+  handleSortPeople: (order: "asc" | "desc") => void;
+  onSearch: (event: React.FormEvent) => void;
+  searchQuery: string | null | undefined;
+  setSearchQuery: React.Dispatch<
+    React.SetStateAction<string | null | undefined>
+  >;
 }
 
 const Category = ({

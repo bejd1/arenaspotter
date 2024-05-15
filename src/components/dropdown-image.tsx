@@ -8,15 +8,34 @@ import {
 import { signOut, useSession } from "next-auth/react";
 import { IoExitOutline, IoSettingsOutline } from "react-icons/io5";
 import { FcStatistics } from "react-icons/fc";
-import { GrUserAdmin } from "react-icons/gr";
 import { CiViewList } from "react-icons/ci";
-import { MdReportGmailerrorred } from "react-icons/md";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import Image from "next/image";
+import { useQuery } from "@tanstack/react-query";
+import { getUserById } from "@/actions/user";
+
+type mySettingsI = {
+  id: string;
+  name: string;
+  password: string | null;
+  email: string;
+  emailVerified: Date | null;
+  image: string | null | undefined;
+  createdAt: Date;
+  updatedAt: Date;
+  role: string;
+} | null;
 
 const DropdownImage = () => {
   const { data: session } = useSession();
+
+  const id = session?.user?.id;
+
+  const { data: mySettings } = useQuery<mySettingsI>({
+    queryKey: ["mySettings"],
+    queryFn: async () => await getUserById(id || ""),
+  });
 
   return (
     <div>
@@ -29,7 +48,7 @@ const DropdownImage = () => {
               </div>
             ) : (
               <Image
-                src={session?.user?.image?.toString()}
+                src={mySettings?.image as string}
                 width={100}
                 height={100}
                 className="w-8 h-8 ml-2 rounded-full cursor-pointer"

@@ -1,11 +1,7 @@
-"use client";
 import React, { useState, useTransition } from "react";
+import { Button } from "@/components/ui/button";
 import UploadBtn from "./uploadBtn";
 import DeleteBtn from "./deleteBtn";
-import { IoMdClose } from "react-icons/io";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -14,47 +10,27 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { SettingsSchema } from "@/schemas";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { editUser } from "@/actions/user";
 import { useToast } from "@/components/ui/use-toast";
+import { editUser } from "@/actions/user";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
-
-interface SettingsI {
-  image: string | null | undefined;
-  firstName: string | undefined;
-  email: string | undefined;
-  id: string | undefined;
-  handleClose: () => void;
-  update: any;
-  refetch: any;
-}
+import Loading from "./loading";
+import Loader from "./loader";
 
 type FormData = z.infer<typeof SettingsSchema>;
 
-const SettingsForm = ({
-  image,
-  firstName,
-  email,
-  id,
-  handleClose,
-  update,
-  refetch,
-}: SettingsI) => {
-  const [url, setUrl] = useState(image);
-  const [key, setKey] = useState("");
+const SettingsForm = ({ id, firstName, email }: any) => {
+  const { update } = useSession();
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
-
-  const form = useForm({
-    resolver: zodResolver(SettingsSchema),
-    defaultValues: {
-      firstName: firstName || "",
-      email: email || "",
-    },
-  });
+  const [url, setUrl] = useState("");
+  const [key, setKey] = useState("");
 
   const onSubmit = async (formData: FormData) => {
     try {
@@ -67,8 +43,6 @@ const SettingsForm = ({
       const response = await editUser(editData);
 
       startTransition(() => {
-        refetch();
-        handleClose();
         update({
           firstName: formData.firstName,
           email: formData.email,
@@ -78,7 +52,7 @@ const SettingsForm = ({
       await update(response);
 
       return toast({
-        title: "Success!",
+        title: "Success",
         description: "You have successfully updated your profile",
         variant: "success",
       });
@@ -91,6 +65,14 @@ const SettingsForm = ({
       });
     }
   };
+
+  const form = useForm({
+    resolver: zodResolver(SettingsSchema),
+    defaultValues: {
+      firstName: firstName || "",
+      email: email || "",
+    },
+  });
 
   return (
     <Form {...form}>
@@ -115,7 +97,7 @@ const SettingsForm = ({
           name="firstName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>First Name</FormLabel>
+              <FormLabel>Name</FormLabel>
               <FormControl>
                 <Input
                   id="name"
@@ -147,24 +129,10 @@ const SettingsForm = ({
             </FormItem>
           )}
         />
-        {/* image */}
-        <Label>Image</Label>
-        {url?.length !== 0 ? (
-          <div>
-            <Image src={url || ""} width={100} height={100} alt="My image" />
-            <DeleteBtn url={url} setUrl={setUrl} />
-          </div>
-        ) : (
-          <UploadBtn setUrl={setUrl} setKey={setKey} />
-        )}
 
-        <Button variant="default" type="submit">
-          Change
+        <Button variant="success" type="submit">
+          {isPending ? <Loader text={"Upload profile"} /> : "Upload profile"}
         </Button>
-        <IoMdClose
-          onClick={handleClose}
-          className="absolute top-4 right-4 cursor-pointer text-xl"
-        />
       </form>
     </Form>
   );

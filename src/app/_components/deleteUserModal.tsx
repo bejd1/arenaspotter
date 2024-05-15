@@ -42,7 +42,7 @@ export default function DeleteUserModal({ id }: { id: string | undefined }) {
       <Button
         onClick={handleOpen}
         variant={"destructive"}
-        className="w-max ml-2 mt-2"
+        className="w-max mt-4"
       >
         Delete account
       </Button>
@@ -56,7 +56,7 @@ export default function DeleteUserModal({ id }: { id: string | undefined }) {
         <Card className="flex flex-col gap-2 my-8 w-full sm:w-[400px] px-4 sm:px-12 py-8 mx-4 relative">
           <h2 className="text-xl">Really want to delete account?</h2>
           <div className="flex items-center justify-center gap-4 mt-4">
-            <Button onClick={handleClose} variant={"default"}>
+            <Button onClick={handleClose} variant={"destructive"}>
               No
             </Button>
             <form
@@ -75,10 +75,10 @@ export default function DeleteUserModal({ id }: { id: string | undefined }) {
                 onChange={() => {}}
               />
               <Button
-                variant={"destructive"}
+                variant={"success"}
                 disabled={isPending}
                 type="submit"
-                className="bg-red-600 hover:bg-red-500"
+                className="text-white"
               >
                 {!isPending ? "Yes" : "Deleting..."}
               </Button>

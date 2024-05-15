@@ -9,8 +9,8 @@ const prisma = new PrismaClient();
 export async function getArena(
   sortBy: string,
   sortOrder: string,
-  category: any,
-  city: any
+  category: string | null,
+  city: string | null
 ) {
   const data: PostT[] = await prisma.post.findMany({});
 
@@ -57,6 +57,8 @@ export async function getArena(
       website: item.website,
       image: item.image,
       premium: item.premium,
+      createdAt: item.createdAt ?? new Date().toISOString(),
+      updatedAt: item.updatedAt,
     }))
     .filter((item) => {
       if (category === null) {
@@ -72,9 +74,15 @@ export async function getArena(
       }
     });
 
-  const filteredData = myData.filter((item) =>
-    (item.city ?? "").toLowerCase().includes(city.toLowerCase())
-  );
+  let filteredData;
+
+  if (city === "") {
+    filteredData = myData;
+  } else {
+    filteredData = myData.filter((item) =>
+      (item.city ?? "").toLowerCase().includes(city?.toLowerCase() ?? "")
+    );
+  }
 
   const sortedData = filteredData.sort((a, b) => {
     if (sortBy === "cost") {

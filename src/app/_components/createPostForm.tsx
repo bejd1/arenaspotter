@@ -76,7 +76,7 @@ const CreatePostForm = () => {
       router.push("/arena");
       setUrl("");
       toast({
-        title: "Success!",
+        title: "Success",
         description: "Created",
         variant: "success",
         duration: 5000,

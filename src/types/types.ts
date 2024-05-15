@@ -40,6 +40,8 @@ export type PostT = {
   website?: string | null;
   image: string;
   premium: string;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 export type ReportT = {

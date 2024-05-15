@@ -13,8 +13,8 @@ import { Slider } from "@/components/ui/slider";
 import SelectSort from "./selectSort";
 
 interface FilterDataI {
-  handleSortCost: any;
-  handleSortPeople: any;
+  handleSortCost: (order: "asc" | "desc") => void;
+  handleSortPeople: (order: "asc" | "desc") => void;
 }
 
 const FilterData = ({ handleSortCost, handleSortPeople }: FilterDataI) => {

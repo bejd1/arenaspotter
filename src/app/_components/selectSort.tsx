@@ -7,66 +7,61 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { BsArrowDownRight, BsArrowUpRight } from "react-icons/bs";
-import { IoRefreshSharp } from "react-icons/io5";
-import Link from "next/link";
 
 interface FilterDataI {
-  handleSortCost: any;
-  handleSortPeople: any;
+  handleSortCost: (order: "asc" | "desc") => void;
+  handleSortPeople: (order: "asc" | "desc") => void;
 }
 
 const SelectSort = ({ handleSortCost, handleSortPeople }: FilterDataI) => {
+  const handleSortByPrice = (order: "asc" | "desc") => {
+    handleSortCost(order);
+  };
+
+  const handleSortByPeople = (order: "asc" | "desc") => {
+    handleSortPeople(order);
+  };
+
   return (
     <div>
-      <Select>
+      <Select
+        onValueChange={(value) => {
+          if (value.startsWith("people")) {
+            handleSortByPeople(value.split("-")[1] as "asc" | "desc");
+          } else {
+            handleSortByPrice(value as "asc" | "desc");
+          }
+        }}
+      >
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="Sort by" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="light" onClick={() => handleSortCost("asc")}>
-            <Link
-              href={"/arena/?price=asc"}
-              className="flex flex-row justify-between items-center w-max gap-1"
-            >
+          <SelectItem value="asc">
+            <div className="flex flex-row justify-between items-center w-max gap-1">
               Sort by price
               <BsArrowUpRight />
-            </Link>
+            </div>
           </SelectItem>
-          <SelectItem value="dark">
-            <Link
-              href={"/arena/?price=asc"}
-              className="flex flex-row justify-between items-center w-max gap-1"
-            >
+
+          <SelectItem value="desc">
+            <div className="flex flex-row justify-between items-center w-max gap-1">
               Sort by price
               <BsArrowDownRight />
-            </Link>
+            </div>
           </SelectItem>
-          <SelectItem value="syss">
+
+          <SelectItem value="people-asc">
             <div className="flex flex-row justify-between items-center w-max gap-1">
-              Sort by ppl
+              Sort by people
               <BsArrowUpRight />
             </div>
           </SelectItem>
-          <SelectItem value="system">
+
+          <SelectItem value="people-desc">
             <div className="flex flex-row justify-between items-center w-max gap-1">
-              Sort by ppl
+              Sort by people
               <BsArrowDownRight />
-            </div>
-          </SelectItem>
-          <SelectItem value="systedm" className="flex flex-row">
-            <div className="flex flex-row justify-between items-center w-max gap-1">
-              Free
-            </div>
-          </SelectItem>
-          <SelectItem value="systsdsem">
-            <div className="flex flex-row justify-between items-center w-max gap-1">
-              Payment only
-            </div>
-          </SelectItem>
-          <SelectItem value="dfsystsdsem" className="flex flex-row">
-            <div className="flex flex-row justify-between items-center w-max gap-1">
-              Restart
-              <IoRefreshSharp className="text-lg" />
             </div>
           </SelectItem>
         </SelectContent>

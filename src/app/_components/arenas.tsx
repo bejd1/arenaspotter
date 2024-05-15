@@ -1,21 +1,19 @@
 "use client";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getArena } from "@/actions/arena";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../_components/loading";
 import ErrorComponent from "../_components/errorComponent";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ArenasData from "./arenasData";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { BiFootball, BiSolidBasketball } from "react-icons/bi";
-import { PiVolleyball } from "react-icons/pi";
 import { useDebounceCallback } from "usehooks-ts";
 import Category from "./category";
 
 const Arenas = () => {
   const [sortBy, setSortBy] = useState("asc");
   const [sortOrder, setSortOrder] = useState("asc");
+  const [searchQuery, setSearchQuery] = useState<string | null>();
+  const [city, setCity] = useState<string | null>("");
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -75,8 +73,7 @@ const Arenas = () => {
   }, 300);
 
   // search input
-  const [searchQuery, setSearchQuery] = useState<string | null>();
-  const [city, setCity] = useState<string | null>("");
+
   const onSearch = (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -90,6 +87,9 @@ const Arenas = () => {
     const queryParams = searchQuery ? `?city=${encodedSearchQuery}` : "";
 
     router.push(`${pathname}${queryParams}`);
+    if (searchQuery === "") {
+      return arenas;
+    }
   };
 
   const {
@@ -105,7 +105,7 @@ const Arenas = () => {
   if (isError) return <ErrorComponent />;
 
   return (
-    <Suspense fallback={<Loading />}>
+    <>
       <Category
         handleSortCategory={handleSortCategory}
         handleSortPeople={handleSortPeople}
@@ -114,8 +114,8 @@ const Arenas = () => {
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
       />
-      <ArenasData arenas={arenas} />
-    </Suspense>
+      <ArenasData arenas={arenas} city={city} />
+    </>
   );
 };
 
