@@ -23,7 +23,7 @@ type mySettingsI = {
 } | null;
 
 const SettingsComponent = () => {
-  const { data: session, status } = useSession();
+  const { data: session, status, update } = useSession();
   const id = session?.user?.id;
 
   const {
@@ -52,8 +52,11 @@ const SettingsComponent = () => {
                   <div className="w-[100px] sm:w-[200px] mt-4">
                     <Label>Profile picture</Label>
                     {mySettings.image?.toString() === "" ? (
-                      <div className="mt-2 flex items-center justify-center w-20 sm:w-40 h-20 sm:h-40 ml-2 bg-blue-600 text-white rounded-full cursor-pointer text-6xl sm:text-8xl">
-                        {mySettings.name?.charAt(0).toLocaleUpperCase()}
+                      <div className="relative">
+                        <div className="mt-2 flex items-center justify-center w-20 sm:w-40 h-20 sm:h-40 ml-2 bg-blue-600 text-white rounded-full text-6xl sm:text-8xl ">
+                          {mySettings.name?.charAt(0).toLocaleUpperCase()}
+                        </div>
+                        <EditPhotoDropdown />
                       </div>
                     ) : (
                       <div className="relative">
@@ -70,12 +73,18 @@ const SettingsComponent = () => {
                   </div>
                 </div>
 
-                <div className="col-span-2">
-                  <SettingsForm
-                    id={id}
-                    firstName={mySettings.name}
-                    email={mySettings.email}
-                  />
+                <div className=" relative col-span-2  flex flex-col gap-4 mt-4 bg-slate-600 p-4 rounded-lg">
+                  <p> Name: {mySettings.name}</p>
+                  <p> Email: {mySettings.email}</p>
+                  <div className="absolute top-2 right-4">
+                    <SettingsForm
+                      id={id}
+                      firstName={mySettings.name}
+                      email={mySettings.email}
+                      refetch={refetch}
+                      update={update}
+                    />
+                  </div>
                 </div>
               </>
             ) : null}

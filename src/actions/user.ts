@@ -29,7 +29,6 @@ export async function editUser(formData: FormData) {
     const id = formData.get("inputId") as string;
     const firstName = formData.get("firstName") as string;
     const email = formData.get("email") as string;
-    const image = formData.get("image") as string;
 
     await prisma.user.update({
       where: {
@@ -38,6 +37,25 @@ export async function editUser(formData: FormData) {
       data: {
         name: firstName,
         email: email,
+      },
+    });
+
+    revalidatePath("/settings");
+  } catch (error) {
+    console.error("Error while editing the product:", error);
+  }
+}
+
+export async function editUserImage(formData: FormData) {
+  try {
+    const id = formData.get("inputId") as string;
+    const image = formData.get("image") as string;
+
+    await prisma.user.update({
+      where: {
+        id: id,
+      },
+      data: {
         image: image,
       },
     });

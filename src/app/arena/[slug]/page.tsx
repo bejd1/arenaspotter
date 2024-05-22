@@ -230,7 +230,7 @@ const ArenaId = async ({ params }: { params: { slug: string } }) => {
           <MapComponent />
         </div>
       </div>
-      <div>Last update: {formattedDate}</div>
+      <div className="text-sm py-3">Last update: {formattedDate}</div>
       <div className="absolute right-3 sm:right-12 md:right-32 top-20">
         <ReportModal id={params.slug} arenaName={productData?.name} />
       </div>

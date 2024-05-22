@@ -52,12 +52,17 @@ const ReportForm = ({ myEmail, id, arenaName, handleClose }: ReportI) => {
         handleClose();
       });
       return toast({
-        title: "Success!",
-        description: "You have successfully updated your product",
+        title: "Success",
+        description: "You have successfully report arena",
         variant: "success",
       });
     } catch (error) {
       console.error("Edit function failed", error);
+      return toast({
+        title: "Error",
+        description: "Failed to report arena",
+        variant: "error",
+      });
     }
   };
 

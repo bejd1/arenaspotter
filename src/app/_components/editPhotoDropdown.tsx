@@ -11,11 +11,11 @@ import { BiPencil } from "react-icons/bi";
 const EditPhotoDropdown = () => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="absolute bottom-0 -right-2 z-10">
-        <Button variant={"noHover"} className="flex gap-1 ">
+      <DropdownMenuTrigger className="absolute bottom-0 right-2 z-10">
+        <div className="flex items-center gap-1 underline-offset-4  text-slate-50 bg-[#22272e] px-3 py-1 rounded-md">
           <BiPencil />
           Edit
-        </Button>
+        </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="relative  z-10">
         <DropdownMenuItem className="cursor-pointer">

@@ -18,6 +18,7 @@ import { BiPencil } from "react-icons/bi";
 import { IoMdClose } from "react-icons/io";
 import OpeningHours from "./openingHours";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "@/components/ui/use-toast";
 
 export default function EditPost({ post }: { post: PostT }) {
   const [open, setOpen] = useState(false);
@@ -27,6 +28,24 @@ export default function EditPost({ post }: { post: PostT }) {
 
   const handleShowSize = () => {
     setShowSize(!showSize);
+  };
+
+  const reporto = () => {
+    try {
+      toast({
+        title: "Success",
+        description: "You have successfully edit arena",
+        variant: "success",
+        duration: 5000,
+        className: "mb-2",
+      });
+    } catch (e) {
+      return toast({
+        title: "Error",
+        description: "Failed to edit arena",
+        variant: "error",
+      });
+    }
   };
 
   return (
@@ -42,6 +61,7 @@ export default function EditPost({ post }: { post: PostT }) {
         className="flex justify-center"
       >
         <Card className="flex flex-col my-8 sm:w-[600px] px-4 sm:px-32 py-8 overflow-scroll relative">
+          <button onClick={reporto}>toast</button>
           <h2 className="text-2xl font-bold text-center">Edit arena</h2>
           <form
             onSubmit={async (e) => {

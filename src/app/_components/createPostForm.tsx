@@ -84,6 +84,11 @@ const CreatePostForm = () => {
       });
     } catch (error) {
       console.error("Edit function failed", error);
+      return toast({
+        title: "Error",
+        description: "Failed to create a new arena",
+        variant: "error",
+      });
     }
   };
 

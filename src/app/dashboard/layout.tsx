@@ -68,12 +68,15 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           const isActive = pathname === link.href;
 
           return (
-            <div key={link.name} className="flex flex-col mb-2">
+            <div
+              key={link.name}
+              className="flex flex-col justify-start mb-2 w-full"
+            >
               <Button
                 variant={"outline"}
                 className={
                   isActive
-                    ? "bg-slate-300 hover:bg-slate-400 dark:bg-slate-700"
+                    ? "bg-slate-300 hover:bg-slate-400 w-full dark:bg-slate-700"
                     : ""
                 }
               >

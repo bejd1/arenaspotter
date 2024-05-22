@@ -11,6 +11,7 @@ import { FcStatistics } from "react-icons/fc";
 import { CiViewList } from "react-icons/ci";
 import Link from "next/link";
 import { Button } from "./ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { getUserById } from "@/actions/user";
@@ -47,13 +48,9 @@ const DropdownImage = () => {
                 {session?.user?.name?.charAt(0).toLocaleUpperCase()}
               </div>
             ) : (
-              <Image
-                src={mySettings?.image as string}
-                width={100}
-                height={100}
-                className="w-8 h-8 ml-2 rounded-full cursor-pointer"
-                alt="user image"
-              />
+              <Avatar className="w-8 h-8 ml-2 cursor-pointer">
+                <AvatarImage src={mySettings?.image as string} />
+              </Avatar>
             )}
           </div>
         </DropdownMenuTrigger>
