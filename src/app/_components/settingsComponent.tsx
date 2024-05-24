@@ -7,8 +7,10 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "../_components/loading";
 import ErrorComponent from "./errorComponent";
 import EditPhotoDropdown from "./editPhotoDropdown";
-import SettingsForm from "./settingsForm";
 import { Label } from "@/components/ui/label";
+import Edit from "../settings/edit/page";
+import { BiPencil } from "react-icons/bi";
+import Link from "next/link";
 
 type mySettingsI = {
   id: string;
@@ -76,8 +78,17 @@ const SettingsComponent = () => {
                 <div className=" relative col-span-2  flex flex-col gap-4 mt-4 bg-slate-600 p-4 rounded-lg">
                   <p> Name: {mySettings.name}</p>
                   <p> Email: {mySettings.email}</p>
-                  <div className="absolute top-2 right-4">
-                    <SettingsForm
+                  <div className="absolute top-2 right-4 ">
+                    <Link
+                      href={"/settings/edit"}
+                      className="flex items-center gap-1 underline-offset-4  text-slate-50 bg-[#22272e] px-3 py-1 rounded-md"
+                    >
+                      <BiPencil />
+                      Edit
+                    </Link>
+                  </div>
+                  <div className="absolute">
+                    <Edit
                       id={id}
                       firstName={mySettings.name}
                       email={mySettings.email}

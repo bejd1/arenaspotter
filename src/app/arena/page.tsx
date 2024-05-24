@@ -1,6 +1,6 @@
 import React from "react";
-import Arenas from "../_components/arenas";
 import { Metadata } from "next";
+import ClientArenas from "./clientArena";
 
 export const metadata: Metadata = {
   title: "Find your arena",
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 const Arena = () => {
   return (
     <div className="flex flex-col mt-8 items-center justify-center w-full">
-      <Arenas />
+      <ClientArenas />
     </div>
   );
 };
