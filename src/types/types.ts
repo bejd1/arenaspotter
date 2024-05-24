@@ -61,3 +61,11 @@ export type SiteConfigT = {
     github: string;
   };
 };
+
+export interface SettingsFormI {
+  id: string | undefined;
+  firstName: string;
+  email: string;
+  refetch: any;
+  update: any;
+}

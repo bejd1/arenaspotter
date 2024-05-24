@@ -64,7 +64,10 @@ const ArenasData = ({ arenas, city }: ArenasDataI) => {
         <div className="grid grid-cols-1 sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 grid-rows-2 sm:px-8 gap-4">
           {filtered().length === 0 ? (
             <div className="col-span-full flex justify-center">
-              <div className="text-center">Doesn&apos;t exist: {city}</div>
+              <div className="text-center">
+                <p>Doesn&apos;t exist</p>
+                {city?.toString().length === 0 ? null : <p>City: {city}</p>}
+              </div>
             </div>
           ) : (
             data.map((arena) => {

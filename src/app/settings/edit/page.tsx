@@ -19,16 +19,9 @@ import Loader from "@/app/_components/loader";
 import { Input } from "@/components/ui/input";
 import { Router } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { SettingsFormI } from "@/types/types";
 
 type FormData = z.infer<typeof SettingsSchema>;
-
-interface SettingsFormI {
-  id: string | undefined;
-  firstName: string;
-  email: string;
-  refetch: any;
-  update: any;
-}
 
 const Edit = ({ id, firstName, email, refetch, update }: SettingsFormI) => {
   const [isPending, startTransition] = useTransition();
