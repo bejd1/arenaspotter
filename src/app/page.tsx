@@ -16,9 +16,10 @@ const ParentComponent = () => {
       <h1 className="text-2xl sm:text-4xl font-extrabold">
         Search arenas near you
       </h1>
-      <h3 className="text-lg sm:text-xl text-zinc-400 sm:w-[700px] my-4">
-        Beautifully designed components that you can copy and paste into your
-        apps. Accessible. Customizable. Open Source. Get Started GitHub
+      <h3 className="text-lg sm:text-xl text-zinc-400 sm:w-[900px] my-4">
+        Welcome to Arena Spotter! Discover the best sports arenas and fields
+        close to you effortlessly. Find locations, read reviews and book by
+        calling next plays everything in one place. Your favorite sports site!
       </h3>
       <Link href={"/arena"}>
         <Button className="flex gap-1">

@@ -65,8 +65,10 @@ const ArenasData = ({ arenas, city }: ArenasDataI) => {
           {filtered().length === 0 ? (
             <div className="col-span-full flex justify-center">
               <div className="text-center">
-                <p>Doesn&apos;t exist</p>
-                {city?.toString().length === 0 ? null : <p>City: {city}</p>}
+                <div className="flex gap-1">
+                  <p>Doesn&apos;t exist</p>
+                  {city === null ? null : <p>city: {city}</p>}
+                </div>
               </div>
             </div>
           ) : (

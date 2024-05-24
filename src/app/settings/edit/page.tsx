@@ -17,14 +17,18 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import Loader from "@/app/_components/loader";
 import { Input } from "@/components/ui/input";
-import { Router } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { SettingsFormI } from "@/types/types";
+import { Modal } from "@mui/material";
+import { BiPencil } from "react-icons/bi";
 
 type FormData = z.infer<typeof SettingsSchema>;
 
-const Edit = ({ id, firstName, email, refetch, update }: SettingsFormI) => {
+const Edit = ({ id, firstName, email, refetch, update }: any) => {
   const [isPending, startTransition] = useTransition();
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const router = useRouter();
   const { toast } = useToast();
 
@@ -74,61 +78,76 @@ const Edit = ({ id, firstName, email, refetch, update }: SettingsFormI) => {
     }
   };
   return (
-    <div className="flex items-center justify-center h-[70vh]">
-      {" "}
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col w-[500px] gap-4 mt-4 bg-slate-600 p-4 rounded-lg"
-        >
-          <Input
-            type="hidden"
-            name="inputId"
-            defaultValue={id || ""}
-            onChange={() => {}}
-          />
-          <FormField
-            control={form.control}
-            name="firstName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Name</FormLabel>
-                <FormControl>
-                  <Input
-                    id="name"
-                    type="text"
-                    {...field}
-                    placeholder="First name"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+    <div className="flex items-center justify-center">
+      <Button onClick={handleOpen}>
+        <BiPencil />
+        Edit
+      </Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        className="flex justify-center items-center mb-12"
+      >
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col w-[500px] gap-4 mt-4 bg-slate-600 p-4 rounded-lg"
+          >
+            <Input
+              type="hidden"
+              name="inputId"
+              defaultValue={id || ""}
+              onChange={() => {}}
+            />
+            <FormField
+              control={form.control}
+              name="firstName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      id="name"
+                      type="text"
+                      {...field}
+                      placeholder="First name"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input
-                    id="email"
-                    type="email"
-                    {...field}
-                    placeholder="youremail@email.com"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button variant="success" type="submit" className="w-32">
-            {isPending ? <Loader text={"Upload profile"} /> : "Upload profile"}
-          </Button>
-        </form>
-      </Form>
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      id="email"
+                      type="email"
+                      {...field}
+                      placeholder="youremail@email.com"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button variant="success" type="submit" className="w-32">
+              {isPending ? (
+                <Loader text={"Upload profile"} />
+              ) : (
+                "Upload profile"
+              )}
+            </Button>
+          </form>
+        </Form>
+      </Modal>
     </div>
   );
 };

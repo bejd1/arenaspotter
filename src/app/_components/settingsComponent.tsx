@@ -75,19 +75,10 @@ const SettingsComponent = () => {
                   </div>
                 </div>
 
-                <div className=" relative col-span-2  flex flex-col gap-4 mt-4 bg-slate-600 p-4 rounded-lg">
+                <div className="relative col-span-2  flex flex-col gap-4 mt-4 bg-slate-600  p-4 rounded-lg">
                   <p> Name: {mySettings.name}</p>
                   <p> Email: {mySettings.email}</p>
                   <div className="absolute top-2 right-4 ">
-                    <Link
-                      href={"/settings/edit"}
-                      className="flex items-center gap-1 underline-offset-4  text-slate-50 bg-[#22272e] px-3 py-1 rounded-md"
-                    >
-                      <BiPencil />
-                      Edit
-                    </Link>
-                  </div>
-                  <div className="absolute">
                     <Edit
                       id={id}
                       firstName={mySettings.name}
