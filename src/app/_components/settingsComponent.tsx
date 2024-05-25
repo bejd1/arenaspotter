@@ -9,8 +9,7 @@ import ErrorComponent from "./errorComponent";
 import EditPhotoDropdown from "./editPhotoDropdown";
 import { Label } from "@/components/ui/label";
 import Edit from "../settings/edit/page";
-import { BiPencil } from "react-icons/bi";
-import Link from "next/link";
+import { redirect } from "next/navigation";
 
 type mySettingsI = {
   id: string;
@@ -28,6 +27,10 @@ const SettingsComponent = () => {
   const { data: session, status, update } = useSession();
   const id = session?.user?.id;
 
+  if (!session?.user) {
+    redirect("/");
+  }
+
   const {
     data: mySettings,
     isLoading,
@@ -43,7 +46,7 @@ const SettingsComponent = () => {
 
   return (
     <>
-      {status === "loading" ? (
+      {status === "authenticated" ? (
         <Loading />
       ) : (
         <>

@@ -6,7 +6,7 @@ export default withAuth({
 
 export const config = {
   matcher: [
-    "/settings",
+    // "/settings",
     "/my-arenas",
     "/reports",
     "/panel-admin",
@@ -15,3 +15,7 @@ export const config = {
     "/create-post",
   ],
 };
+
+// export const config = {
+//   matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+// };

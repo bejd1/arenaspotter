@@ -16,7 +16,7 @@ const ParentComponent = () => {
       <h1 className="text-2xl sm:text-4xl font-extrabold">
         Search arenas near you
       </h1>
-      <h3 className="text-lg sm:text-xl text-zinc-400 sm:w-[900px] my-4">
+      <h3 className="text-lg sm:text-xl text-zinc-400 sm:w-[600px] md:w-[800px] my-4">
         Welcome to Arena Spotter! Discover the best sports arenas and fields
         close to you effortlessly. Find locations, read reviews and book by
         calling next plays everything in one place. Your favorite sports site!
