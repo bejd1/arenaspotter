@@ -26,7 +26,7 @@ const PanelAdminTable = () => {
     refetch,
   } = useQuery({
     queryKey: ["pendingPosts"],
-    queryFn: async () => await getArenaByStatus("Pending"),
+    queryFn: async () => await getArenaByStatus("pending"),
   });
   const handleEditSubmit = async (formData: FormData) => {
     try {

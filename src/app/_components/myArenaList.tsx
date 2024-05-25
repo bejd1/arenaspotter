@@ -87,13 +87,8 @@ const MyArenaList = () => {
                         )}
                       </TableCell>
                       <TableCell className="text-right">
-                        <div className="flex sm:hidden justify-end">
+                        <div className="flex justify-end">
                           <DropdownActions post={post} id={post.id} />
-                        </div>
-                        <div className="hidden sm:flex justify-end gap-1">
-                          <Button variant={"success"}>Upgrade</Button>
-                          <EditPost post={post} />
-                          <DeletePost id={post.id} />
                         </div>
                       </TableCell>
                     </TableRow>

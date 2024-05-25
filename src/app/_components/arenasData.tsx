@@ -80,7 +80,9 @@ const ArenasData = ({ arenas, city }: ArenasDataI) => {
                 <div key={id}>
                   <Card
                     className={`cursor-pointer relative p-0 ${
-                      status === "Pending" ? "hidden" : "block"
+                      status === "pending" || status === "rejected"
+                        ? "hidden"
+                        : "block"
                     }`}
                   >
                     <Link href={`/arena/${id}`}>

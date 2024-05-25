@@ -14,10 +14,10 @@ import {
 } from "@/components/ui/select";
 import DeleteBtn from "../_components/deleteBtn";
 import OpeningHours from "../_components/openingHours";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/use-toast";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const CreatePostForm = () => {
   const { data: session } = useSession();
@@ -28,6 +28,13 @@ const CreatePostForm = () => {
   const [key, setKey] = useState("");
   const ref = useRef<HTMLFormElement>(null);
   const premium = false;
+
+  useEffect(() => {
+    if (!session?.user) {
+      // router.push("/(.)my-account");
+      redirect("/(.)my-account");
+    }
+  }, [session]);
 
   // const form = useForm({
   //   resolver: zodResolver(CreatePostSchema),
@@ -144,7 +151,7 @@ const CreatePostForm = () => {
       />
       <Label>People*</Label>
       <Input type="number" name="people" placeholder="People" required />
-      <Input type="hidden" name="status" value={"Pending"} required />
+      <Input type="hidden" name="status" value={"pending"} required />
       <Label>Category*</Label>
       <div className="flex items-center space-x-2">
         <input

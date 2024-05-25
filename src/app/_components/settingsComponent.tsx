@@ -28,9 +28,6 @@ const SettingsComponent = () => {
 
   const id = session?.user?.id;
 
-  // if (!session?.user) {
-  //   redirect("/");
-  // }
   useEffect(() => {
     if (!session?.user && status !== "loading") {
       redirect("/");

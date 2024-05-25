@@ -23,10 +23,8 @@ const DropdownActions = ({ post, id }: DropdownI) => {
         <BsThreeDotsVertical className="text-lg cursor-pointer" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="flex items-center flex-col gap-2">
-        <div className="mt-2">
+        <div className="my-2 flex flex-col gap-2">
           <Button variant={"success"}>Upgrade</Button>
-        </div>
-        <div className="flex justyfy-between">
           <EditPost post={post} />
           <DeletePost id={id} />
         </div>

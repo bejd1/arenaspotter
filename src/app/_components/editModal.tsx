@@ -50,8 +50,13 @@ export default function EditPost({ post }: { post: PostT }) {
 
   return (
     <div>
-      <Button variant={"outline"} onClick={handleOpen} className="p-3 sm:p-4">
-        <BiPencil />
+      <Button
+        variant={"secondary"}
+        onClick={handleOpen}
+        className="px-6 w-full"
+      >
+        Edit
+        <BiPencil className="ml-1" />
       </Button>
       <Modal
         open={open}
