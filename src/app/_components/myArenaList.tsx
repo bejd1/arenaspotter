@@ -19,10 +19,17 @@ import ErrorComponent from "./errorComponent";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import DropdownActions from "./dropdownActions";
+import { redirect } from "next/navigation";
 
 const MyArenaList = () => {
   const { data: session, status } = useSession();
   const [myId, setMyId] = useState("");
+
+  useEffect(() => {
+    if (!session?.user && status !== "loading") {
+      redirect("/");
+    }
+  }, [session, status]);
 
   const { data: arenas = [], isError } = useQuery({
     queryKey: ["arenas"],

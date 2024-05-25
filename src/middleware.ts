@@ -7,8 +7,8 @@ export default withAuth({
 export const config = {
   matcher: [
     // "/settings",
-    "/my-arenas",
-    "/reports",
+    // "/my-arenas",
+    // "/reports",
     "/panel-admin",
     "/my-account",
     "/(.)my-account",

@@ -16,6 +16,7 @@ import DeleteReport from "../_components/deleteReport";
 import ErrorComponent from "../_components/errorComponent";
 import { useSession } from "next-auth/react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { redirect } from "next/navigation";
 
 const ReportsTable = () => {
   const { data: session } = useSession();
@@ -32,7 +33,9 @@ const ReportsTable = () => {
 
   if (isLoading) return <Loading />;
   if (isError) return <ErrorComponent />;
-
+  if (!session?.user) {
+    redirect("/");
+  }
   if (session?.user?.role !== "admin") return null;
 
   const toggleReportDetails = (reportId: any) => {
