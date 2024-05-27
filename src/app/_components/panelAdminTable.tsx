@@ -41,57 +41,59 @@ const PanelAdminTable = () => {
   if (session?.user?.role !== "admin") return null;
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Name</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Method</TableHead>
-          <TableHead className="text-right">Status</TableHead>
-        </TableRow>
-      </TableHeader>
-      {pendingPosts &&
-        pendingPosts.map((pendingPost) => {
-          const { id, name, status } = pendingPost;
-          return (
-            <TableBody key={id}>
-              <TableRow>
-                <TableCell className="font-medium">
-                  <Link href={id}>{name}</Link>
-                </TableCell>
-                <TableCell>{status}</TableCell>
-                <TableCell>Credit Card</TableCell>
-                <TableCell className="flex w-full justify-end items-right px-0">
-                  <form
-                    onSubmit={async (e) => {
-                      e.preventDefault();
-                      refetch();
-                      await handleEditSubmit(
-                        new FormData(e.target as HTMLFormElement)
-                      );
-                    }}
-                    className="flex flex-col sm:flex-row items-end p-0 m-0"
-                  >
-                    <select
-                      name="status"
-                      defaultValue="pending"
-                      onChange={() => {}}
-                      className="mb-2  mr-0 sm:mr-2"
+    <div className="px-6">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Name</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Method</TableHead>
+            <TableHead className="text-right">Status</TableHead>
+          </TableRow>
+        </TableHeader>
+        {pendingPosts &&
+          pendingPosts.map((pendingPost) => {
+            const { id, name, status } = pendingPost;
+            return (
+              <TableBody key={id}>
+                <TableRow>
+                  <TableCell className="font-medium">
+                    <Link href={id}>{name}</Link>
+                  </TableCell>
+                  <TableCell>{status}</TableCell>
+                  <TableCell>Credit Card</TableCell>
+                  <TableCell className="flex w-full justify-end items-right px-0">
+                    <form
+                      onSubmit={async (e) => {
+                        e.preventDefault();
+                        refetch();
+                        await handleEditSubmit(
+                          new FormData(e.target as HTMLFormElement)
+                        );
+                      }}
+                      className="flex flex-col sm:flex-row items-end p-0 m-0"
                     >
-                      <option value="accept">accept</option>
-                      <option value="rejected">rejected</option>
-                    </select>
-                    <input type="hidden" name="inputId" value={id} />
-                    <Button variant={"default"} type="submit">
-                      Change
-                    </Button>
-                  </form>
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          );
-        })}
-    </Table>
+                      <select
+                        name="status"
+                        defaultValue="pending"
+                        onChange={() => {}}
+                        className="mb-2  mr-0 sm:mr-2"
+                      >
+                        <option value="accept">accept</option>
+                        <option value="rejected">rejected</option>
+                      </select>
+                      <input type="hidden" name="inputId" value={id} />
+                      <Button variant={"default"} type="submit">
+                        Change
+                      </Button>
+                    </form>
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            );
+          })}
+      </Table>
+    </div>
   );
 };
 

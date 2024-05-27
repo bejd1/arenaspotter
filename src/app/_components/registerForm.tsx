@@ -46,7 +46,6 @@ const RegisterForm = () => {
   });
 
   const onSubmit = async (data: FormData) => {
-    console.log("Submitting form", data);
     const { name, email, password } = data;
 
     try {

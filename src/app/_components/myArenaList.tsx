@@ -13,13 +13,12 @@ import { useSession } from "next-auth/react";
 import { getArenaByAuthor } from "@/actions/arena";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "./loading";
-import EditPost from "./editModal";
-import DeletePost from "./deletePost";
 import ErrorComponent from "./errorComponent";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import DropdownActions from "./dropdownActions";
 import { redirect } from "next/navigation";
+import { MyArenaListHover } from "./myArenaListHover";
 
 const MyArenaList = () => {
   const { data: session, status } = useSession();
@@ -58,6 +57,7 @@ const MyArenaList = () => {
                   <TableHead>Name</TableHead>
                   <TableHead>Status areana</TableHead>
                   <TableHead>Status</TableHead>
+                  <TableHead>Premium days</TableHead>
                   <TableHead className="text-right p-0">Actions</TableHead>
                 </TableRow>
               </TableHeader>
@@ -76,16 +76,20 @@ const MyArenaList = () => {
                           <Badge variant="pending">Pending</Badge>
                         )}
                         {post.status === "rejected" && (
-                          <Badge variant="rejected">Rejected</Badge>
+                          <div className="flex gap-1 items-center m-0 p-0">
+                            <Badge variant="rejected">Rejected</Badge>
+                            <MyArenaListHover />
+                          </div>
                         )}
                       </TableCell>
                       <TableCell>
                         {post.premium === "false" ? (
-                          <Badge variant={"pending"}>Free</Badge>
+                          <Badge variant={"none"}>Free</Badge>
                         ) : (
                           <Badge variant={"success"}>Premium</Badge>
                         )}
                       </TableCell>
+                      <TableCell>22 days left</TableCell>
                       <TableCell className="text-right">
                         <div className="flex justify-end">
                           <DropdownActions post={post} id={post.id} />

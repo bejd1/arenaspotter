@@ -1,13 +1,17 @@
+import PanelAdminTable from "@/app/_components/panelAdminTable";
 import React from "react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "New arena",
+};
 
 const NewArena = () => {
   return (
-    <div className="flex flex-col gap-4">
-      <h2 className="p-8 text-xl">New arena</h2>
-      <div className="pt-8 flex flex-col items-center justify-center">
-        <h2 className="text-2xl font-bold mb-2">Coming Soon 👀</h2>
-        <p>This page has not been created yet.</p>
-        <p>Stay tuned though!</p>
+    <div className="flex flex-col">
+      <div className="flex flex-col justify-between px-4 py-2">
+        <h2 className="p-8 text-xl">New arena</h2>
+        <PanelAdminTable />
       </div>
     </div>
   );

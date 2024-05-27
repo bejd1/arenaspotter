@@ -8,12 +8,13 @@ import { MdReportGmailerrorred } from "react-icons/md";
 import { FcStatistics } from "react-icons/fc";
 import { DashboardDropdown } from "../_components/dashboardDropdown";
 import { MdOutlineNotificationsActive } from "react-icons/md";
+import { useQuery } from "@tanstack/react-query";
+import { getArenaByStatus } from "@/actions/newArena";
 
 interface linksI {
   name: string;
   href: string;
   icon: ReactNode;
-  counter?: ReactNode;
 }
 
 const links: linksI[] = [
@@ -26,26 +27,21 @@ const links: linksI[] = [
     name: "New arena",
     href: "/dashboard/new-arena",
     icon: <MdOutlineNotificationsActive className="text-xl mr-1" />,
-    counter: (
-      <span className="flex items-center justify-center w-4 h-4 rounded-full bg-blue-400 ml-1 ">
-        0
-      </span>
-    ),
   },
   {
     name: "Reports",
     href: "/dashboard/reports",
     icon: <MdReportGmailerrorred className="text-xl mr-1" />,
-    counter: (
-      <span className="flex items-center justify-center w-4 h-4 ml-1 rounded-full bg-blue-400 ">
-        0
-      </span>
-    ),
   },
 ];
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
+
+  const { data: pendingPosts = [] } = useQuery({
+    queryKey: ["pendingPosts"],
+    queryFn: async () => await getArenaByStatus("pending"),
+  });
 
   return (
     <div className="flex relative">
@@ -84,7 +80,17 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   href={link.href}
                   className="flex items-center justify-start"
                 >
-                  {link.icon} {link.name} {link.counter}
+                  {link.icon} {link.name}
+                  {link.name === "New arena" ? (
+                    <span className="flex items-center justify-center w-4 h-4 ml-1 rounded-full bg-blue-400 ">
+                      {pendingPosts.length}
+                    </span>
+                  ) : null}
+                  {link.name === "Reports" ? (
+                    <span className="flex items-center justify-center w-4 h-4 ml-1 rounded-full bg-blue-400 ">
+                      0
+                    </span>
+                  ) : null}
                 </Link>
               </Button>
             </div>

@@ -14,10 +14,9 @@ import Image from "next/image";
 
 interface ArenasDataI {
   arenas: PostT[];
-  city: string | null;
 }
 
-const ArenasData = ({ arenas, city }: ArenasDataI) => {
+const ArenasData = ({ arenas }: ArenasDataI) => {
   const [data, setData] = useState<PostT[]>([]);
   const [sortedArenas, setSortedArenas] = useState<PostT[]>([]);
   const params = useSearchParams();
@@ -66,8 +65,7 @@ const ArenasData = ({ arenas, city }: ArenasDataI) => {
             <div className="col-span-full flex justify-center">
               <div className="text-center">
                 <div className="flex gap-1">
-                  <p>Doesn&apos;t exist</p>
-                  {city === null ? null : <p>city: {city}</p>}
+                  <p>Arena is not found. 😐</p>
                 </div>
               </div>
             </div>

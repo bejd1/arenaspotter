@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import EditPost from "./editModal";
 import DeletePost from "./deletePost";
 import { PostT } from "@/types/types";
+import { MdOutlineWorkspacePremium } from "react-icons/md";
 
 interface DropdownI {
   post: PostT;
@@ -24,7 +25,10 @@ const DropdownActions = ({ post, id }: DropdownI) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="flex items-center flex-col gap-2">
         <div className="my-2 flex flex-col gap-2">
-          <Button variant={"success"}>Upgrade</Button>
+          <Button variant={"success"}>
+            Upgrade
+            <MdOutlineWorkspacePremium className="text-lg" />
+          </Button>
           <EditPost post={post} />
           <DeletePost id={id} />
         </div>

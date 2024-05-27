@@ -15,6 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/components/ui/use-toast";
 import { createReport } from "@/actions/report";
+import Loader from "./loader";
 
 interface ReportI {
   myEmail: string | undefined;
@@ -110,7 +111,7 @@ const ReportForm = ({ myEmail, id, arenaName, handleClose }: ReportI) => {
           )}
         />
         <Button type="submit" className="mt-1">
-          Report
+          {isPending ? <Loader text={"Report"} /> : "Report"}
         </Button>
       </form>
     </Form>

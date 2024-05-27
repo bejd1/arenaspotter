@@ -66,6 +66,35 @@ export async function editUserImage(formData: FormData) {
   }
 }
 
+export async function editUserPassword(formData: FormData) {
+  try {
+    const id = formData.get("inputId") as string;
+    if (!id) {
+      throw new Error("User ID is required");
+    }
+    const password = formData.get("newPassword") as string;
+
+    const bcrypt = require("bcrypt");
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    // const hashedPassword = await bcrypt.hash(password, 10);
+
+    await prisma.user.update({
+      where: {
+        id: id.toString(),
+      },
+      data: {
+        password: hashedPassword,
+      },
+    });
+
+    revalidatePath("/settings/change-password");
+  } catch (error) {
+    console.error("Error while editing the product:", error);
+  }
+}
+
 export async function deleteUser(formData: FormData) {
   try {
     const inputId = formData.get("inputId") as string;

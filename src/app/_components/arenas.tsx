@@ -114,7 +114,7 @@ const Arenas = () => {
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
       />
-      <ArenasData arenas={arenas} city={city} />
+      <ArenasData arenas={arenas} />
     </>
   );
 };

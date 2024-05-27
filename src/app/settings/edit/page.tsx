@@ -79,7 +79,11 @@ const Edit = ({ id, firstName, email, refetch, update }: any) => {
   };
   return (
     <div className="flex items-center justify-center">
-      <Button onClick={handleOpen}>
+      <Button
+        onClick={handleOpen}
+        variant={"success"}
+        className="flex gap-1 bg-[#22272e] hover:bg-[#0b0d0e] py-1 px-3 "
+      >
         <BiPencil />
         Edit
       </Button>

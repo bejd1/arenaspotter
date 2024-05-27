@@ -66,7 +66,6 @@ export default function EditPost({ post }: { post: PostT }) {
         className="flex justify-center"
       >
         <Card className="flex flex-col my-8 sm:w-[600px] px-4 sm:px-32 py-8 overflow-scroll relative">
-          <button onClick={reporto}>toast</button>
           <h2 className="text-2xl font-bold text-center">Edit arena</h2>
           <form
             onSubmit={async (e) => {
