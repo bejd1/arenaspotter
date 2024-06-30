@@ -10,6 +10,7 @@ import EditPhotoDropdown from "./editPhotoDropdown";
 import { Label } from "@/components/ui/label";
 import Edit from "../settings/edit/page";
 import { redirect } from "next/navigation";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 type mySettingsI = {
   id: string;
@@ -56,7 +57,7 @@ const SettingsComponent = () => {
             <div className="flex flex-col items-center gap-4">
               <div className="w-[100px] sm:w-[200px] mt-4">
                 <Label>Profile picture</Label>
-                {mySettings.image?.toString() === "" ? (
+                {mySettings.image?.toString() !== "" ? (
                   <div className="relative">
                     <div className="mt-2 flex items-center justify-center w-20 sm:w-40 h-20 sm:h-40 ml-2 bg-blue-600 text-white rounded-full text-6xl sm:text-8xl ">
                       {mySettings.name?.charAt(0).toLocaleUpperCase()}
@@ -92,7 +93,9 @@ const SettingsComponent = () => {
               </div>
             </div>
           </>
-        ) : null}
+        ) : (
+          <div></div>
+        )}
         <div className="col-span-2"></div>
       </div>
     </>

@@ -23,8 +23,13 @@ const ArenasData = ({ arenas }: ArenasDataI) => {
   const category = params.get("category");
 
   useEffect(() => {
-    setSortedArenas(arenas);
-    setData(arenas.slice(0, 10));
+    const sorted = [...arenas].sort((a, b) => {
+      if (a.premium === "true" && b.premium !== "true") return -1;
+      if (a.premium !== "true" && b.premium === "true") return 1;
+      return 0;
+    });
+    setSortedArenas(sorted);
+    setData(sorted.slice(0, 10));
   }, [arenas]);
 
   const filtered = () => {
@@ -71,8 +76,17 @@ const ArenasData = ({ arenas }: ArenasDataI) => {
             </div>
           ) : (
             data.map((arena) => {
-              const { id, name, city, street, image, people, cost, status } =
-                arena;
+              const {
+                id,
+                name,
+                city,
+                street,
+                image,
+                people,
+                cost,
+                status,
+                premium,
+              } = arena;
 
               return (
                 <div key={id}>
@@ -81,7 +95,7 @@ const ArenasData = ({ arenas }: ArenasDataI) => {
                       status === "pending" || status === "rejected"
                         ? "hidden"
                         : "block"
-                    }`}
+                    } ${premium === "true" ? "border-6" : ""}`}
                   >
                     <Link href={`/arena/${id}`}>
                       <Image
